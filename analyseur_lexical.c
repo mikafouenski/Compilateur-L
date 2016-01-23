@@ -15,16 +15,17 @@
 extern FILE *yyin;
 
 char *tableMotsClefs[] = {
-  "si", "alors", "sinon", "retour", "tantque", "entier", "faire"
+  "si", "alors", "sinon", "tantque", "faire", "retour", "entier", "lire", "ecrire"
 };
 
 int codeMotClefs[] = { 
-  SI, ALORS, SINON, RETOUR, TANTQUE, ENTIER, FAIRE
+  SI, ALORS, SINON, TANTQUE, FAIRE, RETOUR, ENTIER, LIRE, ECRIRE
 };
 
 char yytext[YYTEXT_MAX];
 int yyleng;
 int nbMotsClefs = 9;
+int motsClefsMaxLeng = 7;
 /* Compter les lignes pour afficher les messages d'erreur avec numero ligne */
 int nb_ligne = 1;
 
@@ -85,18 +86,67 @@ int yylex(void)
   char c;
   int i;
   yytext[yyleng = 0] = '\0';
-  while(mangeEspaces() == 0) {
-    c = lireCar();
-    if (c == ' ') {
-        for (int j = 0; j < nbMotsClefs; ++j) {
-            if (strcmp(yytext, tableMotsClefs[i]) == 0) {
-                return codeMotClefs[i];
-            }
-        }
-        if (c == ';') return POINT_VIRGULE;
+
+  if (mangeEspaces() == -1) return FIN;
+  c = lireCar();
+
+  /* Caract simple */
+  if (c == ';') return POINT_VIRGULE;
+  else if (c == ',') return VIRGULE;
+  else if (c == '+') return PLUS;
+  else if (c == '-') return MOINS;
+  else if (c == '*') return FOIS;
+  else if (c == '/') return DIVISE;
+  else if (c == '(') return PARENTHESE_OUVRANTE;
+  else if (c == ')') return PARENTHESE_FERMANTE;
+  else if (c == '[') return CROCHET_OUVRANT;
+  else if (c == ']') return CROCHET_FERMANT;
+  else if (c == '{') return ACCOLADE_OUVRANTE;
+  else if (c == '}') return ACCOLADE_FERMANTE;
+  else if (c == '=') return EGAL;
+  else if (c == '<') return INFERIEUR;
+  else if (c == '&') return ET;
+  else if (c == '|') return OU;
+  else if (c == '!') return NON;
+
+  /* Mot cles */
+  for (i = 0; i < nbMotsClefs; ++i)
+    if (strcmp(yytext, tableMotsClefs[i]) == 0)
+      return codeMotClefs[i];
+
+
+  /* Nombre */
+  if (is_num(c)) {
+    while (is_num(c)) {
+      c = lireCar();
+      if (! is_num(c)){ 
+        delireCar();
+        return NOMBRE;
+      }
     }
   }
-  return FIN;
+
+  /* var */
+  if (c == '$') {
+    while (is_alphanum(c)) {
+      c = lireCar();
+      if (! is_alphanum(c)) {
+        delireCar();
+        return ID_VAR;
+      }
+    }
+  }
+
+  /* func */
+  if (is_min(c) || is_maj(c) || c == '_') {
+    while(is_alphanum(c)) {
+      c = lireCar();
+      if (! is_alphanum(c)) {
+        delireCar();
+        return ID_FCT;
+      }
+    }
+  }
 }
 
 /*******************************************************************************
