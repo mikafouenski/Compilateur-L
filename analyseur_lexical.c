@@ -109,9 +109,6 @@ int yylex(void)
   else if (c == '|') return OU;
   else if (c == '!') return NON;
 
-  /* Mot cles */
-  
-
   /* Nombre */
   if (is_num(c)) {
     while (is_num(c)) {
@@ -134,7 +131,7 @@ int yylex(void)
     }
   }
 
-  /* func */
+  /* func et mot cle */
   if (is_min(c) || is_maj(c) || c == '_') {
     while(is_alphanum(c)) {
       for (i = 0; i < nbMotsClefs; ++i)
