@@ -110,10 +110,7 @@ int yylex(void)
   else if (c == '!') return NON;
 
   /* Mot cles */
-  for (i = 0; i < nbMotsClefs; ++i)
-    if (strcmp(yytext, tableMotsClefs[i]) == 0)
-      return codeMotClefs[i];
-
+  
 
   /* Nombre */
   if (is_num(c)) {
@@ -140,6 +137,9 @@ int yylex(void)
   /* func */
   if (is_min(c) || is_maj(c) || c == '_') {
     while(is_alphanum(c)) {
+      for (i = 0; i < nbMotsClefs; ++i)
+        if (strcmp(yytext, tableMotsClefs[i]) == 0)
+          return codeMotClefs[i];
       c = lireCar();
       if (! is_alphanum(c)) {
         delireCar();
