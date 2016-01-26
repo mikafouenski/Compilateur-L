@@ -5,10 +5,10 @@ CCFLAGS = -Wall -ggdb
 
 OBJ = analyseur_lexical.o util.o
 
-all: test_yylex
+all: compilateur
 
-test_yylex: test_yylex.c $(OBJ)
-	$(CC) $(CCFLAGS) -o test_yylex test_yylex.c $(OBJ)
+compilateur: compilateur.c $(OBJ)
+	$(CC) $(CCFLAGS) -o compilateur compilateur.c $(OBJ)
 
 analyseur_lexical.o: analyseur_lexical.c
 	$(CC) $(CCFLAGS) -c $^
