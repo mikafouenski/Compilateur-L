@@ -8,43 +8,65 @@
 
 int uniteCourante;
 
-void _expression_(void) {
-	_terme_();
-	_expressionBis_();
+void expression(void) {
+    affiche_balise_ouvrante("Expresion", 1);
+    terme();
+    expressionBis();
+    affiche_balise_fermante("Expresion", 1);
 }
 
-void _expressionBis_(void) {
-	if(uniteCourante == PLUS) {
-		uniteCourante = yylex();
-		_expression_();
-	}
-	else return;
+void expressionBis(void) {
+    affiche_balise_ouvrante("ExpresionBIS", 1);
+    if(uniteCourante == PLUS) {
+        uniteCourante = yylex();
+        expression();
+        affiche_balise_fermante("ExpresionBIS", 1);
+    }
 }
 
-void _terme_(void) {
-	_facteur_();
-	_termeBis_();
+void terme(void) {
+    affiche_balise_ouvrante("Terme", 1);
+    facteur();
+    termeBis();
+    affiche_balise_fermante("Terme", 1);
 }
 
-void _termeBis_(void) {
-	if(uniteCourante == FOIS) {
-		uniteCourante = yylex();
-		_terme_();
-	}
-	else return;	
+void termeBis(void) {
+    affiche_balise_ouvrante("TermeBIS", 1);
+    if(uniteCourante == FOIS) {
+        uniteCourante = yylex();
+        terme();
+        affiche_balise_fermante("TermeBIS", 1);
+    }
 }
 
-void _facteur_(void) {
-	if(uniteCourante == PARENTHESE_OUVRANTE) {
-		uniteCourante = yylex();
-		_expression_();
-		if (uniteCourante == PARENTHESE_FERMANTE) {
-			uniteCourante = yylex();
-		}
-		else {
-			printf("Erreur de syntaxe");
-			exit (-1);
-		}
-	}
-	else return;
+void facteur(void) {
+    affiche_balise_ouvrante("Facteur", 1);
+    if(uniteCourante == PARENTHESE_OUVRANTE) {
+        uniteCourante = yylex();
+        expression();
+        if (uniteCourante == PARENTHESE_FERMANTE) {
+            uniteCourante = yylex();
+            affiche_balise_fermante("Facteur", 1);
+        }
+        else {
+            printf("Erreur de syntaxe 1");
+            exit (-1);
+        }
+    }
+    else {
+        if (uniteCourante == NOMBRE) {
+            uniteCourante = yylex();
+            affiche_balise_fermante("Facteur", 1);
+        } else {
+            printf("Erreur de syntaxe 2");
+            exit (-1);
+        }
+    }
+}
+
+void syntaxe(FILE *yyin) {
+    uniteCourante = yylex();
+    //nom_token(uniteCourante, nom, valeur);
+    expression();
 }
