@@ -20,4 +20,4 @@ analyseur_syntaxique.o: analyseur_syntaxique.c
 
 clean:
 	- rm -f $(OBJ)
-	- rm -f test_yylex
+	- rm -f compilateur
