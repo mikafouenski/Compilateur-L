@@ -6,6 +6,6 @@ void expressionBis(void);
 void terme(void);
 void termeBis(void);
 void facteur(void);
-void syntaxe(FILE *yyin);
+void syntaxe(void);
 
 #endif
