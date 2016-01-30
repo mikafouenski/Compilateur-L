@@ -7,64 +7,73 @@
 #include "analyseur_lexical.h"
 
 int uniteCourante;
+int trace_xml = 1;
+char nom[100];
+char valeur[100];
 
 void expression(void) {
-    affiche_balise_ouvrante("Expresion", 1);
+    affiche_balise_ouvrante("Expression", trace_xml);
     terme();
     expressionBis();
-    affiche_balise_fermante("Expresion", 1);
+    affiche_balise_fermante("Expression", trace_xml);
 }
 
 void expressionBis(void) {
-    affiche_balise_ouvrante("ExpresionBIS", 1);
     if(uniteCourante == PLUS) {
-        printf("PLUS\n");
+        affiche_balise_ouvrante("ExpresionBis", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
         uniteCourante = yylex();
         expression();
-        affiche_balise_fermante("ExpresionBIS", 1);
+        affiche_balise_fermante("ExpresionBis", trace_xml);
     }
 }
 
 void terme(void) {
-    affiche_balise_ouvrante("Terme", 1);
+    affiche_balise_ouvrante("Terme", trace_xml);
     facteur();
     termeBis();
-    affiche_balise_fermante("Terme", 1);
+    affiche_balise_fermante("Terme", trace_xml);
 }
 
 void termeBis(void) {
-    affiche_balise_ouvrante("TermeBIS", 1);
     if(uniteCourante == FOIS) {
-        printf("FOIS\n");
+        affiche_balise_ouvrante("TermeBis", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
         uniteCourante = yylex();
         terme();
-        affiche_balise_fermante("TermeBIS", 1);
+        affiche_balise_fermante("TermeBis", trace_xml);
     }
 }
 
 void facteur(void) {
-    affiche_balise_ouvrante("Facteur", 1);
     if(uniteCourante == PARENTHESE_OUVRANTE) {
-        printf("PARENTHESE\n");
+        affiche_balise_ouvrante("Facteur", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
         uniteCourante = yylex();
         expression();
         if (uniteCourante == PARENTHESE_FERMANTE) {
-            printf("PARENTHESE\n");
+            nom_token(uniteCourante, nom, valeur);
+            affiche_element(nom, valeur, trace_xml);
             uniteCourante = yylex();
-            affiche_balise_fermante("Facteur", 1);
+            affiche_balise_fermante("Facteur", trace_xml);
         }
         else {
-            printf("Erreur de syntaxe 1");
+            erreur("Erreur de syntaxe 1.");
             exit (-1);
         }
     }
     else {
         if (uniteCourante == NOMBRE) {
-            printf("NOMBRE\n");
+            affiche_balise_ouvrante("Facteur", trace_xml);
+            nom_token(uniteCourante, nom, valeur);
+            affiche_element(nom, valeur, trace_xml);
             uniteCourante = yylex();
-            affiche_balise_fermante("Facteur", 1);
+            affiche_balise_fermante("Facteur", trace_xml);
         } else {
-            printf("Erreur de syntaxe 2 : %d\n", uniteCourante);
+            erreur("Erreur de syntaxe 2.");
             exit (-1);
         }
     }
