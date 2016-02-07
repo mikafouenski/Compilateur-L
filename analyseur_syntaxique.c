@@ -107,6 +107,10 @@ void listeDecFonctions (void) {
         if (est_premier(uniteCourante, _listeDecFonctions_)) {
             listeDecFonctions();
             affiche_balise_fermante("listeDecFonctions", trace_xml);
+            return;
+        } else {
+            printf("ERREUR\n");
+            exit(EXIT_FAILURE);
         }
     } else if (est_suivant(uniteCourante, _listeDecFonctions_)) 
         return;
@@ -114,25 +118,206 @@ void listeDecFonctions (void) {
     exit(EXIT_FAILURE);
 }
 void declarationVariable (void) {
-
+    if (uniteCourante == ENTIER) {
+        affiche_balise_ouvrante("declarationVariable", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        if (uniteCourante == ID_VAR) {
+            nom_token(uniteCourante, nom, valeur);
+            affiche_element(nom, valeur, trace_xml);
+            uniteCourante = yylex();
+            if (est_premier(uniteCourante, optTailleTableau)) {
+                optTailleTableau();
+                affiche_balise_fermante("declarationVariable", trace_xml);
+                return;
+            } else {
+                printf("ERREUR\n");
+                exit(EXIT_FAILURE);
+            }
+        } else {
+            printf("ERREUR\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void declarationFonction (void) {
-
+    if (uniteCourante == ID_FCT) {
+        affiche_balise_ouvrante("declarationFonction", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        if (est_premier(uniteCourante, _listeParam_)) {
+            listeParam();
+            if (est_premier(uniteCourante, _optDecVariables_)) {
+                optDecVariables();
+                if (est_premier(uniteCourante, _instructionBloc_)) {
+                    instructionBloc();
+                    affiche_balise_fermante("declarationFonction", trace_xml);
+                    return;
+                } else {
+                    printf("ERREUR\n");
+                    exit(EXIT_FAILURE);
+                }
+            } else {
+                printf("ERREUR\n");
+                exit(EXIT_FAILURE);
+            }
+        } else {
+            printf("ERREUR\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void listeParam (void) {
-
+    if (uniteCourante == PARENTHESE_OUVRANTE) {
+        affiche_balise_ouvrante("listeParam", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        if (est_premier(uniteCourante, _optListeDecVariables_)) {
+            optListeDecVariables();
+            if (uniteCourante == PARENTHESE_FERMANTE) {
+                nom_token(uniteCourante, nom, valeur);
+                affiche_element(nom, valeur, trace_xml);
+                uniteCourante = yylex();
+                affiche_balise_fermante("listeParam", trace_xml);
+                return;
+            } else {
+                printf("ERREUR\n");
+                exit(EXIT_FAILURE);
+            }
+        } else {
+            printf("ERREUR\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void listeInstructions (void) {
-
+    if (est_premier(uniteCourante, _instruction_)) {
+        affiche_balise_ouvrante("listeInstructions", trace_xml);
+        instruction();
+        if (est_premier(uniteCourante, _listeInstructions_)) {
+            listeInstructions();
+            affiche_balise_fermante("listeInstructions", trace_xml);
+            return;
+        } else {
+            printf("ERREUR\n");
+            exit(EXIT_FAILURE);
+        }
+    } else if (est_suivant(uniteCourante, _listeInstructions_))
+        return;
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void instruction (void) {
-
+    if (est_premier(uniteCourante, _instructionAffect_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionAffect();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
+    } else if (est_premier(uniteCourante, _instructionBloc_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionBloc();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
+    } else if (est_premier(uniteCourante, _instructionSi_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionSi();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
+    } else if (est_premier(uniteCourante, _instructionTantque_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionTantque();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
+    } else if (est_premier(uniteCourante, _instructionAppel_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionAppel();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
+    } else if (est_premier(uniteCourante, _instructionRetour_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionRetour();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
+    } else if (est_premier(uniteCourante, _instructionEcriture_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionEcriture();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
+    } else if (est_premier(uniteCourante, _instructionVide_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionVide();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
+    }
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void instructionAffect (void) {
-
+    if (est_premier(uniteCourante, _var_)) {
+        affiche_balise_ouvrante("instructionAffect", trace_xml);
+        var();
+        if (uniteCourante == EGAL) {
+            nom_token(uniteCourante, nom, valeur);
+            affiche_element(nom, valeur, trace_xml);
+            uniteCourante = yylex();
+            if (est_premier(uniteCourante, _expression_)) {
+                expression();
+                if (uniteCourante == POINT_VIRGULE) {
+                    nom_token(uniteCourante, nom, valeur);
+                    affiche_element(nom, valeur, trace_xml);
+                    uniteCourante = yylex();
+                    affiche_balise_fermante("instructionAffect", trace_xml);
+                    return;
+                } else {
+                    printf("ERREUR\n");
+                    exit(EXIT_FAILURE);
+                }
+            } else {
+                printf("ERREUR\n");
+                exit(EXIT_FAILURE);
+            }
+        } else {
+            printf("ERREUR\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void instructionBloc (void) {
-
+    if (uniteCourante == ACCOLADE_OUVRANTE) {
+        affiche_balise_ouvrante("instructionBloc", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        if (est_premier(uniteCourante, _listeInstructions_)) {
+            listeInstructions();
+            if (uniteCourante == ACCOLADE_FERMANTE) {
+                nom_token(uniteCourante, nom, valeur);
+                affiche_element(nom, valeur, trace_xml);
+                uniteCourante = yylex();
+                affiche_balise_fermante("instructionBloc", trace_xml);
+                return;
+            } else {
+                printf("ERREUR\n");
+                exit(EXIT_FAILURE);
+            }
+        } else {
+            printf("ERREUR\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void instructionSi (void) {
 
