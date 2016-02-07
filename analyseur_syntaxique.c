@@ -84,10 +84,34 @@ void facteur(void) {
 
 
 void listeDecVariables (void) {
-
+    if (est_premier(uniteCourante, _declarationVariable_)) {
+        affiche_balise_ouvrante("listeDecVariables", trace_xml);
+        //nom_token(uniteCourante, nom, valeur);
+        //affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        declarationVariable();
+        if (est_premier(uniteCourante, _listeDecVariablesBis_)) {
+            listeDecVariablesBis();
+            affiche_balise_fermante("listeDecVariables", trace_xml);
+            return;
+        }
+    }
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void listeDecFonctions (void) {
-
+    if (est_premier(uniteCourante, _declarationFonction_)) {
+        affiche_balise_ouvrante("listeDecFonctions", trace_xml);
+        uniteCourante = yylex();
+        declarationFonction();
+        if (est_premier(uniteCourante, _listeDecFonctions_)) {
+            listeDecFonctions();
+            affiche_balise_fermante("listeDecFonctions", trace_xml);
+        }
+    } else if (est_suivant(uniteCourante, _listeDecFonctions_)) 
+        return;
+    printf("ERREUR\n");
+    exit(EXIT_FAILURE);
 }
 void declarationVariable (void) {
 
