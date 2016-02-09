@@ -54,19 +54,9 @@ void declarationVariable (void) {
             nom_token(uniteCourante, nom, valeur);
             affiche_element(nom, valeur, trace_xml);
             uniteCourante = yylex();
-            printf("%d\n", uniteCourante);
-            if (est_premier(uniteCourante, _optTailleTableau_)) {
-                optTailleTableau();
-                affiche_balise_fermante("declarationVariable", trace_xml);
-                return;
-            } else if (est_suivant(uniteCourante, _declarationVariable_)) {
-                printf("SUIVANT\n");
-                return;
-            }
-            else {
-                printf("ERREUR 1\n");
-                exit(EXIT_FAILURE);
-            }
+            optTailleTableau();
+            affiche_balise_fermante("declarationVariable", trace_xml);
+            return;
         } else {
             printf("ERREUR 2\n");
             exit(EXIT_FAILURE);
