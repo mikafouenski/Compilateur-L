@@ -17,9 +17,6 @@ char valeur[100];
 void listeDecVariables (void) {
     if (est_premier(uniteCourante, _declarationVariable_)) {
         affiche_balise_ouvrante("listeDecVariables", trace_xml);
-        //nom_token(uniteCourante, nom, valeur);
-        //affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
         declarationVariable();
         if (est_premier(uniteCourante, _listeDecVariablesBis_)) {
             listeDecVariablesBis();
@@ -33,7 +30,6 @@ void listeDecVariables (void) {
 void listeDecFonctions (void) {
     if (est_premier(uniteCourante, _declarationFonction_)) {
         affiche_balise_ouvrante("listeDecFonctions", trace_xml);
-        uniteCourante = yylex();
         declarationFonction();
         if (est_premier(uniteCourante, _listeDecFonctions_)) {
             listeDecFonctions();
@@ -58,20 +54,25 @@ void declarationVariable (void) {
             nom_token(uniteCourante, nom, valeur);
             affiche_element(nom, valeur, trace_xml);
             uniteCourante = yylex();
+            printf("%d\n", uniteCourante);
             if (est_premier(uniteCourante, _optTailleTableau_)) {
                 optTailleTableau();
                 affiche_balise_fermante("declarationVariable", trace_xml);
                 return;
-            } else {
-                printf("ERREUR\n");
+            } else if (est_suivant(uniteCourante, _declarationVariable_)) {
+                printf("SUIVANT\n");
+                return;
+            }
+            else {
+                printf("ERREUR 1\n");
                 exit(EXIT_FAILURE);
             }
         } else {
-            printf("ERREUR\n");
+            printf("ERREUR 2\n");
             exit(EXIT_FAILURE);
         }
     }
-    printf("ERREUR\n");
+    printf("ERREUR 3\n");
     exit(EXIT_FAILURE);
 }
 void declarationFonction (void) {
@@ -522,7 +523,7 @@ void negation (void) {
     }
 }
 void comparaison (void) {
-    if (est_premier(uniteCourante, expArith))
+    if (est_premier(uniteCourante, _expArith_))
     {
         affiche_balise_ouvrante("comparaison", trace_xml);
         expArith();
@@ -567,7 +568,7 @@ void facteur (void) {
         nom_token(uniteCourante, nom, valeur);
         affiche_element(nom, valeur, trace_xml);
         uniteCourante = yylex();
-        if (est_premier(uniteCourante, _expression__))
+        if (est_premier(uniteCourante, _expression_))
         {
             expression();
             if (uniteCourante == PARENTHESE_FERMANTE)
@@ -629,7 +630,7 @@ void argumentsEffectifs (void) {
 
 }
 void listeExpressions (void) {
-    if (est_premier(uniteCourante, _expression__))
+    if (est_premier(uniteCourante, _expression_))
     {
         affiche_balise_ouvrante("listeExpressions", trace_xml);
         expression();
@@ -987,5 +988,5 @@ void syntaxe(void) {
     initialise_premiers();
     initialise_suivants();
     uniteCourante = yylex();
-    expression();
+    programme();
 }
