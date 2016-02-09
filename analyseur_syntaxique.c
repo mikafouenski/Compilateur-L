@@ -347,31 +347,186 @@ void appelFct (void) {
 
 }
 void conjonction (void) {
-
+    if (est_premier(uniteCourante, _negation_))
+    {
+        affiche_balise_ouvrante("conjonction", trace_xml);
+        negation();
+        if (est_premier(uniteCourante, _conjonctionBis_))
+        {
+            conjonctionBis();
+            affiche_balise_fermante("conjonction", trace_xml);
+            return;
+        }
+    }
 }
 void negation (void) {
-
+    if (uniteCourante == NON)
+    {
+        affiche_balise_ouvrante("negation", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        if (est_premier(uniteCourante, _comparaison_))
+        {
+            comparaison();
+            affiche_balise_fermante("negation", trace_xml);
+            return;
+        }
+    }
+    else if (est_premier(uniteCourante, _comparaison_))
+    {
+        affiche_balise_ouvrante("negation", trace_xml);
+        comparaison();
+        affiche_balise_fermante("negation", trace_xml);
+        return;
+    }
 }
 void comparaison (void) {
-
+    if (est_premier(uniteCourante, expArith))
+    {
+        affiche_balise_ouvrante("comparaison", trace_xml);
+        expArith();
+        if (est_premier(uniteCourante, _comparaisonBis_))
+        {
+            comparaisonBis();
+            affiche_balise_fermante("comparaison", trace_xml);
+            return;
+        }
+    }
 }
 void expArith (void) {
-
+    if (est_premier(uniteCourante, _facteur_))
+    {
+        affiche_balise_ouvrante("expArith", trace_xml);
+        facteur();
+        if (est_premier(uniteCourante, _expArithBis_))
+        {
+            expArithBis();
+            affiche_balise_fermante("expArith", trace_xml);
+            return;
+        }
+    }
 }
 void terme (void) {
-
+    if (est_premier(uniteCourante, _facteur_))
+    {
+        affiche_balise_ouvrante("terme", trace_xml);
+        facteur();
+        if (est_premier(uniteCourante, _termeBis_))
+        {
+            termeBis();
+            affiche_balise_fermante("terme", trace_xml);
+            return;
+        }
+    }
 }
 void facteur (void) {
-
+    if (uniteCourante == PARENTHESE_OUVRANTE)
+    {
+        affiche_balise_ouvrante("facteur", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        if (est_premier(uniteCourante, _expression__))
+        {
+            expression();
+            if (uniteCourante == PARENTHESE_FERMANTE)
+            {
+                nom_token(uniteCourante, nom, valeur);
+                affiche_element(nom, valeur, trace_xml);
+                uniteCourante = yylex();
+                affiche_balise_fermante("facteur", trace_xml);
+                return;
+            }
+        }
+    }
+    else if (uniteCourante == NOMBRE)
+    {
+        affiche_balise_ouvrante("facteur", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        affiche_balise_fermante("facteur", trace_xml);
+        return;
+    }
+    else if (est_premier(uniteCourante, _appelFct_))
+    {
+        affiche_balise_ouvrante("facteur", trace_xml);
+        appelFct();
+        affiche_balise_fermante("facteur", trace_xml);
+        return;
+    }
+    else if (est_premier(uniteCourante, _var_))
+    {
+        affiche_balise_ouvrante("facteur", trace_xml);
+        var();
+        affiche_balise_fermante("facteur", trace_xml);
+        return;
+    }
+    else if (uniteCourante == LIRE)
+    {
+        affiche_balise_ouvrante("facteur", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        if (uniteCourante == PARENTHESE_OUVRANTE)
+        {
+            nom_token(uniteCourante, nom, valeur);
+            affiche_element(nom, valeur, trace_xml);
+            uniteCourante = yylex();
+            if (uniteCourante == PARENTHESE_FERMANTE)
+            {
+                nom_token(uniteCourante, nom, valeur);
+                affiche_element(nom, valeur, trace_xml);
+                uniteCourante = yylex();
+                affiche_balise_fermante("facteur", trace_xml);
+                return;
+            }
+        }
+    }
 }
 void argumentsEffectifs (void) {
 
 }
 void listeExpressions (void) {
-
+    if (est_premier(uniteCourante, _expression__))
+    {
+        affiche_balise_ouvrante("listeExpressions", trace_xml);
+        expression();
+        if (est_premier(uniteCourante, _listeExpressionsBis_))
+        {
+            listeExpressionsBis();
+            affiche_balise_fermante("listeExpressions", trace_xml);
+            return;
+        }
+    }
+    else if (est_suivant(uniteCourante, _listeExpressions_))
+        return;
+    printf("ERREUR\n");
+    exit(-1);
 }
 void listeExpressionsBis (void) {
-
+    if (uniteCourante == VIRGULE)
+    {
+        affiche_balise_ouvrante("listeExpressionsBis", trace_xml);
+        nom_token(uniteCourante, nom, valeur);
+        affiche_element(nom, valeur, trace_xml);
+        uniteCourante = yylex();
+        if (est_premier(uniteCourante, _expression_))
+        {
+            expression();
+            if (est_premier(uniteCourante, _listeExpressionsBis_))
+            {
+                listeExpressionsBis();
+                affiche_balise_fermante("listeExpressionsBis", trace_xml);
+                return;
+            }
+        }
+    }
+    else if (est_suivant(uniteCourante, _listeExpressionsBis_))
+        return;
+    printf("ERREUR\n");
+    exit(-1);
 }
 void programme (void) {
     if (est_premier(uniteCourante, _optDecVariables_))
@@ -383,7 +538,13 @@ void programme (void) {
             listeDecFonctions();
             affiche_balise_fermante("programme", trace_xml);
             return;
+        } else {
+            erreur("ERREUR");
+            exit(EXIT_FAILURE);
         }
+    } else {
+        erreur("ERREUR");
+        exit(EXIT_FAILURE);
     }
 }
 void conjonctionBis (void) {
