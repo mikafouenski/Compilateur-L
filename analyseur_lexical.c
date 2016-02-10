@@ -134,9 +134,17 @@ int yylex(void)
   /* func et mot cle */
   if (is_min(c) || is_maj(c) || c == '_') {
     while(is_alphanum(c)) {
-      for (i = 0; i < nbMotsClefs; ++i)
-        if (strcmp(yytext, tableMotsClefs[i]) == 0)
-          return codeMotClefs[i];
+      for (i = 0; i < nbMotsClefs; ++i) {
+        if (strcmp(yytext, tableMotsClefs[i]) == 0) {
+          if (strcmp(yytext, tableMotsClefs[0]) == 0) {
+            c = lireCar();
+            if (! is_min(c)) {
+              delireCar();
+              return codeMotClefs[i];
+            }
+          } else return codeMotClefs[i];
+        }
+      }
       c = lireCar();
       if (! is_alphanum(c)) {
         delireCar();

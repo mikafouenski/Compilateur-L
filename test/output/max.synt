@@ -449,20 +449,65 @@
                       <symbole>ACCOLADE_FERMANTE</symbole>
                     </instructionBloc>
                     <optSinon>
+                      <mot_clef>sinon</mot_clef>
+                      <instructionBloc>
+                        <symbole>ACCOLADE_OUVRANTE</symbole>
+                        <listeInstructions>
+                          <instruction>
+                            <instructionEcriture>
+                              <mot_clef>ecrire</mot_clef>
+                              <symbole>PARENTHESE_OUVRANTE</symbole>
+                              <expression>
+                                <conjonction>
+                                  <negation>
+                                    <comparaison>
+                                      <expArith>
+                                        <terme>
+                                          <facteur>
+                                            <var>
+                                              <id_variable>$v_2</id_variable>
+                                              <optIndice>
+                                              </optIndice>
+                                            </var>
+                                          </facteur>
+                                          <termeBis>
+                                          </termeBis>
+                                        </terme>
+                                        <expArithBis>
+                                        </expArithBis>
+                                      </expArith>
+                                      <comparaisonBis>
+                                      </comparaisonBis>
+                                    </comparaison>
+                                  </negation>
+                                  <conjonctionBis>
+                                  </conjonctionBis>
+                                </conjonction>
+                                <expressionBis>
+                                </expressionBis>
+                              </expression>
+                              <symbole>PARENTHESE_FERMANTE</symbole>
+                              <symbole>POINT_VIRGULE</symbole>
+                            </instructionEcriture>
+                          </instruction>
+                          <listeInstructions>
+                          </listeInstructions>
+                        </listeInstructions>
+                        <symbole>ACCOLADE_FERMANTE</symbole>
+                      </instructionBloc>
                     </optSinon>
                   </instructionSi>
                 </instruction>
                 <listeInstructions>
-                  <instruction>
-                    <instructionSi>
-                      <mot_clef>si</mot_clef>
-                      <expression>
-                        <conjonction>
-                          <negation>
-                            <comparaison>
-                              <expArith>
-                                <terme>
-                                  <facteur>
-                                    <appelFct>
-                                      <id_fonction>non</id_fonction>
-ERREUR
+                </listeInstructions>
+              </listeInstructions>
+            </listeInstructions>
+          </listeInstructions>
+          <symbole>ACCOLADE_FERMANTE</symbole>
+        </instructionBloc>
+      </declarationFonction>
+      <listeDecFonctions>
+      </listeDecFonctions>
+    </listeDecFonctions>
+  </listeDecFonctions>
+</programme>

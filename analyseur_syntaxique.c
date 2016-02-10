@@ -558,7 +558,8 @@ void listeExpressionsBis (void) {
 void programme (void) {
     affiche_balise_ouvrante("programme", trace_xml);
     if (est_premier(uniteCourante, _optDecVariables_) ||
-        est_premier(uniteCourante, _listeDecFonctions_)) {
+        est_premier(uniteCourante, _listeDecFonctions_) ||
+        est_suivant(uniteCourante, _programme_)) {
         optDecVariables();
         listeDecFonctions();
         affiche_balise_fermante("programme", trace_xml);
