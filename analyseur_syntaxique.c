@@ -674,7 +674,7 @@ void comparaisonBis (void) {
         nom_token(uniteCourante, nom, valeur);
         affiche_element(nom, valeur, trace_xml);
         uniteCourante = yylex();
-        expression();
+        expArith();
         comparaisonBis();
         affiche_balise_fermante("comparaisonBis", trace_xml);
         return;
@@ -685,7 +685,7 @@ void comparaisonBis (void) {
         nom_token(uniteCourante, nom, valeur);
         affiche_element(nom, valeur, trace_xml);
         uniteCourante = yylex();
-        expression();
+        expArith();
         comparaisonBis();
         affiche_balise_fermante("comparaisonBis", trace_xml);
         return;

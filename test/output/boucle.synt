@@ -96,31 +96,17 @@
                         </expArith>
                         <comparaisonBis>
                           <symbole>INFERIEUR</symbole>
-                          <expression>
-                            <conjonction>
-                              <negation>
-                                <comparaison>
-                                  <expArith>
-                                    <terme>
-                                      <facteur>
-                                        <nombre>10</nombre>
-                                      </facteur>
-                                      <termeBis>
-                                      </termeBis>
-                                    </terme>
-                                    <expArithBis>
-                                    </expArithBis>
-                                  </expArith>
-                                  <comparaisonBis>
-                                  </comparaisonBis>
-                                </comparaison>
-                              </negation>
-                              <conjonctionBis>
-                              </conjonctionBis>
-                            </conjonction>
-                            <expressionBis>
-                            </expressionBis>
-                          </expression>
+                          <expArith>
+                            <terme>
+                              <facteur>
+                                <nombre>10</nombre>
+                              </facteur>
+                              <termeBis>
+                              </termeBis>
+                            </terme>
+                            <expArithBis>
+                            </expArithBis>
+                          </expArith>
                           <comparaisonBis>
                           </comparaisonBis>
                         </comparaisonBis>
