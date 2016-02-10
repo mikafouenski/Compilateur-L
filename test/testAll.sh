@@ -12,9 +12,9 @@
 MYCOMPILO="../compilateur"
 MYCOMPILOLEX="${MYCOMPILO} -l"
 MYCOMPILOSYNT="${MYCOMPILO} -s"
-#MYCOMPILOASYNT="${MYCOMPILO} -a"
-#MYCOMPILOTAB="${MYCOMPILO} -t"
-#MYCOMPILOMIPS="${MYCOMPILO} -m"
+MYCOMPILOASYNT="${MYCOMPILO} -a"
+MYCOMPILOTAB="${MYCOMPILO} -t"
+MYCOMPILOMIPS="${MYCOMPILO} -m"
 
 ################################################################################
 
@@ -68,12 +68,12 @@ function test_fichier_ok() {
         ${MYCOMPILOLEX} input/$input.l > output/$input.lex
         diff_prog "${REGDIFF}" $input lex        
         diff_prog ${XMLDIFF} $input synt
-        ${MYCOMPILOASYNT} input/$input.l > output/$input.asynt
-        diff_prog ${XMLDIFF} $input asynt
-        ${MYCOMPILOTAB} input/$input.l > output/$input.tab
-        diff_prog "${REGDIFF}" $input tab
-        ${MYCOMPILOMIPS} input/$input.l > output/$input.mips
-        diff_prog "${REGDIFF}" $input mips
+        #${MYCOMPILOASYNT} input/$input.l > output/$input.asynt
+        #diff_prog ${XMLDIFF} $input asynt
+        #${MYCOMPILOTAB} input/$input.l > output/$input.tab
+        #diff_prog "${REGDIFF}" $input tab
+        #${MYCOMPILOMIPS} input/$input.l > output/$input.mips
+        #diff_prog "${REGDIFF}" $input mips
     else
         echo -e "\033[31minput/$input.l non trouvé\033[0m"
         echo -e "\033[31mTest impossible\033[0m"        

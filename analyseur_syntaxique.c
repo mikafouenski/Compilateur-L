@@ -33,6 +33,8 @@ void listeDecFonctions (void) {
         affiche_balise_fermante("listeDecFonctions", trace_xml);
         return;
     } else if (est_suivant(uniteCourante, _listeDecFonctions_)) {
+        affiche_balise_ouvrante("listeDecFonctions", trace_xml);
+        affiche_balise_fermante("listeDecFonctions", trace_xml);
         return;
     }
 
@@ -103,8 +105,11 @@ void listeInstructions (void) {
         listeInstructions();
         affiche_balise_fermante("listeInstructions", trace_xml);
         return;
-    } else if (est_suivant(uniteCourante, _listeInstructions_))
-    return;
+    } else if (est_suivant(uniteCourante, _listeInstructions_)) {
+        affiche_balise_ouvrante("listeInstructions", trace_xml);
+        affiche_balise_fermante("listeInstructions", trace_xml);
+        return;
+    }
     printf("ERREUR\n");
     exit(EXIT_FAILURE);
 }
@@ -522,8 +527,11 @@ void listeExpressions (void) {
         affiche_balise_fermante("listeExpressions", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _listeExpressions_))
+    else if (est_suivant(uniteCourante, _listeExpressions_)) {
+        affiche_balise_ouvrante("listeExpressions", trace_xml);
+        affiche_balise_fermante("listeExpressions", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -539,8 +547,11 @@ void listeExpressionsBis (void) {
         affiche_balise_fermante("listeExpressionsBis", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _listeExpressionsBis_))
+    else if (est_suivant(uniteCourante, _listeExpressionsBis_)) {
+        affiche_balise_ouvrante("listeExpressionsBis", trace_xml);
+        affiche_balise_fermante("listeExpressionsBis", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -559,7 +570,7 @@ void programme (void) {
 void conjonctionBis (void) {
     if (uniteCourante == ET)
     {
-        affiche_balise_ouvrante("conjonction", trace_xml);
+        affiche_balise_ouvrante("conjonctionBis", trace_xml);
         nom_token(uniteCourante, nom, valeur);
         affiche_element(nom, valeur, trace_xml);
         uniteCourante = yylex();
@@ -568,8 +579,11 @@ void conjonctionBis (void) {
         affiche_balise_fermante("conjonctionBis", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _conjonctionBis_))
+    else if (est_suivant(uniteCourante, _conjonctionBis_)) {
+        affiche_balise_ouvrante("conjonctionBis", trace_xml);
+        affiche_balise_fermante("conjonctionBis", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -595,8 +609,11 @@ void optTailleTableau (void) {
             }
         }
     }
-    else if (est_suivant(uniteCourante, _optTailleTableau_))
+    else if (est_suivant(uniteCourante, _optTailleTableau_)) {
+        affiche_balise_ouvrante("optTailleTableau", trace_xml);
+        affiche_balise_fermante("optTailleTableau", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -623,8 +640,11 @@ void expArithBis (void) {
         affiche_balise_fermante("expArithBis", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _expArithBis_))
+    else if (est_suivant(uniteCourante, _expArithBis_)) {
+        affiche_balise_ouvrante("expArithBis", trace_xml);
+        affiche_balise_fermante("expArithBis", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -639,8 +659,11 @@ void optSinon (void) {
         affiche_balise_fermante("optSinon", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _optSinon_))
+    else if (est_suivant(uniteCourante, _optSinon_)) {
+        affiche_balise_ouvrante("optSinon", trace_xml);
+        affiche_balise_fermante("optSinon", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -653,7 +676,7 @@ void comparaisonBis (void) {
         uniteCourante = yylex();
         expression();
         comparaisonBis();
-        affiche_balise_fermante("conjonctionBis", trace_xml);
+        affiche_balise_fermante("comparaisonBis", trace_xml);
         return;
     }
     else if (uniteCourante == INFERIEUR)
@@ -664,11 +687,14 @@ void comparaisonBis (void) {
         uniteCourante = yylex();
         expression();
         comparaisonBis();
-        affiche_balise_fermante("conjonctionBis", trace_xml);
+        affiche_balise_fermante("comparaisonBis", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _comparaisonBis_))
+    else if (est_suivant(uniteCourante, _comparaisonBis_)) {
+        affiche_balise_ouvrante("comparaisonBis", trace_xml);
+        affiche_balise_fermante("comparaisonBis", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -686,8 +712,11 @@ void optDecVariables (void) {
             return;
         }
     }
-    else if (est_suivant(uniteCourante, _optDecVariables_))
+    else if (est_suivant(uniteCourante, _optDecVariables_)) {
+        affiche_balise_ouvrante("optDecVariables", trace_xml);
+        affiche_balise_fermante("optDecVariables", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -708,8 +737,11 @@ void optIndice (void) {
             return;
         }
     }
-    else if (est_suivant(uniteCourante, _optIndice_))
+    else if (est_suivant(uniteCourante, _optIndice_)) {
+        affiche_balise_ouvrante("optIndice", trace_xml);
+        affiche_balise_fermante("optIndice", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -725,8 +757,11 @@ void listeDecVariablesBis (void) {
         affiche_balise_fermante("listeDecVariablesBis", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _listeDecVariablesBis_))
+    else if (est_suivant(uniteCourante, _listeDecVariablesBis_)) {
+        affiche_balise_ouvrante("listeDecVariablesBis", trace_xml);
+        affiche_balise_fermante("listeDecVariablesBis", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -753,8 +788,11 @@ void termeBis (void) {
         affiche_balise_fermante("termeBis", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _termeBis_))
+    else if (est_suivant(uniteCourante, _termeBis_)) {
+        affiche_balise_ouvrante("termeBis", trace_xml);
+        affiche_balise_fermante("termeBis", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -770,8 +808,11 @@ void expressionBis (void) {
         affiche_balise_fermante("expressionBis", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _expressionBis_))
+    else if (est_suivant(uniteCourante, _expressionBis_)) {
+        affiche_balise_ouvrante("expressionBis", trace_xml);
+        affiche_balise_fermante("expressionBis", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
@@ -783,8 +824,11 @@ void optListeDecVariables (void) {
         affiche_balise_fermante("optListeDecVariables", trace_xml);
         return;
     }
-    else if (est_suivant(uniteCourante, _listeDecVariables_))
+    else if (est_suivant(uniteCourante, _listeDecVariables_)) {
+        affiche_balise_ouvrante("optListeDecVariables", trace_xml);
+        affiche_balise_fermante("optListeDecVariables", trace_xml);
         return;
+    }
     printf("ERREUR\n");
     exit(-1);
 }
