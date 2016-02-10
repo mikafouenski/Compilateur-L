@@ -22,7 +22,7 @@ void listeDecVariables (void) {
         affiche_balise_fermante("listeDecVariables", trace_xml);
         return;
     }
-    printf("ERREUR 2\n");
+    printf("ERREUR\n");
     exit(EXIT_FAILURE);
 }
 void listeDecFonctions (void) {
@@ -557,8 +557,8 @@ void listeExpressionsBis (void) {
 }
 void programme (void) {
     affiche_balise_ouvrante("programme", trace_xml);
-    if (est_premier(uniteCourante, _optDecVariables_))
-    {
+    if (est_premier(uniteCourante, _optDecVariables_) ||
+        est_premier(uniteCourante, _listeDecFonctions_)) {
         optDecVariables();
         listeDecFonctions();
         affiche_balise_fermante("programme", trace_xml);
