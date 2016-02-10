@@ -115,7 +115,7 @@ test_fichier_ok expression
 test_fichier_ok max
 test_fichier_ok tri
 
-echo -e "\033[1m\n>> 1) Tests connus FAIL\033[0m"
+#echo -e "\033[1m\n>> 1) Tests connus FAIL\033[0m"
 
-test_fichier_fail affect-err
+#test_fichier_fail affect-err
 
