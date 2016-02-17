@@ -45,9 +45,10 @@ int main(int argc, char **argv) {
 
     if (lflag) {
         test_yylex_internal(yyin);
+        return 0;
     } else if (sflag) {
-        syntaxe();
+        syntaxe(1);
     }
-
+    syntaxe(0);
     return 0;
 }

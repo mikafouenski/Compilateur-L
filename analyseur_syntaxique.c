@@ -10,7 +10,7 @@
 #include "suivants.h"
 
 int uniteCourante;
-int trace_xml = 1;
+int trace_xml;
 char nom[100];
 char valeur[100];
 
@@ -702,9 +702,10 @@ void optListeDecVariables (void) {
     erreur("ERREUR");
 }
 
-void syntaxe(void) {
+void syntaxe(int trace) {
     initialise_premiers();
     initialise_suivants();
+    trace_xml = trace;
     uniteCourante = yylex();
     programme();
 }
