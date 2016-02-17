@@ -10,48 +10,44 @@ char yytext[100];
 FILE *yyin;
 
 int main(int argc, char **argv) {
+    int sflag = 0;
+    int lflag = 0;
+    int c;
+    opterr = 0;
 
-  int sflag = 0;
-  int lflag = 0;
-  int c;
-  opterr = 0;
-
-  if (argc == 1) return 1;
-  while ((c = getopt (argc, argv, "sl")) != -1) {
-    switch (c) {
-      case 's':
-        sflag = 1;
-        break;
-      case 'l':
-        lflag = 1;
-        break;
-      case 'h':
-        printf("USAGE\n");
-      case '?':
-        if (isprint (optopt))
-          fprintf (stderr, "Unknown option `-%c'.\n", optopt);
-        else
-          fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
-        return 1;
-      default:
-        abort ();
+    while ((c = getopt (argc, argv, "slh")) != -1) {
+        switch (c) {
+            case 's':
+                sflag = 1;
+                break;
+            case 'l':
+                lflag = 1;
+                break;
+            case 'h':
+                printf("Ici reposent les usages... Solennellement\n");
+                return 0;
+            case '?':
+                if (isprint (optopt))
+                    fprintf (stderr, "option inconnue `-%c'.\n", optopt);
+                else
+                    fprintf (stderr, "Caractère d'option inconnu `\\x%x'.\n", optopt);
+                return 1;
+            default:
+                abort ();
+        }
     }
-  }
 
-  //printf ("sflag = %d, lflag = %d, optind = %d\n", sflag, lflag, optind);
+    yyin = fopen(argv[optind], "r"); 
+    if(yyin == NULL){
+        fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", argv[optind]);
+        return 1;
+    }
 
-  yyin = fopen(argv[optind], "r"); 
-  if(yyin == NULL){
-    fprintf(stderr, "impossible d'ouvrir le fichier %s\n", argv[optind]);
-    return 1;
-  }
+    if (lflag) {
+        test_yylex_internal(yyin);
+    } else if (sflag) {
+        syntaxe();
+    }
 
-  if (lflag) {
-    test_yylex_internal(yyin);
-  }
-  if (sflag) {
-    syntaxe();
-  }
-
-  return 0;
+    return 0;
 }

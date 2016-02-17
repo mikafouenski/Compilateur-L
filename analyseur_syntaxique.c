@@ -14,6 +14,12 @@ int trace_xml = 1;
 char nom[100];
 char valeur[100];
 
+void EatTerminal(void) {
+    nom_token(uniteCourante, nom, valeur);
+    affiche_element(nom, valeur, trace_xml);
+    uniteCourante = yylex();
+}
+
 void listeDecVariables (void) {
     if (est_premier(uniteCourante, _declarationVariable_)) {
         affiche_balise_ouvrante("listeDecVariables", trace_xml);
@@ -22,7 +28,7 @@ void listeDecVariables (void) {
         affiche_balise_fermante("listeDecVariables", trace_xml);
         return;
     }
-    erreur("ERREUR");
+    erreur("Un entier");
 }
 void listeDecFonctions (void) {
     if (est_premier(uniteCourante, _declarationFonction_)) {
@@ -41,13 +47,9 @@ void listeDecFonctions (void) {
 void declarationVariable (void) {
     if (uniteCourante == ENTIER) {
         affiche_balise_ouvrante("declarationVariable", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         if (uniteCourante == ID_VAR) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             optTailleTableau();
             affiche_balise_fermante("declarationVariable", trace_xml);
             return;
@@ -60,9 +62,7 @@ void declarationVariable (void) {
 void declarationFonction (void) {
     if (uniteCourante == ID_FCT) {
         affiche_balise_ouvrante("declarationFonction", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         listeParam();
         optDecVariables();
         instructionBloc();
@@ -74,14 +74,10 @@ void declarationFonction (void) {
 void listeParam (void) {
     if (uniteCourante == PARENTHESE_OUVRANTE) {
         affiche_balise_ouvrante("listeParam", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         optListeDecVariables();
         if (uniteCourante == PARENTHESE_FERMANTE) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             affiche_balise_fermante("listeParam", trace_xml);
             return;
         } else {
@@ -153,15 +149,11 @@ void instructionAffect (void) {
         affiche_balise_ouvrante("instructionAffect", trace_xml);
         var();
         if (uniteCourante == EGAL) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             if (est_premier(uniteCourante, _expression_)) {
                 expression();
                 if (uniteCourante == POINT_VIRGULE) {
-                    nom_token(uniteCourante, nom, valeur);
-                    affiche_element(nom, valeur, trace_xml);
-                    uniteCourante = yylex();
+                    EatTerminal();
                     affiche_balise_fermante("instructionAffect", trace_xml);
                     return;
                 } else {
@@ -179,14 +171,10 @@ void instructionAffect (void) {
 void instructionBloc (void) {
     if (uniteCourante == ACCOLADE_OUVRANTE) {
         affiche_balise_ouvrante("instructionBloc", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         listeInstructions();
         if (uniteCourante == ACCOLADE_FERMANTE) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             affiche_balise_fermante("instructionBloc", trace_xml);
             return;
         } else {
@@ -198,14 +186,10 @@ void instructionBloc (void) {
 void instructionSi (void) {
     if (uniteCourante == SI) {
         affiche_balise_ouvrante("instructionSi", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         expression();
         if (uniteCourante == ALORS) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             instructionBloc();
             optSinon();
             affiche_balise_fermante("instructionSi", trace_xml);
@@ -219,14 +203,10 @@ void instructionSi (void) {
 void instructionTantque (void) {
     if (uniteCourante == TANTQUE) {
         affiche_balise_ouvrante("instructionTantque", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         expression();
         if (uniteCourante == FAIRE) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             instructionBloc();
             affiche_balise_fermante("instructionTantque", trace_xml);
             return;
@@ -241,9 +221,7 @@ void instructionAppel (void) {
         affiche_balise_ouvrante("instructionAppel", trace_xml);
         appelFct();
         if (uniteCourante == POINT_VIRGULE) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             affiche_balise_fermante("instructionAppel", trace_xml);
             return;
         } else {
@@ -255,14 +233,10 @@ void instructionAppel (void) {
 void instructionRetour (void) {
     if (uniteCourante == RETOUR) {
         affiche_balise_ouvrante("instructionRetour", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         expression();
         if (uniteCourante == POINT_VIRGULE) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             affiche_balise_fermante("instructionRetour", trace_xml);
             return;
         } else {
@@ -274,22 +248,14 @@ void instructionRetour (void) {
 void instructionEcriture (void) {
     if (uniteCourante == ECRIRE) {
         affiche_balise_ouvrante("instructionEcriture", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         if (uniteCourante == PARENTHESE_OUVRANTE) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             expression();
             if (uniteCourante == PARENTHESE_FERMANTE) {
-                nom_token(uniteCourante, nom, valeur);
-                affiche_element(nom, valeur, trace_xml);
-                uniteCourante = yylex();
+                EatTerminal();
                 if (uniteCourante == POINT_VIRGULE) {
-                    nom_token(uniteCourante, nom, valeur);
-                    affiche_element(nom, valeur, trace_xml);
-                    uniteCourante = yylex();
+                    EatTerminal();
                     affiche_balise_fermante("instructionEcriture", trace_xml);
                     return;
                 } else {
@@ -307,9 +273,7 @@ void instructionEcriture (void) {
 void instructionVide (void) {
     if (uniteCourante == POINT_VIRGULE) {
         affiche_balise_ouvrante("instructionVide", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         affiche_balise_fermante("instructionVide", trace_xml);
         return;
     }
@@ -318,9 +282,7 @@ void instructionVide (void) {
 void var (void) {
     if (uniteCourante == ID_VAR) {
         affiche_balise_ouvrante("var", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         optIndice();
         affiche_balise_fermante("var", trace_xml);
         return;
@@ -340,18 +302,12 @@ void expression (void) {
 void appelFct (void) {
     if (uniteCourante == ID_FCT) {
         affiche_balise_ouvrante("appelFct", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         if (uniteCourante == PARENTHESE_OUVRANTE) {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             listeExpressions();
             if (uniteCourante == PARENTHESE_FERMANTE) {
-                nom_token(uniteCourante, nom, valeur);
-                affiche_element(nom, valeur, trace_xml);
-                uniteCourante = yylex();
+                EatTerminal();
                 affiche_balise_fermante("appelFct", trace_xml);
                 return;
             } else {
@@ -377,9 +333,7 @@ void conjonction (void) {
 void negation (void) {
     if (uniteCourante == NON) {
         affiche_balise_ouvrante("negation", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         comparaison();
         affiche_balise_fermante("negation", trace_xml);
         return;
@@ -428,15 +382,11 @@ void facteur (void) {
     if (uniteCourante == PARENTHESE_OUVRANTE)
     {
         affiche_balise_ouvrante("facteur", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         expression();
         if (uniteCourante == PARENTHESE_FERMANTE)
         {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             affiche_balise_fermante("facteur", trace_xml);
             return;
         } else {
@@ -446,9 +396,7 @@ void facteur (void) {
     else if (uniteCourante == NOMBRE)
     {
         affiche_balise_ouvrante("facteur", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         affiche_balise_fermante("facteur", trace_xml);
         return;
     }
@@ -469,19 +417,13 @@ void facteur (void) {
     else if (uniteCourante == LIRE)
     {
         affiche_balise_ouvrante("facteur", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         if (uniteCourante == PARENTHESE_OUVRANTE)
         {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             if (uniteCourante == PARENTHESE_FERMANTE)
             {
-                nom_token(uniteCourante, nom, valeur);
-                affiche_element(nom, valeur, trace_xml);
-                uniteCourante = yylex();
+                EatTerminal();
                 affiche_balise_fermante("facteur", trace_xml);
                 return;
             } else {
@@ -513,9 +455,7 @@ void listeExpressionsBis (void) {
     if (uniteCourante == VIRGULE)
     {
         affiche_balise_ouvrante("listeExpressionsBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         expression();
         listeExpressionsBis();
         affiche_balise_fermante("listeExpressionsBis", trace_xml);
@@ -544,9 +484,7 @@ void conjonctionBis (void) {
     if (uniteCourante == ET)
     {
         affiche_balise_ouvrante("conjonctionBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         negation();
         conjonctionBis();
         affiche_balise_fermante("conjonctionBis", trace_xml);
@@ -563,19 +501,13 @@ void optTailleTableau (void) {
     if (uniteCourante == CROCHET_OUVRANT)
     {
         affiche_balise_ouvrante("optTailleTableau", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         if (uniteCourante == NOMBRE)
         {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             if (uniteCourante == CROCHET_FERMANT)
             {
-                nom_token(uniteCourante, nom, valeur);
-                affiche_element(nom, valeur, trace_xml);
-                uniteCourante = yylex();
+                EatTerminal();
                 affiche_balise_fermante("optTailleTableau", trace_xml);
                 return;
             } else {
@@ -596,9 +528,7 @@ void expArithBis (void) {
     if (uniteCourante == PLUS)
     {
         affiche_balise_ouvrante("expArithBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         terme();
         expArithBis();
         affiche_balise_fermante("expArithBis", trace_xml);
@@ -607,9 +537,7 @@ void expArithBis (void) {
     else if (uniteCourante == MOINS)
     {
         affiche_balise_ouvrante("expArithBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         terme();
         expArithBis();
         affiche_balise_fermante("expArithBis", trace_xml);
@@ -626,9 +554,7 @@ void optSinon (void) {
     if (uniteCourante == SINON)
     {
         affiche_balise_ouvrante("optSinon", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         instructionBloc();
         affiche_balise_fermante("optSinon", trace_xml);
         return;
@@ -644,9 +570,7 @@ void comparaisonBis (void) {
     if (uniteCourante == EGAL)
     {
         affiche_balise_ouvrante("comparaisonBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         expArith();
         comparaisonBis();
         affiche_balise_fermante("comparaisonBis", trace_xml);
@@ -655,9 +579,7 @@ void comparaisonBis (void) {
     else if (uniteCourante == INFERIEUR)
     {
         affiche_balise_ouvrante("comparaisonBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         expArith();
         comparaisonBis();
         affiche_balise_fermante("comparaisonBis", trace_xml);
@@ -677,9 +599,7 @@ void optDecVariables (void) {
         listeDecVariables();
         if (uniteCourante == POINT_VIRGULE)
         {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             affiche_balise_fermante("optDecVariables", trace_xml);
             return;
         } else {
@@ -697,15 +617,11 @@ void optIndice (void) {
     if (uniteCourante == CROCHET_OUVRANT)
     {
         affiche_balise_ouvrante("optIndice", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         expression();
         if (uniteCourante == CROCHET_FERMANT)
         {
-            nom_token(uniteCourante, nom, valeur);
-            affiche_element(nom, valeur, trace_xml);
-            uniteCourante = yylex();
+            EatTerminal();
             affiche_balise_fermante("optIndice", trace_xml);
             return;
         } else {
@@ -723,9 +639,7 @@ void listeDecVariablesBis (void) {
     if (uniteCourante == VIRGULE)
     {
         affiche_balise_ouvrante("listeDecVariablesBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         declarationVariable();
         listeDecVariablesBis();
         affiche_balise_fermante("listeDecVariablesBis", trace_xml);
@@ -742,9 +656,7 @@ void termeBis (void) {
     if (uniteCourante == FOIS || uniteCourante == DIVISE)
     {
         affiche_balise_ouvrante("termeBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         facteur();
         termeBis();
         affiche_balise_fermante("termeBis", trace_xml);
@@ -761,9 +673,7 @@ void expressionBis (void) {
     if (uniteCourante == OU)
     {
         affiche_balise_ouvrante("expressionBis", trace_xml);
-        nom_token(uniteCourante, nom, valeur);
-        affiche_element(nom, valeur, trace_xml);
-        uniteCourante = yylex();
+        EatTerminal();
         conjonction();
         expressionBis();
         affiche_balise_fermante("expressionBis", trace_xml);

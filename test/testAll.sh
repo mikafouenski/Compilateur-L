@@ -87,7 +87,7 @@ function test_fichier_fail() {
     echo -e "\n\033[4m ---- Test input/$input.l ----\033[0m"
     ${MYCOMPILO} input/$input.l > output/$input.synt.xml
     if [ $? = 0 ]; then 
-    echo -e "\033[31mTEST REJET ÉCHOUÉ\033[0m"
+        echo -e "\033[31mTEST REJET ÉCHOUÉ\033[0m"
         echo -e "Le programme $input.l a été accepté alors qu'il aurait dû être rejeté"
         if [ $EXITONFAIL = 1 ]; then exit 1; fi
     else
@@ -115,7 +115,7 @@ test_fichier_ok expression
 test_fichier_ok max
 test_fichier_ok tri
 
-#echo -e "\033[1m\n>> 1) Tests connus FAIL\033[0m"
+echo -e "\033[1m\n>> 1) Tests connus FAIL\033[0m"
 
-#test_fichier_fail affect-err
+test_fichier_fail affect-err
 

@@ -42,6 +42,7 @@ void expressionBis (void);
 void instructionFaire (void);
 void optListeDecVariables (void);
 
+void EatTerminal(void);
 void syntaxe(void);
 
 #endif
