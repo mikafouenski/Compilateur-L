@@ -42,7 +42,8 @@ void listeDecFonctions (void) {
         affiche_balise_fermante("listeDecFonctions", trace_xml);
         return;
     }
-    erreur("ERREUR");
+    nom_token(uniteCourante, nom, valeur);
+    erreurBis(", erreur de syntaxe ! Unité courante : ", uniteCourante, nom);
 }
 void declarationVariable (void) {
     if (uniteCourante == ENTIER) {
@@ -57,7 +58,7 @@ void declarationVariable (void) {
             erreur("ERREUR");
         }
     }
-    erreur("ERREUR");
+    erreur(", erreur de syntaxe ! Type entier attendu");
 }
 void declarationFonction (void) {
     if (uniteCourante == ID_FCT) {
