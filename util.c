@@ -16,13 +16,6 @@ void erreur(char *message) {
   exit(1);
 }
 
-void erreurBis(char *message, int uc, char *uc_str) {
-  fprintf(stderr, "Ligne %d : ", nb_ligne);
-  fprintf(stderr, "%s", message);
-  fprintf(stderr, "%d ", uc);
-  fprintf(stderr, "%s\n", uc_str);
-  exit(1);
-}
 /*-------------------------------------------------------------------------*/
 
 void erreur_1s(char *message, char *s) {

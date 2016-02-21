@@ -43,6 +43,8 @@ void instructionFaire (void);
 void optListeDecVariables (void);
 
 void EatTerminal(void);
+void DisplayErreur(void);
+
 void syntaxe(int trace);
 
 #endif
