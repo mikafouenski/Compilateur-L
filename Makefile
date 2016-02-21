@@ -1,7 +1,14 @@
 CC = gcc
 
+SRCDIR = src
+INCDIR = inc
+OBJDIR = obj
+
 LIBS = -lm 
-CCFLAGS = -Wall -ggdb
+CCFLAGS = -Wall -ggdb -I${INCDIR}
+
+SRC = $(wildcard *.c)
+OBJ2 = $(patsubst %.c, %.o, $(SRC))
 
 OBJ = analyseur_lexical.o util.o analyseur_syntaxique.o premiers.o suivants.o
 
@@ -27,3 +34,7 @@ suivants.o: suivants.c
 clean:
 	- rm -f $(OBJ)
 	- rm -f compilateur
+
+JETESTE:
+	@echo 'SRC' $(SRC)
+	@echo 'OBJ' $(OBJ2)
