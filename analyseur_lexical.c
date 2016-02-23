@@ -15,16 +15,16 @@
 extern FILE *yyin;
 
 char *tableMotsClefs[] = {
-  "si", "alors", "sinon", "tantque", "faire", "retour", "entier", "lire", "ecrire"
+  "si", "alors", "sinon", "tantque", "faire", "retour", "entier", "lire", "ecrire" , "pour"
 };
 
 int codeMotClefs[] = { 
-  SI, ALORS, SINON, TANTQUE, FAIRE, RETOUR, ENTIER, LIRE, ECRIRE
+  SI, ALORS, SINON, TANTQUE, FAIRE, RETOUR, ENTIER, LIRE, ECRIRE, POUR
 };
 
 char yytext[YYTEXT_MAX];
 int yyleng;
-int nbMotsClefs = 9;
+int nbMotsClefs = 10;
 int motsClefsMaxLeng = 7;
 /* Compter les lignes pour afficher les messages d'erreur avec numero ligne */
 int nb_ligne = 1;

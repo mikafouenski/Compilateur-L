@@ -41,6 +41,7 @@ void termeBis (void);
 void expressionBis (void);
 void instructionFaire (void);
 void optListeDecVariables (void);
+void instructionPour (void);
 
 void EatTerminal(void);
 void DisplayErreur(void);

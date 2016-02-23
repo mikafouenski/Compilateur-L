@@ -2,7 +2,7 @@
 
 #define EPSILON 0
 
-#define NB_NON_TERMINAUX 42
+#define NB_NON_TERMINAUX 43
 
 #define _listeDecVariables_ 1
 #define _listeDecFonctions_ 2
@@ -44,11 +44,12 @@
 #define _expressionBis_ 39
 #define _instructionFaire_ 40
 #define _optListeDecVariables_ 41
+#define _instructionPour_ 42
 
 
 
 /* symboles terminaux */
-#define NB_TERMINAUX 31
+#define NB_TERMINAUX 32
 
 #define POINT_VIRGULE 1
 #define PLUS 2
@@ -80,5 +81,6 @@
 #define NOMBRE 28
 #define FIN 29
 #define VIRGULE 30
+#define POUR 31
 
 

@@ -152,6 +152,11 @@ void instruction (void) {
         instructionVide();
         affiche_balise_fermante("instruction", trace_xml);
         return;
+    } else if (est_premier(uniteCourante, _instructionPour_)) {
+        affiche_balise_ouvrante("instruction", trace_xml);
+        instructionPour();
+        affiche_balise_fermante("instruction", trace_xml);
+        return;
     }
     DisplayErreur();
 }
@@ -297,6 +302,29 @@ void var (void) {
         optIndice();
         affiche_balise_fermante("var", trace_xml);
         return;
+    }
+    DisplayErreur();
+}
+void instructionPour (void) {
+    if (uniteCourante == POUR) {
+        affiche_balise_ouvrante("instructionPour", trace_xml);
+        EatTerminal();
+        instructionAffect();
+        expression();
+        if (uniteCourante == POINT_VIRGULE) {
+            EatTerminal();
+            instructionAffect();
+            if (uniteCourante == FAIRE) {
+                EatTerminal();
+                instructionBloc();
+                affiche_balise_fermante("instructionPour", trace_xml);
+                return;
+            } else {
+                DisplayErreur();
+            }
+        } else {
+            DisplayErreur();
+        }
     }
     DisplayErreur();
 }

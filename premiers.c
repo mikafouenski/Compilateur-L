@@ -44,6 +44,7 @@ void initialise_premiers(void){
     premiers[_instruction_][ID_FCT] = 1;
     premiers[_instruction_][RETOUR] = 1;
     premiers[_instruction_][ECRIRE] = 1;
+    premiers[_instruction_][POUR] = 1;
     //IAFF
     premiers[_instructionAffect_][ID_VAR] = 1;
     //IB
@@ -58,6 +59,7 @@ void initialise_premiers(void){
     premiers[_listeInstructions_][RETOUR] = 1;
     premiers[_listeInstructions_][ECRIRE] = 1;
     premiers[_listeInstructions_][EPSILON] = 1;
+    premiers[_listeInstructions_][POUR] = 1;
     //ISI
     premiers[_instructionSi_][SI] = 1;
     //OSINON
@@ -154,6 +156,8 @@ void initialise_premiers(void){
     //LEXPB
     premiers[_listeExpressionsBis_][VIRGULE] = 1;
     premiers[_listeExpressionsBis_][EPSILON] = 1;
+    //IP
+    premiers[_instructionPour_][POUR] = 1;
 }
 
 int est_premier(int terminal, int non_terminal)

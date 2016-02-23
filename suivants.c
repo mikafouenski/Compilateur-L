@@ -49,6 +49,7 @@ void initialise_suivants(void){
     suivants[_instruction_][RETOUR] = 1;
     suivants[_instruction_][ECRIRE] = 1;
     suivants[_instruction_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instruction_][POUR] = 1;
     //IAFF
     suivants[_instructionAffect_][POINT_VIRGULE] = 1;
     suivants[_instructionAffect_][ID_VAR] = 1;
@@ -59,6 +60,7 @@ void initialise_suivants(void){
     suivants[_instructionAffect_][RETOUR] = 1;
     suivants[_instructionAffect_][ECRIRE] = 1;
     suivants[_instructionAffect_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instructionAffect_][POUR] = 1;
     //IB
     suivants[_instructionBloc_][ID_FCT] = 1;
     suivants[_instructionBloc_][FIN] = 1;
@@ -71,6 +73,7 @@ void initialise_suivants(void){
     suivants[_instructionBloc_][ECRIRE] = 1;
     suivants[_instructionBloc_][ACCOLADE_FERMANTE] = 1;
     suivants[_instructionBloc_][SINON] = 1;
+    suivants[_instructionBloc_][POUR] = 1;
     //LI
     suivants[_listeInstructions_][ACCOLADE_FERMANTE] = 1;
     //ISI
@@ -83,6 +86,7 @@ void initialise_suivants(void){
     suivants[_instructionSi_][RETOUR] = 1;
     suivants[_instructionSi_][ECRIRE] = 1;
     suivants[_instructionSi_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instructionSi_][POUR] = 1;
     //OSINON
     suivants[_optSinon_][POINT_VIRGULE] = 1;
     suivants[_optSinon_][ID_VAR] = 1;
@@ -93,6 +97,7 @@ void initialise_suivants(void){
     suivants[_optSinon_][RETOUR] = 1;
     suivants[_optSinon_][ECRIRE] = 1;
     suivants[_optSinon_][ACCOLADE_FERMANTE] = 1;
+    suivants[_optSinon_][POUR] = 1;
     //ITQ
     suivants[_instructionTantque_][POINT_VIRGULE] = 1;
     suivants[_instructionTantque_][ID_VAR] = 1;
@@ -103,6 +108,7 @@ void initialise_suivants(void){
     suivants[_instructionTantque_][RETOUR] = 1;
     suivants[_instructionTantque_][ECRIRE] = 1;
     suivants[_instructionTantque_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instructionTantque_][POUR] = 1;
     //IAPP
     suivants[_instructionAppel_][POINT_VIRGULE] = 1;
     suivants[_instructionAppel_][ID_VAR] = 1;
@@ -113,6 +119,7 @@ void initialise_suivants(void){
     suivants[_instructionAppel_][RETOUR] = 1;
     suivants[_instructionAppel_][ECRIRE] = 1;
     suivants[_instructionAppel_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instructionAppel_][POUR] = 1;
     //IRET
     suivants[_instructionRetour_][POINT_VIRGULE] = 1;
     suivants[_instructionRetour_][ID_VAR] = 1;
@@ -123,6 +130,7 @@ void initialise_suivants(void){
     suivants[_instructionRetour_][RETOUR] = 1;
     suivants[_instructionRetour_][ECRIRE] = 1;
     suivants[_instructionRetour_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instructionRetour_][POUR] = 1;
     //IECR
     suivants[_instructionEcriture_][POINT_VIRGULE] = 1;
     suivants[_instructionEcriture_][ID_VAR] = 1;
@@ -133,6 +141,7 @@ void initialise_suivants(void){
     suivants[_instructionEcriture_][RETOUR] = 1;
     suivants[_instructionEcriture_][ECRIRE] = 1;
     suivants[_instructionEcriture_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instructionEcriture_][POUR] = 1;
     //IVIDE
     suivants[_instructionVide_][POINT_VIRGULE] = 1;
     suivants[_instructionVide_][ID_VAR] = 1;
@@ -143,6 +152,7 @@ void initialise_suivants(void){
     suivants[_instructionVide_][RETOUR] = 1;
     suivants[_instructionVide_][ECRIRE] = 1;
     suivants[_instructionVide_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instructionVide_][POUR] = 1;
     //EXP
     suivants[_expression_][POINT_VIRGULE] = 1;
     suivants[_expression_][ALORS] = 1;
@@ -312,6 +322,17 @@ void initialise_suivants(void){
     suivants[_listeExpressions_][PARENTHESE_FERMANTE] = 1;
     //LEXPB
     suivants[_listeExpressionsBis_][PARENTHESE_FERMANTE] = 1;
+    //IP
+    suivants[_instructionPour_][POINT_VIRGULE] = 1;
+    suivants[_instructionPour_][ID_VAR] = 1;
+    suivants[_instructionPour_][ACCOLADE_OUVRANTE] = 1;
+    suivants[_instructionPour_][SI] = 1;
+    suivants[_instructionPour_][TANTQUE] = 1;
+    suivants[_instructionPour_][ID_FCT] = 1;
+    suivants[_instructionPour_][RETOUR] = 1;
+    suivants[_instructionPour_][ECRIRE] = 1;
+    suivants[_instructionPour_][ACCOLADE_FERMANTE] = 1;
+    suivants[_instructionPour_][POUR] = 1;
 }
 
 int est_suivant(int terminal, int non_terminal)
