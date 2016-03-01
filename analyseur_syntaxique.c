@@ -33,7 +33,7 @@ void DisplayErreur(void) {
 }
 /* ------------------------------ INTERNAL -----------------------------------*/
 
-n_l_dec listeDecVariables (void) {
+n_l_dec *listeDecVariables (void) {
     n_l_dec *$$ = NULL;
     n_dec *$1 = NULL;
     n_l_dec *$2 = NULL;
@@ -47,7 +47,7 @@ n_l_dec listeDecVariables (void) {
     }
     DisplayErreur();
 }
-n_l_dec listeDecFonctions (void) {
+n_l_dec *listeDecFonctions (void) {
     n_l_dec *$$ = NULL;
     n_dec *$1 = NULL;
     n_l_dec *$2 = NULL;
@@ -66,7 +66,7 @@ n_l_dec listeDecFonctions (void) {
     }
     DisplayErreur();
 }
-n_dec declarationVariable (void) {
+n_dec *declarationVariable (void) {
     n_dec *$$ = NULL;
     int i = 0;
     if (uniteCourante == ENTIER) {
@@ -89,7 +89,7 @@ n_dec declarationVariable (void) {
     }
     DisplayErreur();
 }
-n_dec declarationFonction (void) {
+n_dec *declarationFonction (void) {
     n_dec *$$ = NULL;
     n_l_dec *$2 = NULL;
     n_l_dec *$3 = NULL;
@@ -107,7 +107,7 @@ n_dec declarationFonction (void) {
     }
     DisplayErreur();
 }
-n_l_dec listeParam (void) {
+n_l_dec *listeParam (void) {
     n_l_dec *$$ = NULL;
     n_l_dec *$2 = NULL;
     if (uniteCourante == PARENTHESE_OUVRANTE) {
@@ -116,90 +116,99 @@ n_l_dec listeParam (void) {
         $2 = optListeDecVariables();
         if (uniteCourante == PARENTHESE_FERMANTE) {
             EatTerminal();
-            $$ = cree_n_l_dec ()
             affiche_balise_fermante("listeParam", trace_xml);
-            return;
+            return $2;
         } else {
             DisplayErreur();
         }
     }
     DisplayErreur();
 }
-void listeInstructions (void) {
+n_l_instr *listeInstructions (void) {
+    n_l_instr *$$;
+    n_instr *$1;
+    n_l_instr *$2;
     if (est_premier(uniteCourante, _instruction_)) {
         affiche_balise_ouvrante("listeInstructions", trace_xml);
-        instruction();
-        listeInstructions();
+        $1 = instruction();
+        $2 = listeInstructions();
+        $$ = cree_n_l_instr($1, $2);
         affiche_balise_fermante("listeInstructions", trace_xml);
-        return;
+        return $$;
     } else if (est_suivant(uniteCourante, _listeInstructions_)) {
         affiche_balise_ouvrante("listeInstructions", trace_xml);
         affiche_balise_fermante("listeInstructions", trace_xml);
-        return;
+        return NULL;
     }
     DisplayErreur();
 }
-void instruction (void) {
+n_instr *instruction (void) {
+    n_instr *$$ = NULL;
+    n_instr *$1 = NULL;
     if (est_premier(uniteCourante, _instructionAffect_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionAffect();
+        $1 = instructionAffect();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     } else if (est_premier(uniteCourante, _instructionBloc_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionBloc();
+        $1 = instructionBloc();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     } else if (est_premier(uniteCourante, _instructionSi_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionSi();
+        $1 = instructionSi();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     } else if (est_premier(uniteCourante, _instructionTantque_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionTantque();
+        $1 = instructionTantque();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     } else if (est_premier(uniteCourante, _instructionAppel_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionAppel();
+        $1 = instructionAppel();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     } else if (est_premier(uniteCourante, _instructionRetour_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionRetour();
+        $1 = instructionRetour();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     } else if (est_premier(uniteCourante, _instructionEcriture_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionEcriture();
+        $1 = instructionEcriture();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     } else if (est_premier(uniteCourante, _instructionVide_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionVide();
+        $1 = instructionVide();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     } else if (est_premier(uniteCourante, _instructionPour_)) {
         affiche_balise_ouvrante("instruction", trace_xml);
-        instructionPour();
+        $1 = instructionPour();
         affiche_balise_fermante("instruction", trace_xml);
-        return;
+        return $1;
     }
     DisplayErreur();
 }
-void instructionAffect (void) {
+n_instr *instructionAffect (void) {
+    n_instr *$$ = NULL;
+    n_var *$1 = NULL;
+    n_exp *$3 = NULL;
     if (est_premier(uniteCourante, _var_)) {
         affiche_balise_ouvrante("instructionAffect", trace_xml);
-        var();
+        $1 = var();
         if (uniteCourante == EGAL) {
             EatTerminal();
             if (est_premier(uniteCourante, _expression_)) {
-                expression();
+                $3 = expression();
                 if (uniteCourante == POINT_VIRGULE) {
                     EatTerminal();
+                    $$ = cree_n_instr_affect($1, $3);
                     affiche_balise_fermante("instructionAffect", trace_xml);
-                    return;
+                    return $$;
                 } else {
                     DisplayErreur();
                 }
@@ -212,22 +221,25 @@ void instructionAffect (void) {
     }
     DisplayErreur();
 }
-void instructionBloc (void) {
+n_instr *instructionBloc (void) {
+    n_instr *$$ = NULL;
+    n_l_instr *$2 = NULL;
     if (uniteCourante == ACCOLADE_OUVRANTE) {
         affiche_balise_ouvrante("instructionBloc", trace_xml);
         EatTerminal();
-        listeInstructions();
+        $2 = listeInstructions();
         if (uniteCourante == ACCOLADE_FERMANTE) {
             EatTerminal();
+            $$ = cree_n_instr_bloc($2);
             affiche_balise_fermante("instructionBloc", trace_xml);
-            return;
+            return $$;
         } else {
             DisplayErreur();
         }
     }
     DisplayErreur();
 }
-n_instr instructionSi (void) {
+n_instr *instructionSi (void) {
     n_instr *$$ = NULL;
     n_exp *$2 = NULL;
     n_instr *$4 = NULL;
@@ -249,64 +261,77 @@ n_instr instructionSi (void) {
     }
     DisplayErreur();
 }
-void instructionTantque (void) {
+n_instr *instructionTantque (void) {
+    n_instr *$$ = NULL;
+    n_exp *$2 = NULL;
+    n_instr *$4 = NULL;
     if (uniteCourante == TANTQUE) {
         affiche_balise_ouvrante("instructionTantque", trace_xml);
         EatTerminal();
-        expression();
+        $2 = expression();
         if (uniteCourante == FAIRE) {
             EatTerminal();
-            instructionBloc();
+            $4 = instructionBloc();
+            $$ = cree_n_instr_tantque($2, $4);
             affiche_balise_fermante("instructionTantque", trace_xml);
-            return;
+            return $$;
         } else {
             DisplayErreur();
         }
     }
     DisplayErreur();
 }
-void instructionAppel (void) {
+n_instr *instructionAppel (void) {
+    n_instr *$$ = NULL;
+    n_appel *$1 = NULL;
     if (est_premier(uniteCourante, _appelFct_)) {
         affiche_balise_ouvrante("instructionAppel", trace_xml);
-        appelFct();
+        $1 = appelFct();
         if (uniteCourante == POINT_VIRGULE) {
             EatTerminal();
+            $$ = cree_n_instr_appel($1);
             affiche_balise_fermante("instructionAppel", trace_xml);
-            return;
+            return $$;
         } else {
             DisplayErreur();
         }
     }
     DisplayErreur();
 }
-void instructionRetour (void) {
+n_instr *instructionRetour (void) {
+    n_instr *$$ = NULL;
+    n_exp *$2 = NULL;
     if (uniteCourante == RETOUR) {
         affiche_balise_ouvrante("instructionRetour", trace_xml);
         EatTerminal();
-        expression();
+        $2 = expression();
         if (uniteCourante == POINT_VIRGULE) {
             EatTerminal();
+            $$ = cree_n_instr_retour($2);
             affiche_balise_fermante("instructionRetour", trace_xml);
-            return;
+            return $$;
         } else {
             DisplayErreur();
         }
     }
     DisplayErreur();
 }
-void instructionEcriture (void) {
+n_instr *instructionEcriture (void) {
+    n_instr *$$ = NULL;
+    n_exp *$3 = NULL;
     if (uniteCourante == ECRIRE) {
         affiche_balise_ouvrante("instructionEcriture", trace_xml);
         EatTerminal();
         if (uniteCourante == PARENTHESE_OUVRANTE) {
             EatTerminal();
-            expression();
+            $3 = expression();
             if (uniteCourante == PARENTHESE_FERMANTE) {
                 EatTerminal();
                 if (uniteCourante == POINT_VIRGULE) {
                     EatTerminal();
+                    $$ = cree_n_instr_ecrire($3);
                     affiche_balise_fermante("instructionEcriture", trace_xml);
-                    return;
+                    return $$;
                 } else {
                     DisplayErreur();
                 }
@@ -319,22 +344,32 @@ void instructionEcriture (void) {
     }
     DisplayErreur();
 }
-void instructionVide (void) {
+n_instr *instructionVide (void) {
+    n_instr *$$ = NULL;
     if (uniteCourante == POINT_VIRGULE) {
         affiche_balise_ouvrante("instructionVide", trace_xml);
         EatTerminal();
+        $$ = cree_n_instr_vide();
         affiche_balise_fermante("instructionVide", trace_xml);
-        return;
+        return $$;
     }
     DisplayErreur();
 }
-void var (void) {
+n_var *var (void) {
+    n_var *$$ = NULL;
+    n_exp *$2 = NULL;
     if (uniteCourante == ID_VAR) {
         affiche_balise_ouvrante("var", trace_xml);
         EatTerminal();
-        optIndice();
+        $2 = optIndice();
+        if ($2 != NULL) {
+            $$ = cree_n_var_indicee(valeur, $2);
+        }
+        else if ($2 == NULL) {
+            $$ = cree_n_var_simple(valeur);
+        }
         affiche_balise_fermante("var", trace_xml);
-        return;
+        return $$;
     }
     DisplayErreur();
 }
