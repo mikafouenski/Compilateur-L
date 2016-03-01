@@ -8,6 +8,8 @@
 #include "analyseur_lexical.h"
 #include "premiers.h"
 #include "suivants.h"
+#include "syntabs.h"
+#include "affiche_arbre_abstrait.h"
 
 int uniteCourante;
 int trace_xml;
@@ -31,64 +33,90 @@ void DisplayErreur(void) {
 }
 /* ------------------------------ INTERNAL -----------------------------------*/
 
-void listeDecVariables (void) {
+n_l_dec listeDecVariables (void) {
+    n_l_dec *$$ = NULL;
+    n_dec *$1 = NULL;
+    n_l_dec *$2 = NULL;
     if (est_premier(uniteCourante, _declarationVariable_)) {
         affiche_balise_ouvrante("listeDecVariables", trace_xml);
-        declarationVariable();
-        listeDecVariablesBis();
+        $1 = declarationVariable();
+        $2 = listeDecVariablesBis();
+        $$ = cree_n_l_dec($1, $2);
         affiche_balise_fermante("listeDecVariables", trace_xml);
-        return;
+        return $$;
     }
     DisplayErreur();
 }
-void listeDecFonctions (void) {
+n_l_dec listeDecFonctions (void) {
+    n_l_dec *$$ = NULL;
+    n_dec *$1 = NULL;
+    n_l_dec *$2 = NULL;
     if (est_premier(uniteCourante, _declarationFonction_)) {
         affiche_balise_ouvrante("listeDecFonctions", trace_xml);
-        declarationFonction();
-        listeDecFonctions();
+        *$1 = declarationFonction();
+        *$2 = listeDecFonctions();
+        $$ = cree_n_l_dec($1, $2);
         affiche_balise_fermante("listeDecFonctions", trace_xml);
-        return;
+        return $$;
     } else if (est_suivant(uniteCourante, _listeDecFonctions_)) {
         affiche_balise_ouvrante("listeDecFonctions", trace_xml);
         affiche_balise_fermante("listeDecFonctions", trace_xml);
-        return;
+        $$ = cree_n_l_dec($1, $2);
+        return $$;
     }
     DisplayErreur();
 }
-void declarationVariable (void) {
+n_dec declarationVariable (void) {
+    n_dec *$$ = NULL;
+    int i = 0;
     if (uniteCourante == ENTIER) {
         affiche_balise_ouvrante("declarationVariable", trace_xml);
         EatTerminal();
         if (uniteCourante == ID_VAR) {
             EatTerminal();
-            optTailleTableau();
+            i = optTailleTableau();
+            if (i == 1)
+                $$ = cree_n_dec_var(valeur);
+            else if (i > 0)
+                $$ = cree_n_dec_tab(valeur, i);
+            else
+                DisplayErreur();
             affiche_balise_fermante("declarationVariable", trace_xml);
-            return;
+            return $$;
         } else {
             DisplayErreur();
         }
     }
     DisplayErreur();
 }
-void declarationFonction (void) {
+n_dec declarationFonction (void) {
+    n_dec *$$ = NULL;
+    n_l_dec *$2 = NULL;
+    n_l_dec *$3 = NULL;
+    n_instr *$4 = NULL:
     if (uniteCourante == ID_FCT) {
         affiche_balise_ouvrante("declarationFonction", trace_xml);
         EatTerminal();
-        listeParam();
-        optDecVariables();
-        instructionBloc();
+        char * tmp = valeur;
+        $2 = listeParam();
+        $3 = optDecVariables();
+        $4 = instructionBloc();
+        $$ = cree_n_dec_fonc(tmp, *$2, *$3, *$4);
         affiche_balise_fermante("declarationFonction", trace_xml);
-        return;
+        return $$;
     }
     DisplayErreur();
 }
-void listeParam (void) {
+n_l_dec listeParam (void) {
+    n_l_dec *$$ = NULL;
+    n_l_dec *$2 = NULL;
     if (uniteCourante == PARENTHESE_OUVRANTE) {
         affiche_balise_ouvrante("listeParam", trace_xml);
         EatTerminal();
-        optListeDecVariables();
+        $2 = optListeDecVariables();
         if (uniteCourante == PARENTHESE_FERMANTE) {
             EatTerminal();
+            $$ = cree_n_l_dec ()
             affiche_balise_fermante("listeParam", trace_xml);
             return;
         } else {
@@ -199,17 +227,22 @@ void instructionBloc (void) {
     }
     DisplayErreur();
 }
-void instructionSi (void) {
+n_instr instructionSi (void) {
+    n_instr *$$ = NULL;
+    n_exp *$2 = NULL;
+    n_instr *$4 = NULL;
+    n_instr *$5 = NULL;
     if (uniteCourante == SI) {
         affiche_balise_ouvrante("instructionSi", trace_xml);
         EatTerminal();
-        expression();
+        $2 = expression();
         if (uniteCourante == ALORS) {
             EatTerminal();
-            instructionBloc();
-            optSinon();
+            $4 = instructionBloc();
+            $5 = optSinon();
+            $$ = cree_n_instr_si($2, $4, $5);
             affiche_balise_fermante("instructionSi", trace_xml);
-            return;
+            return $$;
         }  else {
             DisplayErreur();
         }
@@ -741,10 +774,13 @@ void optListeDecVariables (void) {
     DisplayErreur();
 }
 
-void syntaxe(int trace) {
+void syntaxe(int trace_xml, int trace_abs_tree) {
     initialise_premiers();
     initialise_suivants();
-    trace_xml = trace;
+    trace_xml = trace_xml;
     uniteCourante = yylex();
-    programme();
+    n_prog *p = programme();
+    if (trace_abs_tree) {
+        affiche_n_prog(p);
+    }
 }
