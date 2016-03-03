@@ -69,18 +69,16 @@ n_l_dec *listeDecFonctions (void) {
 n_dec *declarationVariable (void) {
     n_dec *$$ = NULL;
     int i = -1;
-    char tmp[100];
     if (uniteCourante == ENTIER) {
         affiche_balise_ouvrante("declarationVariable", trace_xml);
         EatTerminal();
         if (uniteCourante == ID_VAR) {
-            strncpy(tmp, valeur, 18);
             EatTerminal();
             i = optTailleTableau();
             if (i == -1)
-                $$ = cree_n_dec_var(tmp);
+                $$ = cree_n_dec_var("test");
             else if (i > 0)
-                $$ = cree_n_dec_tab(tmp, i);
+                $$ = cree_n_dec_tab(valeur, i);
             else
                 DisplayErreur();
             affiche_balise_fermante("declarationVariable", trace_xml);
