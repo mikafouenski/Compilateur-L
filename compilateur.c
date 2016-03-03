@@ -12,10 +12,11 @@ FILE *yyin;
 int main(int argc, char **argv) {
     int sflag = 0;
     int lflag = 0;
+    int aflag = 0;
     int c;
     opterr = 0;
 
-    while ((c = getopt (argc, argv, "slh")) != -1) {
+    while ((c = getopt (argc, argv, "slha")) != -1) {
         switch (c) {
             case 's':
                 sflag = 1;
@@ -26,6 +27,9 @@ int main(int argc, char **argv) {
             case 'h':
                 printf("Ici reposent les usages... Solennellement\n");
                 return 0;
+            case 'a':
+                aflag = 1;
+                break;
             case '?':
                 if (isprint (optopt))
                     fprintf (stderr, "option inconnue `-%c'.\n", optopt);
@@ -46,9 +50,7 @@ int main(int argc, char **argv) {
     if (lflag) {
         test_yylex_internal(yyin);
         return 0;
-    } else if (sflag) {
-        syntaxe(1);
     }
-    syntaxe(0);
+    syntaxe(sflag, aflag);
     return 0;
 }
