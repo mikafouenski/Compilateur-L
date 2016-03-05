@@ -40,7 +40,7 @@ void affiche_n_prog(n_prog *n)
   affiche_balise_ouvrante(fct, trace_abs);
 
   affiche_l_dec(n->variables);
-  affiche_l_dec(n->fonctions); 
+  affiche_l_dec(n->fonctions);
   affiche_balise_fermante(fct, trace_abs);
 }
 

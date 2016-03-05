@@ -8,7 +8,6 @@
 #include "analyseur_lexical.h"
 #include "premiers.h"
 #include "suivants.h"
-//#include "syntabs.h"
 #include "affiche_arbre_abstrait.h"
 
 int uniteCourante;
@@ -16,6 +15,7 @@ int trace_xml;
 char nom[100];
 char valeur[100];
 extern int nb_ligne;
+extern char yytext[];
 
 /* ------------------------------ INTERNAL -----------------------------------*/
 void EatTerminal(void) {
@@ -32,6 +32,18 @@ void DisplayErreur(void) {
     exit(1);
 }
 /* ------------------------------ INTERNAL -----------------------------------*/
+void test(n_l_dec *liste) {
+    if (liste) {
+        if (liste->tete) {
+            printf("tete :%s\n", liste->tete->nom);
+        }
+        if (liste->queue) {
+            printf("suite\n");
+            test (liste->queue);
+        }
+    }
+}
+
 
 n_l_dec *listeDecVariables (void) {
     n_l_dec *$$ = NULL;
@@ -39,7 +51,7 @@ n_l_dec *listeDecVariables (void) {
     if (est_premier(uniteCourante, _declarationVariable_)) {
         affiche_balise_ouvrante("listeDecVariables", trace_xml);
         $1 = declarationVariable();
-        $$ = cree_n_l_dec($1, listeDecVariablesBis($$));
+        $$ = listeDecVariablesBis(cree_n_l_dec($1, NULL));
         affiche_balise_fermante("listeDecVariables", trace_xml);
         return $$;
     }
@@ -60,7 +72,6 @@ n_l_dec *listeDecFonctions (void) {
     } else if (est_suivant(uniteCourante, _listeDecFonctions_)) {
         affiche_balise_ouvrante("listeDecFonctions", trace_xml);
         affiche_balise_fermante("listeDecFonctions", trace_xml);
-        $$ = cree_n_l_dec($1, $2);
         return $$;
     }
     DisplayErreur();
@@ -75,12 +86,9 @@ n_dec *declarationVariable (void) {
         if (uniteCourante == ID_VAR) {
             EatTerminal();
             i = optTailleTableau();
-            if (i == -1)
-                $$ = cree_n_dec_var("test");
-            else if (i > 0)
-                $$ = cree_n_dec_tab(valeur, i);
-            else
-                DisplayErreur();
+            if (i == -1) $$ = cree_n_dec_var(valeur);
+            else if (i > 0) $$ = cree_n_dec_tab(valeur, i);
+            else DisplayErreur();
             affiche_balise_fermante("declarationVariable", trace_xml);
             return $$;
         } else {
@@ -139,7 +147,6 @@ n_l_instr *listeInstructions (void) {
     } else if (est_suivant(uniteCourante, _listeInstructions_)) {
         affiche_balise_ouvrante("listeInstructions", trace_xml);
         affiche_balise_fermante("listeInstructions", trace_xml);
-        $$ = cree_n_l_instr($1, $2);
         return $$;
     }
     DisplayErreur();
@@ -756,9 +763,13 @@ n_l_dec *optDecVariables (void) {
     if (est_premier(uniteCourante, _listeDecVariables_)) {
         affiche_balise_ouvrante("optDecVariables", trace_xml);
         $$ = listeDecVariables();
+        printf("optDEC\n");
+        test($$);
         if (uniteCourante == POINT_VIRGULE) {
+            test($$);
             EatTerminal();
             affiche_balise_fermante("optDecVariables", trace_xml);
+            test($$);
             return $$;
         } else {
             DisplayErreur();
