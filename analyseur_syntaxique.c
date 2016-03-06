@@ -31,19 +31,14 @@ void DisplayErreur(void) {
     fprintf(stderr, " (%d - \"%s\") \n", uniteCourante, nom);
     exit(1);
 }
-/* ------------------------------ INTERNAL -----------------------------------*/
-void test(n_l_dec *liste) {
-    if (liste) {
-        if (liste->tete) {
-            printf("tete :%s\n", liste->tete->nom);
-        }
-        if (liste->queue) {
-            printf("suite\n");
-            test (liste->queue);
-        }
-    }
-}
 
+char *saveValeur(void) {
+    char *tmp;
+    tmp = malloc(100 * sizeof(char));
+    sprintf(tmp, "%s", valeur);
+    return tmp;
+}
+/* ------------------------------ INTERNAL -----------------------------------*/
 
 n_l_dec *listeDecVariables (void) {
     n_l_dec *$$ = NULL;
@@ -85,9 +80,12 @@ n_dec *declarationVariable (void) {
         EatTerminal();
         if (uniteCourante == ID_VAR) {
             EatTerminal();
+            char *tmp = saveValeur();
             i = optTailleTableau();
-            if (i == -1) $$ = cree_n_dec_var(valeur);
-            else if (i > 0) $$ = cree_n_dec_tab(valeur, i);
+            if (i == -1){
+                $$ = cree_n_dec_var(tmp);
+            } 
+            else if (i > 0) $$ = cree_n_dec_tab(tmp, i);
             else DisplayErreur();
             affiche_balise_fermante("declarationVariable", trace_xml);
             return $$;
@@ -106,10 +104,11 @@ n_dec *declarationFonction (void) {
     if (uniteCourante == ID_FCT) {
         affiche_balise_ouvrante("declarationFonction", trace_xml);
         EatTerminal();
+        char *tmp = saveValeur();
         $2 = listeParam();
         $3 = optDecVariables();
         $4 = instructionBloc();
-        $$ = cree_n_dec_fonc(valeur, $2, $3, $4);
+        $$ = cree_n_dec_fonc(tmp, $2, $3, $4);
         affiche_balise_fermante("declarationFonction", trace_xml);
         return $$;
     }
@@ -379,12 +378,13 @@ n_var *var (void) {
     if (uniteCourante == ID_VAR) {
         affiche_balise_ouvrante("var", trace_xml);
         EatTerminal();
+        char *tmp = saveValeur();
         $2 = optIndice();
         if ($2 != NULL) {
-            $$ = cree_n_var_indicee(valeur, $2);
+            $$ = cree_n_var_indicee(tmp, $2);
         }
         else if ($2 == NULL) {
-            $$ = cree_n_var_simple(valeur);
+            $$ = cree_n_var_simple(tmp);
         }
         affiche_balise_fermante("var", trace_xml);
         return $$;
@@ -446,7 +446,8 @@ n_appel *appelFct (void) {
             $2 = listeExpressions();
             if (uniteCourante == PARENTHESE_FERMANTE) {
                 EatTerminal();
-                $$ = cree_n_appel(valeur, $2);
+                char *tmp = saveValeur();
+                $$ = cree_n_appel(tmp, $2);
                 affiche_balise_fermante("appelFct", trace_xml);
                 return $$;
             } else {
@@ -546,8 +547,9 @@ n_exp *facteur (void) {
     } else if (uniteCourante == NOMBRE) {
         affiche_balise_ouvrante("facteur", trace_xml);
         EatTerminal();
+        char *tmp = saveValeur();
         affiche_balise_fermante("facteur", trace_xml);
-        $$ = cree_n_exp_entier( atoi(valeur));
+        $$ = cree_n_exp_entier( atoi(tmp));
         return $$;
     } else if (est_premier(uniteCourante, _appelFct_)) {
         affiche_balise_ouvrante("facteur", trace_xml);
@@ -664,7 +666,8 @@ int optTailleTableau (void) {
         EatTerminal();
         if (uniteCourante == NOMBRE) {
             EatTerminal();
-            i = atoi(valeur);
+            char *tmp = saveValeur();
+            i = atoi(tmp);
             if (uniteCourante == CROCHET_FERMANT) {
                 EatTerminal();
                 affiche_balise_fermante("optTailleTableau", trace_xml);
@@ -764,12 +767,9 @@ n_l_dec *optDecVariables (void) {
         affiche_balise_ouvrante("optDecVariables", trace_xml);
         $$ = listeDecVariables();
         printf("optDEC\n");
-        test($$);
         if (uniteCourante == POINT_VIRGULE) {
-            test($$);
             EatTerminal();
             affiche_balise_fermante("optDecVariables", trace_xml);
-            test($$);
             return $$;
         } else {
             DisplayErreur();
