@@ -32,18 +32,6 @@ void DisplayErreur(void) {
     exit(1);
 }
 /* ------------------------------ INTERNAL -----------------------------------*/
-void test(n_l_dec *liste) {
-    if (liste) {
-        if (liste->tete) {
-            printf("tete :%s\n", liste->tete->nom);
-        }
-        if (liste->queue) {
-            printf("suite\n");
-            test (liste->queue);
-        }
-    }
-}
-
 
 n_l_dec *listeDecVariables (void) {
     n_l_dec *$$ = NULL;
@@ -51,12 +39,11 @@ n_l_dec *listeDecVariables (void) {
     if (est_premier(uniteCourante, _declarationVariable_)) {
         affiche_balise_ouvrante("listeDecVariables", trace_xml);
         $1 = declarationVariable();
-        $$ = listeDecVariablesBis(cree_n_l_dec($1, NULL));
+        $$ = listeDecVariablesBis($1);
         affiche_balise_fermante("listeDecVariables", trace_xml);
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_l_dec *listeDecFonctions (void) {
     n_l_dec *$$ = NULL;
@@ -75,19 +62,20 @@ n_l_dec *listeDecFonctions (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_dec *declarationVariable (void) {
     n_dec *$$ = NULL;
     int i = -1;
+    char *tmp = malloc(100*sizeof(char));
     if (uniteCourante == ENTIER) {
         affiche_balise_ouvrante("declarationVariable", trace_xml);
         EatTerminal();
         if (uniteCourante == ID_VAR) {
             EatTerminal();
+            strcpy(tmp, valeur);
             i = optTailleTableau();
-            if (i == -1) $$ = cree_n_dec_var(valeur);
-            else if (i > 0) $$ = cree_n_dec_tab(valeur, i);
+            if (i == -1) $$ = cree_n_dec_var(tmp);
+            else if (i > 0) $$ = cree_n_dec_tab(tmp, i);
             else DisplayErreur();
             affiche_balise_fermante("declarationVariable", trace_xml);
             return $$;
@@ -96,25 +84,25 @@ n_dec *declarationVariable (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_dec *declarationFonction (void) {
     n_dec *$$ = NULL;
     n_l_dec *$2 = NULL;
     n_l_dec *$3 = NULL;
     n_instr *$4 = NULL;
+    char *tmp = malloc(100*sizeof(char));
     if (uniteCourante == ID_FCT) {
         affiche_balise_ouvrante("declarationFonction", trace_xml);
         EatTerminal();
+        strcpy(tmp, valeur);
         $2 = listeParam();
         $3 = optDecVariables();
         $4 = instructionBloc();
-        $$ = cree_n_dec_fonc(valeur, $2, $3, $4);
+        $$ = cree_n_dec_fonc(tmp, $2, $3, $4);
         affiche_balise_fermante("declarationFonction", trace_xml);
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_l_dec *listeParam (void) {
     n_l_dec *$$ = NULL;
@@ -131,7 +119,6 @@ n_l_dec *listeParam (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_l_instr *listeInstructions (void) {
     n_l_instr *$$ = NULL;
@@ -150,7 +137,6 @@ n_l_instr *listeInstructions (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instruction (void) {
     n_instr *$$ = NULL;
@@ -201,7 +187,6 @@ n_instr *instruction (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionAffect (void) {
     n_instr *$$ = NULL;
@@ -230,7 +215,6 @@ n_instr *instructionAffect (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionBloc (void) {
     n_instr *$$ = NULL;
@@ -249,7 +233,6 @@ n_instr *instructionBloc (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionSi (void) {
     n_instr *$$ = NULL;
@@ -272,7 +255,6 @@ n_instr *instructionSi (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionTantque (void) {
     n_instr *$$ = NULL;
@@ -293,7 +275,6 @@ n_instr *instructionTantque (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionAppel (void) {
     n_instr *$$ = NULL;
@@ -311,7 +292,6 @@ n_instr *instructionAppel (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionRetour (void) {
     n_instr *$$ = NULL;
@@ -330,7 +310,6 @@ n_instr *instructionRetour (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionEcriture (void) {
     n_instr *$$ = NULL;
@@ -359,7 +338,6 @@ n_instr *instructionEcriture (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionVide (void) {
     n_instr *$$ = NULL;
@@ -371,26 +349,24 @@ n_instr *instructionVide (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_var *var (void) {
     n_var *$$ = NULL;
     n_exp *$2 = NULL;
+    char *tmp = malloc(100*sizeof(char));
     if (uniteCourante == ID_VAR) {
         affiche_balise_ouvrante("var", trace_xml);
         EatTerminal();
+        strcpy(tmp, valeur);
         $2 = optIndice();
-        if ($2 != NULL) {
-            $$ = cree_n_var_indicee(valeur, $2);
-        }
-        else if ($2 == NULL) {
-            $$ = cree_n_var_simple(valeur);
-        }
+        if ($2 != NULL)
+            $$ = cree_n_var_indicee(tmp, $2);
+        else if ($2 == NULL)
+            $$ = cree_n_var_simple(tmp);
         affiche_balise_fermante("var", trace_xml);
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *instructionPour (void) {
     n_instr *$$ = NULL;
@@ -420,7 +396,6 @@ n_instr *instructionPour (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *expression (void) {
     n_exp *$$ = NULL;
@@ -433,20 +408,21 @@ n_exp *expression (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_appel *appelFct (void) {
     n_appel *$$ = NULL;
     n_l_exp *$2 = NULL;
+    char *tmp = malloc(100*sizeof(char));
     if (uniteCourante == ID_FCT) {
         affiche_balise_ouvrante("appelFct", trace_xml);
         EatTerminal();
+        strcpy(tmp, valeur);
         if (uniteCourante == PARENTHESE_OUVRANTE) {
             EatTerminal();
             $2 = listeExpressions();
             if (uniteCourante == PARENTHESE_FERMANTE) {
                 EatTerminal();
-                $$ = cree_n_appel(valeur, $2);
+                $$ = cree_n_appel(tmp, $2);
                 affiche_balise_fermante("appelFct", trace_xml);
                 return $$;
             } else {
@@ -457,7 +433,6 @@ n_appel *appelFct (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *conjonction (void) {
     n_exp *$$ = NULL;
@@ -470,7 +445,6 @@ n_exp *conjonction (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *negation (void) {
     n_exp *$$ = NULL;
@@ -487,7 +461,6 @@ n_exp *negation (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *comparaison (void) {
     n_exp *$$ = NULL;
@@ -500,7 +473,6 @@ n_exp *comparaison (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *expArith (void) {
     n_exp *$$ = NULL;
@@ -513,7 +485,6 @@ n_exp *expArith (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *terme (void) {
     n_exp *$$ = NULL;
@@ -526,7 +497,6 @@ n_exp *terme (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *facteur (void) {
     n_exp *$$ = NULL;
@@ -579,7 +549,6 @@ n_exp *facteur (void) {
         }
     }
     DisplayErreur();
-   return $$;
 }
 n_l_exp *listeExpressions (void) {
     n_l_exp *$$ = NULL;
@@ -596,7 +565,6 @@ n_l_exp *listeExpressions (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_l_exp *listeExpressionsBis (n_l_exp *herite) {
     n_l_exp *$$ = NULL;
@@ -617,7 +585,6 @@ n_l_exp *listeExpressionsBis (n_l_exp *herite) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_prog *programme (void) {
     n_prog *$$ = NULL;
@@ -634,7 +601,6 @@ n_prog *programme (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *conjonctionBis (n_exp *herite) {
     n_exp *$$ = NULL;
@@ -655,7 +621,6 @@ n_exp *conjonctionBis (n_exp *herite) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 int optTailleTableau (void) {
     int i = -1;
@@ -710,7 +675,6 @@ n_exp *expArithBis (n_exp *herite) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_instr *optSinon (void) {
     n_instr *$$ = NULL;
@@ -727,7 +691,6 @@ n_instr *optSinon (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *comparaisonBis (n_exp *herite) {
     n_exp *$$ = NULL;
@@ -756,20 +719,15 @@ n_exp *comparaisonBis (n_exp *herite) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_l_dec *optDecVariables (void) {
     n_l_dec *$$ = NULL;
     if (est_premier(uniteCourante, _listeDecVariables_)) {
         affiche_balise_ouvrante("optDecVariables", trace_xml);
         $$ = listeDecVariables();
-        printf("optDEC\n");
-        test($$);
         if (uniteCourante == POINT_VIRGULE) {
-            test($$);
             EatTerminal();
             affiche_balise_fermante("optDecVariables", trace_xml);
-            test($$);
             return $$;
         } else {
             DisplayErreur();
@@ -780,7 +738,6 @@ n_l_dec *optDecVariables (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *optIndice (void) {
     n_exp *$$ = NULL;
@@ -801,28 +758,24 @@ n_exp *optIndice (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
-n_l_dec *listeDecVariablesBis (n_l_dec *herite) {
+n_l_dec *listeDecVariablesBis (n_dec *herite) {
     n_l_dec *$$ = NULL;
-    n_dec *$2 = NULL;
-    n_l_dec *herite_fils = NULL;
+    n_dec *$1 = NULL;
     if (uniteCourante == VIRGULE) {
         affiche_balise_ouvrante("listeDecVariablesBis", trace_xml);
         EatTerminal();
-        $2 = declarationVariable();
-        herite_fils = cree_n_l_dec($2, herite);
-        $$ = listeDecVariablesBis(herite_fils);
+        $1 = declarationVariable();
+        $$ = listeDecVariablesBis($1);
         affiche_balise_fermante("listeDecVariablesBis", trace_xml);
         return $$;
     } else if (est_suivant(uniteCourante, _listeDecVariablesBis_)) {
         affiche_balise_ouvrante("listeDecVariablesBis", trace_xml);
         affiche_balise_fermante("listeDecVariablesBis", trace_xml);
-        $$ = herite;
+        $$ = cree_n_l_dec(herite, NULL);
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *termeBis (n_exp *herite) {
     n_exp *$2 = NULL;
@@ -851,7 +804,6 @@ n_exp *termeBis (n_exp *herite) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_exp *expressionBis (n_exp *herite) {
     n_exp *$2= NULL;
@@ -872,7 +824,6 @@ n_exp *expressionBis (n_exp *herite) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 n_l_dec *optListeDecVariables (void) {
     n_l_dec *$$ = NULL;
@@ -887,7 +838,6 @@ n_l_dec *optListeDecVariables (void) {
         return $$;
     }
     DisplayErreur();
-   return $$;
 }
 
 void syntaxe(int trace_xml_tree, int trace_abs_tree) {

@@ -38,7 +38,7 @@ n_instr *optSinon (void);
 n_exp *comparaisonBis (n_exp *herite);
 n_l_dec *optDecVariables (void);
 n_exp *optIndice (void);
-n_l_dec *listeDecVariablesBis (n_l_dec *herite);
+n_l_dec *listeDecVariablesBis (n_dec *herite);
 n_exp *termeBis (n_exp *herite);
 n_exp *expressionBis (n_exp *herite);
 n_instr *instructionFaire (void);

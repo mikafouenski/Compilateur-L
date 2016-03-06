@@ -1,27 +1,100 @@
-optDEC
-tete :$a
-tete :$a
-tete :POINT_VIRGULE
 <prog>
   <l_dec>
-    <varDec>ACCOLADE_FERMANTE</varDec>
-  </l_dec>
-  <l_dec>
     <foncDec>
-      ACCOLADE_FERMANTE
+      max
+      <l_dec>
+        <varDec>$b</varDec>
+      </l_dec>
       <l_instr>
-        <instr_affect>
-          <var_simple>ACCOLADE_FERMANTE</var_simple>
-          <intExp>1</intExp>
-        </instr_affect>
-        <l_instr>
-          <instr_ecrire>
+        <instr_si>
+          <opExp>
+            inf
             <varExp>
-              <var_simple>ACCOLADE_FERMANTE</var_simple>
+              <var_simple>$a</var_simple>
             </varExp>
-          </instr_ecrire>
+            <varExp>
+              <var_simple>$b</var_simple>
+            </varExp>
+          </opExp>
+          <l_instr>
+            <instr_retour>
+              <varExp>
+                <var_simple>$b</var_simple>
+              </varExp>
+            </instr_retour>
+          </l_instr>
+        </instr_si>
+        <l_instr>
+          <instr_retour>
+            <varExp>
+              <var_simple>$a</var_simple>
+            </varExp>
+          </instr_retour>
         </l_instr>
       </l_instr>
     </foncDec>
+    <l_dec>
+      <foncDec>
+        main
+        <l_dec>
+          <varDec>$v_2</varDec>
+        </l_dec>
+        <l_instr>
+          <instr_affect>
+            <var_simple>$v_1</var_simple>
+            <lireExp>
+            </lireExp>
+          </instr_affect>
+          <l_instr>
+            <instr_affect>
+              <var_simple>$v_2</var_simple>
+              <lireExp>
+              </lireExp>
+            </instr_affect>
+            <l_instr>
+              <instr_si>
+                <opExp>
+                  egal
+                  <appelExp>
+                    <appel>
+                      max
+                      <l_exp>
+                        <varExp>
+                          <var_simple>$v_1</var_simple>
+                        </varExp>
+                        <l_exp>
+                          <varExp>
+                            <var_simple>$v_2</var_simple>
+                          </varExp>
+                          <l_exp>
+                          </l_exp>
+                        </l_exp>
+                      </l_exp>
+                    </appel>
+                  </appelExp>
+                  <varExp>
+                    <var_simple>$v_1</var_simple>
+                  </varExp>
+                </opExp>
+                <l_instr>
+                  <instr_ecrire>
+                    <varExp>
+                      <var_simple>$v_1</var_simple>
+                    </varExp>
+                  </instr_ecrire>
+                </l_instr>
+                <l_instr>
+                  <instr_ecrire>
+                    <varExp>
+                      <var_simple>$v_2</var_simple>
+                    </varExp>
+                  </instr_ecrire>
+                </l_instr>
+              </instr_si>
+            </l_instr>
+          </l_instr>
+        </l_instr>
+      </foncDec>
+    </l_dec>
   </l_dec>
 </prog>

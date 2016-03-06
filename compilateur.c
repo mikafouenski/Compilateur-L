@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     int c;
     opterr = 0;
 
-    while ((c = getopt (argc, argv, "slha")) != -1) {
+    while ((c = getopt (argc, argv, "sla")) != -1) {
         switch (c) {
             case 's':
                 sflag = 1;
@@ -24,17 +24,11 @@ int main(int argc, char **argv) {
             case 'l':
                 lflag = 1;
                 break;
-            case 'h':
-                printf("Ici reposent les usages... Solennellement\n");
-                return 0;
             case 'a':
                 aflag = 1;
                 break;
             case '?':
-                if (isprint (optopt))
-                    fprintf (stderr, "option inconnue `-%c'.\n", optopt);
-                else
-                    fprintf (stderr, "Caractère d'option inconnu `\\x%x'.\n", optopt);
+                fprintf (stderr, "Caractère d'option inconnu `\\x%x'.\n", optopt);
                 return 1;
             default:
                 abort ();
@@ -46,10 +40,9 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", argv[optind]);
         return 1;
     }
-
     if (lflag) {
         test_yylex_internal(yyin);
-        return 0;
+        rewind(yyin);
     }
     syntaxe(sflag, aflag);
     return 0;
