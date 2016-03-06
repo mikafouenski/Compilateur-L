@@ -13,8 +13,8 @@ MYCOMPILO="../compilateur"
 MYCOMPILOLEX="${MYCOMPILO} -l"
 MYCOMPILOSYNT="${MYCOMPILO} -s"
 MYCOMPILOASYNT="${MYCOMPILO} -a"
-MYCOMPILOTAB="${MYCOMPILO} -t"
-MYCOMPILOMIPS="${MYCOMPILO} -m"
+#MYCOMPILOTAB="${MYCOMPILO} -t"
+#MYCOMPILOMIPS="${MYCOMPILO} -m"
 
 ################################################################################
 
@@ -25,8 +25,8 @@ declare -A testname
 testname["lex"]="Analyse lexicale"
 testname["synt"]="Analyse syntaxique"
 testname["asynt"]="Arbre abstrait"
-testname["tab"]="Table des symboles"
-testname["mips"]="Code machine MIPS"
+#testname["tab"]="Table des symboles"
+#testname["mips"]="Code machine MIPS"
 
 ################################################################################
 
@@ -68,8 +68,8 @@ function test_fichier_ok() {
         ${MYCOMPILOLEX} input/$input.l > output/$input.lex
         diff_prog "${REGDIFF}" $input lex        
         diff_prog ${XMLDIFF} $input synt
-        #${MYCOMPILOASYNT} input/$input.l > output/$input.asynt
-        #diff_prog ${XMLDIFF} $input asynt
+        ${MYCOMPILOASYNT} input/$input.l > output/$input.asynt
+        diff_prog ${XMLDIFF} $input asynt
         #${MYCOMPILOTAB} input/$input.l > output/$input.tab
         #diff_prog "${REGDIFF}" $input tab
         #${MYCOMPILOMIPS} input/$input.l > output/$input.mips
@@ -87,7 +87,7 @@ function test_fichier_fail() {
     echo -e "\n\033[4m ---- Test input/$input.l ----\033[0m"
     ${MYCOMPILO} input/$input.l > output/$input.synt.xml
     if [ $? = 0 ]; then 
-        echo -e "\033[31mTEST REJET ÉCHOUÉ\033[0m"
+    echo -e "\033[31mTEST REJET ÉCHOUÉ\033[0m"
         echo -e "Le programme $input.l a été accepté alors qu'il aurait dû être rejeté"
         if [ $EXITONFAIL = 1 ]; then exit 1; fi
     else
