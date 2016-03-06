@@ -1,4 +1,4 @@
-entier $carre, entier $i;
+entier $i, entier $carre;
 main()
 {
     $i = 0;
