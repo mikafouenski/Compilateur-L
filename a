@@ -3,7 +3,10 @@
     <foncDec>
       max
       <l_dec>
-        <varDec>$b</varDec>
+        <varDec>$a</varDec>
+        <l_dec>
+          <varDec>$b</varDec>
+        </l_dec>
       </l_dec>
       <l_instr>
         <instr_si>
@@ -37,7 +40,10 @@
       <foncDec>
         main
         <l_dec>
-          <varDec>$v_2</varDec>
+          <varDec>$v_1</varDec>
+          <l_dec>
+            <varDec>$v_2</varDec>
+          </l_dec>
         </l_dec>
         <l_instr>
           <instr_affect>

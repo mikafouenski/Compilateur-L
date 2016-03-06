@@ -36,10 +36,12 @@ void DisplayErreur(void) {
 n_l_dec *listeDecVariables (void) {
     n_l_dec *$$ = NULL;
     n_dec *$1 = NULL;
+    n_l_dec *$2 = NULL;
     if (est_premier(uniteCourante, _declarationVariable_)) {
         affiche_balise_ouvrante("listeDecVariables", trace_xml);
         $1 = declarationVariable();
-        $$ = listeDecVariablesBis($1);
+        $2 = listeDecVariablesBis(NULL);
+        $$ = cree_n_l_dec($1, $2);
         affiche_balise_fermante("listeDecVariables", trace_xml);
         return $$;
     }
