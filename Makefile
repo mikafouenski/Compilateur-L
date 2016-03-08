@@ -11,7 +11,7 @@ SRC = $(wildcard *.c)
 OBJ2 = $(patsubst %.c, %.o, $(SRC))
 
 OBJ = analyseur_lexical.o util.o analyseur_syntaxique.o premiers.o suivants.o \
-syntabs.o affiche_arbre_abstrait.o
+syntabs.o affiche_arbre_abstrait.o analyseur_semantique.o
 
 all: compilateur
 
@@ -34,6 +34,9 @@ syntabs.o: syntabs.c
 	$(CC) $(CCFLAGS) -c $^
 
 affiche_arbre_abstrait.o: affiche_arbre_abstrait.c
+	$(CC) $(CCFLAGS) -c $^
+
+analyseur_semantique.o: analyseur_semantique.c
 	$(CC) $(CCFLAGS) -c $^
 
 .PHONY : clean
