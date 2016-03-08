@@ -30,6 +30,10 @@ void analyse_var_simple(n_var *n);
 void analyse_var_indicee(n_var *n);
 void analyse_appel(n_appel *n);
 
+void semantique(n_prog *p, int trace_dico) {
+  analyse_n_prog(p);
+}
+
 /*-------------------------------------------------------------------------*/
 
 void analyse_n_prog(n_prog *n)

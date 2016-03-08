@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "analyseur_lexical.h"
 #include "analyseur_syntaxique.h"
+#include "analyseur_semantique.h"
 #include "symboles.h"
 
 char yytext[100];
@@ -13,16 +14,21 @@ int main(int argc, char **argv) {
     int sflag = 0;
     int lflag = 0;
     int aflag = 0;
+    int tflag = 0;
     int c;
+    n_prog *p = NULL;
     opterr = 0;
 
-    while ((c = getopt (argc, argv, "sla")) != -1) {
+    while ((c = getopt (argc, argv, "slat")) != -1) {
         switch (c) {
             case 's':
                 sflag = 1;
                 break;
             case 'l':
                 lflag = 1;
+                break;
+            case 't':
+                tflag = 1;
                 break;
             case 'a':
                 aflag = 1;
@@ -40,10 +46,12 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", argv[optind]);
         return 1;
     }
+    
     if (lflag) {
         test_yylex_internal(yyin);
         rewind(yyin);
     }
-    syntaxe(sflag, aflag);
+    p = syntaxe(sflag, aflag);
+    semantique(p, tflag);
     return 0;
 }

@@ -881,13 +881,13 @@ n_l_dec *optListeDecVariables (void) {
     return $$;
 }
 
-void syntaxe(int trace_xml_tree, int trace_abs_tree) {
+n_prog *syntaxe(int trace_xml_tree, int trace_abs_tree) {
     initialise_premiers();
     initialise_suivants();
     trace_xml = trace_xml_tree;
     uniteCourante = yylex();
     n_prog *p = programme();
-    if (trace_abs_tree) {
+    if (trace_abs_tree)
         affiche_n_prog(p);
-    }
+    return p;
 }
