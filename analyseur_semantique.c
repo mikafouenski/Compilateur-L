@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "syntabs.h"
 #include "util.h"
+#include "dico.h"
 
 void analyse_n_prog(n_prog *n);
 void analyse_l_instr(n_l_instr *n);
@@ -33,6 +34,10 @@ void analyse_appel(n_appel *n);
 void semantique(n_prog *p, int trace_dico) {
   analyse_n_prog(p);
 }
+
+int contexte;
+int adresseLocaleCourante;
+int adresseArgumentCourant;
 
 /*-------------------------------------------------------------------------*/
 
@@ -227,7 +232,9 @@ void analyse_dec(n_dec *n)
 
   if(n){
     if(n->type == foncDec) {
+      entreeFonction();
       analyse_foncDec(n);
+      sortieFonction();
     }
     else if(n->type == varDec) {
       analyse_varDec(n);
@@ -251,6 +258,10 @@ void analyse_foncDec(n_dec *n)
 
 void analyse_varDec(n_dec *n)
 {
+  if (rechercheDeclarative(n->nom) == -1) {
+    ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseLocaleCourante, 0);
+    adresseLocaleCourante += 4;
+  }
 }
 
 /*-------------------------------------------------------------------------*/
