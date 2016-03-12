@@ -2,9 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include "affiche_arbre_abstrait.h"
+
 #include "analyseur_lexical.h"
 #include "analyseur_syntaxique.h"
 #include "analyseur_semantique.h"
+
 #include "symboles.h"
 
 char yytext[100];
@@ -19,7 +23,7 @@ int main(int argc, char **argv) {
     n_prog *p = NULL;
     opterr = 0;
 
-    while ((c = getopt (argc, argv, "slat")) != -1) {
+    while ((c = getopt (argc, argv, "slta")) != -1) {
         switch (c) {
             case 's':
                 sflag = 1;
@@ -34,7 +38,7 @@ int main(int argc, char **argv) {
                 aflag = 1;
                 break;
             case '?':
-                fprintf (stderr, "Caractère d'option inconnu `\\x%x'.\n", optopt);
+                fprintf (stderr, "Option inconnu `\\x%x'.\n", optopt);
                 return 1;
             default:
                 abort ();
@@ -46,12 +50,16 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", argv[optind]);
         return 1;
     }
-    
+
     if (lflag) {
         test_yylex_internal(yyin);
         rewind(yyin);
     }
-    p = syntaxe(sflag, aflag);
+
+    p = syntaxe(sflag);
+
+    if (aflag) affiche_n_prog(p);
+
     semantique(p, tflag);
     return 0;
 }

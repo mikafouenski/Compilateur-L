@@ -48,6 +48,6 @@ n_instr *instructionPour (void);
 void EatTerminal(void);
 void DisplayErreur(void);
 
-n_prog *syntaxe(int trace_xml_tree, int trace_abs_tree);
+n_prog *syntaxe(int trace_xml_tree);
 
 #endif

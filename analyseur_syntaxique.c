@@ -8,7 +8,6 @@
 #include "analyseur_lexical.h"
 #include "premiers.h"
 #include "suivants.h"
-#include "affiche_arbre_abstrait.h"
 
 int uniteCourante;
 int trace_xml;
@@ -881,13 +880,10 @@ n_l_dec *optListeDecVariables (void) {
     return $$;
 }
 
-n_prog *syntaxe(int trace_xml_tree, int trace_abs_tree) {
+n_prog *syntaxe(int trace_xml_tree) {
     initialise_premiers();
     initialise_suivants();
     trace_xml = trace_xml_tree;
     uniteCourante = yylex();
-    n_prog *p = programme();
-    if (trace_abs_tree)
-        affiche_n_prog(p);
-    return p;
+    return programme();
 }

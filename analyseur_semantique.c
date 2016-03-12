@@ -33,11 +33,13 @@ void analyse_appel(n_appel *n);
 
 void semantique(n_prog *p, int trace_dico) {
   analyse_n_prog(p);
+  if (trace_dico) affiche_dico();
 }
 
-int contexte;
-int adresseLocaleCourante;
-int adresseArgumentCourant;
+
+int contexte = C_VARIABLE_GLOBALE;
+int adresseLocaleCourante = 0;
+int adresseArgumentCourant = 0;
 
 /*-------------------------------------------------------------------------*/
 
@@ -232,9 +234,7 @@ void analyse_dec(n_dec *n)
 
   if(n){
     if(n->type == foncDec) {
-      entreeFonction();
       analyse_foncDec(n);
-      sortieFonction();
     }
     else if(n->type == varDec) {
       analyse_varDec(n);
@@ -249,9 +249,15 @@ void analyse_dec(n_dec *n)
 
 void analyse_foncDec(n_dec *n)
 {
-  analyse_l_dec(n->u.foncDec_.param);
-  analyse_l_dec(n->u.foncDec_.variables);
-  analyse_instr(n->u.foncDec_.corps);
+  entreeFonction();
+  if (rechercheExecutable(n->nom) == -1) {
+    ajouteIdentificateur(n->nom, contexte, T_FONCTION, adresseLocaleCourante, 0);
+    adresseLocaleCourante += 4;
+    analyse_l_dec(n->u.foncDec_.param);
+    analyse_l_dec(n->u.foncDec_.variables);
+    analyse_instr(n->u.foncDec_.corps);
+  }
+  sortieFonction();
 }
 
 /*-------------------------------------------------------------------------*/
@@ -259,7 +265,7 @@ void analyse_foncDec(n_dec *n)
 void analyse_varDec(n_dec *n)
 {
   if (rechercheDeclarative(n->nom) == -1) {
-    ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseLocaleCourante, 0);
+    ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseLocaleCourante, -1);
     adresseLocaleCourante += 4;
   }
 }
@@ -268,6 +274,10 @@ void analyse_varDec(n_dec *n)
 
 void analyse_tabDec(n_dec *n)
 {
+  if (rechercheDeclarative(n->nom) == -1) {
+    ajouteIdentificateur(n->nom, contexte, T_TABLEAU_ENTIER, adresseLocaleCourante, n->u.tabDec_.taille);
+    adresseLocaleCourante += 4;
+  }
 }
 
 /*-------------------------------------------------------------------------*/
