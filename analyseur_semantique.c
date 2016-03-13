@@ -249,15 +249,15 @@ void analyse_dec(n_dec *n)
 
 void analyse_foncDec(n_dec *n)
 {
-  entreeFonction();
   if (rechercheExecutable(n->nom) == -1) {
     ajouteIdentificateur(n->nom, contexte, T_FONCTION, adresseLocaleCourante, 0);
     adresseLocaleCourante += 4;
+    entreeFonction();
     analyse_l_dec(n->u.foncDec_.param);
     analyse_l_dec(n->u.foncDec_.variables);
     analyse_instr(n->u.foncDec_.corps);
+    sortieFonction();
   }
-  sortieFonction();
 }
 
 /*-------------------------------------------------------------------------*/
