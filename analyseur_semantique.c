@@ -252,9 +252,10 @@ void analyse_foncDec(n_dec *n)
   if (rechercheExecutable(n->nom) == -1) {
     ajouteIdentificateur(n->nom, contexte, T_FONCTION, adresseLocaleCourante, 0);
     adresseLocaleCourante += 4;
-    entreeFonction();
+    
     analyse_l_dec(n->u.foncDec_.param);
     analyse_l_dec(n->u.foncDec_.variables);
+    entreeFonction();
     analyse_instr(n->u.foncDec_.corps);
     sortieFonction();
   }
