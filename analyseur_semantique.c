@@ -3,6 +3,11 @@
 #include "util.h"
 #include "dico.h"
 
+int contexte = C_VARIABLE_GLOBALE;
+int adresseLocaleCourante = 0;
+int adresseArgumentCourant = 0;
+int trace_tab;
+
 void analyse_n_prog(n_prog *n);
 void analyse_l_instr(n_l_instr *n);
 void analyse_instr(n_instr *n);
@@ -32,19 +37,20 @@ void analyse_var_indicee(n_var *n);
 void analyse_appel(n_appel *n);
 
 void semantique(n_prog *p, int trace_dico) {
+  trace_tab = trace_dico;
   analyse_n_prog(p);
-  if (trace_dico) affiche_dico();
 }
 
-
-int contexte = C_VARIABLE_GLOBALE;
-int adresseLocaleCourante = 0;
-int adresseArgumentCourant = 0;
+int taille_n_l_dec(n_l_dec *liste) {
+  if (liste) {
+    return 1 + taille_n_l_dec(liste->queue);
+  }
+  return 0;
+}
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_n_prog(n_prog *n)
-{
+void analyse_n_prog(n_prog *n) {
   analyse_l_dec(n->variables);
   analyse_l_dec(n->fonctions);
 }
@@ -52,8 +58,7 @@ void analyse_n_prog(n_prog *n)
 /*-------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------*/
 
-void analyse_l_instr(n_l_instr *n)
-{
+void analyse_l_instr(n_l_instr *n) {
   if(n){
   analyse_instr(n->tete);
   analyse_l_instr(n->queue);
@@ -62,15 +67,14 @@ void analyse_l_instr(n_l_instr *n)
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_instr(n_instr *n)
-{
+void analyse_instr(n_instr *n) {
   if(n){
     if(n->type == blocInst) analyse_l_instr(n->u.liste);
     else if(n->type == affecteInst) analyse_instr_affect(n);
     else if(n->type == siInst) analyse_instr_si(n);
     else if(n->type == tantqueInst) analyse_instr_tantque(n);
     else if(n->type == faireInst) analyse_instr_faire(n);
-    else if(n->type == pourInst) analyse_instr_pour(n);    
+    else if(n->type == pourInst) analyse_instr_pour(n);
     else if(n->type == appelInst) analyse_instr_appel(n);
     else if(n->type == retourInst) analyse_instr_retour(n);
     else if(n->type == ecrireInst) analyse_instr_ecrire(n);
@@ -79,8 +83,7 @@ void analyse_instr(n_instr *n)
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_instr_si(n_instr *n)
-{  
+void analyse_instr_si(n_instr *n) {  
   analyse_exp(n->u.si_.test);
   analyse_instr(n->u.si_.alors);
   if(n->u.si_.sinon){
@@ -90,8 +93,7 @@ void analyse_instr_si(n_instr *n)
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_instr_tantque(n_instr *n)
-{
+void analyse_instr_tantque(n_instr *n) {
   analyse_exp(n->u.tantque_.test);
   analyse_instr(n->u.tantque_.faire);
 }
@@ -116,43 +118,37 @@ void analyse_instr_pour(n_instr *n)                /* MODIFIE POUR EVAL */
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_instr_affect(n_instr *n)
-{
+void analyse_instr_affect(n_instr *n) {
   analyse_var(n->u.affecte_.var);
   analyse_exp(n->u.affecte_.exp);
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_instr_appel(n_instr *n)
-{
+void analyse_instr_appel(n_instr *n) {
   analyse_appel(n->u.appel);
 }
 /*-------------------------------------------------------------------------*/
 
-void analyse_appel(n_appel *n)
-{
+void analyse_appel(n_appel *n) {
   analyse_l_exp(n->args);
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_instr_retour(n_instr *n)
-{
+void analyse_instr_retour(n_instr *n) {
   analyse_exp(n->u.retour_.expression);
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_instr_ecrire(n_instr *n)
-{
+void analyse_instr_ecrire(n_instr *n) {
   analyse_exp(n->u.ecrire_.expression);
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_l_exp(n_l_exp *n)
-{
+void analyse_l_exp(n_l_exp *n) {
   if(n){
     analyse_exp(n->tete);
     analyse_l_exp(n->queue);
@@ -161,8 +157,7 @@ void analyse_l_exp(n_l_exp *n)
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_exp(n_exp *n)
-{
+void analyse_exp(n_exp *n) {
   if(n->type == varExp) analyse_varExp(n);
   else if(n->type == opExp) analyse_opExp(n);
   else if(n->type == intExp) analyse_intExp(n);
@@ -172,14 +167,12 @@ void analyse_exp(n_exp *n)
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_varExp(n_exp *n)
-{
+void analyse_varExp(n_exp *n) {
   analyse_var(n->u.var);
 }
 
 /*-------------------------------------------------------------------------*/
-void analyse_opExp(n_exp *n)
-{
+void analyse_opExp(n_exp *n) {
   /*if(n->u.opExp_.op == plus) analyse_texte("plus", trace_abs);
   else if(n->u.opExp_.op == moins) analyse_texte("moins", trace_abs);
   else if(n->u.opExp_.op == fois) analyse_texte("fois", trace_abs);
@@ -201,26 +194,22 @@ void analyse_opExp(n_exp *n)
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_intExp(n_exp *n)
-{
+void analyse_intExp(n_exp *n) {
 }
 
 /*-------------------------------------------------------------------------*/
-void analyse_lireExp(n_exp *n)
-{
+void analyse_lireExp(n_exp *n) {
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_appelExp(n_exp *n)
-{
+void analyse_appelExp(n_exp *n) {
   analyse_appel(n->u.appel);
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_l_dec(n_l_dec *n)
-{
+void analyse_l_dec(n_l_dec *n) {
   if( n ){
     analyse_dec(n->tete);
     analyse_l_dec(n->queue);
@@ -229,8 +218,7 @@ void analyse_l_dec(n_l_dec *n)
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_dec(n_dec *n)
-{
+void analyse_dec(n_dec *n) {
 
   if(n){
     if(n->type == foncDec) {
@@ -247,44 +235,49 @@ void analyse_dec(n_dec *n)
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_foncDec(n_dec *n)
-{
+void analyse_foncDec(n_dec *n) {
   if (rechercheExecutable(n->nom) == -1) {
-    ajouteIdentificateur(n->nom, contexte, T_FONCTION, adresseLocaleCourante, 0);
-    adresseLocaleCourante += 4;
-    
-    analyse_l_dec(n->u.foncDec_.param);
-    analyse_l_dec(n->u.foncDec_.variables);
+    ajouteIdentificateur(n->nom, contexte, T_FONCTION, 0, taille_n_l_dec(n->u.foncDec_.param));
+    dico.base = dico.base + 1;
     entreeFonction();
+    contexte = C_ARGUMENT;
+    analyse_l_dec(n->u.foncDec_.param);
+    contexte = C_VARIABLE_LOCALE;
+    analyse_l_dec(n->u.foncDec_.variables);
     analyse_instr(n->u.foncDec_.corps);
+    if (trace_tab) affiche_dico();
     sortieFonction();
   }
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_varDec(n_dec *n)
-{
+void analyse_varDec(n_dec *n) {
   if (rechercheDeclarative(n->nom) == -1) {
-    ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseLocaleCourante, -1);
-    adresseLocaleCourante += 4;
+    if (contexte == C_VARIABLE_GLOBALE || contexte == C_VARIABLE_LOCALE) {
+      ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseLocaleCourante, -1);
+      if (contexte == C_VARIABLE_GLOBALE) dico.base = dico.base + 1;
+      adresseLocaleCourante += 4;
+    } else if (contexte == C_ARGUMENT) {
+      ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseArgumentCourant, -1);
+      adresseArgumentCourant += 4;
+    }
   }
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_tabDec(n_dec *n)
-{
+void analyse_tabDec(n_dec *n) {
   if (rechercheDeclarative(n->nom) == -1) {
     ajouteIdentificateur(n->nom, contexte, T_TABLEAU_ENTIER, adresseLocaleCourante, n->u.tabDec_.taille);
-    adresseLocaleCourante += 4;
+    dico.base = dico.base + 1;
+    adresseLocaleCourante += 4 * n->u.tabDec_.taille;
   }
 }
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_var(n_var *n)
-{
+void analyse_var(n_var *n) {
   if(n->type == simple) {
     analyse_var_simple(n);
   }
@@ -294,13 +287,14 @@ void analyse_var(n_var *n)
 }
 
 /*-------------------------------------------------------------------------*/
-void analyse_var_simple(n_var *n)
-{
+void analyse_var_simple(n_var *n) {
+  if (rechercheDeclarative(n->nom) && rechercheExecutable(n->nom)) {
+    // TODO
+  }
 }
 
 /*-------------------------------------------------------------------------*/
-void analyse_var_indicee(n_var *n)
-{
+void analyse_var_indicee(n_var *n) {
   analyse_exp( n->u.indicee_.indice );
 }
 /*-------------------------------------------------------------------------*/

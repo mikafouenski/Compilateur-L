@@ -13,7 +13,7 @@ MYCOMPILO="../compilateur"
 MYCOMPILOLEX="${MYCOMPILO} -l"
 MYCOMPILOSYNT="${MYCOMPILO} -s"
 MYCOMPILOASYNT="${MYCOMPILO} -a"
-#MYCOMPILOTAB="${MYCOMPILO} -t"
+MYCOMPILOTAB="${MYCOMPILO} -t"
 #MYCOMPILOMIPS="${MYCOMPILO} -m"
 
 ################################################################################
@@ -25,7 +25,7 @@ declare -A testname
 testname["lex"]="Analyse lexicale"
 testname["synt"]="Analyse syntaxique"
 testname["asynt"]="Arbre abstrait"
-#testname["tab"]="Table des symboles"
+testname["tab"]="Table des symboles"
 #testname["mips"]="Code machine MIPS"
 
 ################################################################################
@@ -70,8 +70,8 @@ function test_fichier_ok() {
         diff_prog ${XMLDIFF} $input synt
         ${MYCOMPILOASYNT} input/$input.l > output/$input.asynt
         diff_prog ${XMLDIFF} $input asynt
-        #${MYCOMPILOTAB} input/$input.l > output/$input.tab
-        #diff_prog "${REGDIFF}" $input tab
+        ${MYCOMPILOTAB} input/$input.l > output/$input.tab
+        diff_prog "${REGDIFF}" $input tab
         #${MYCOMPILOMIPS} input/$input.l > output/$input.mips
         #diff_prog "${REGDIFF}" $input mips
     else

@@ -17,7 +17,7 @@ void entreeFonction(void){
 void sortieFonction(void){
   dico.sommet = dico.base;
   dico.base = 0;
-  contexte = C_VARIABLE_GLOBALE;  
+  contexte = C_VARIABLE_GLOBALE;
 }
 
 /*-------------------------------------------------------------------------*/
