@@ -1,28 +1,27 @@
-CC = gcc
+CC=gcc
 
-SRCDIR = src
-INCDIR = inc
-OBJDIR = obj
+LIBS = -lm
+CCFLAGS= -Wall -ggdb -I./inc 
+LDFLAGS=
 
-LIBS = -lm 
-CCFLAGS = -Wall -ggdb -I${INCDIR}
+SRC=$(wildcard src/*.c)
+OBJ=$(SRC:.c=.o)
 
-SRC = $(wildcard *.c)
-OBJ2 = $(patsubst %.c, %.o, $(SRC))
+EXEC=compilateur
 
-OBJ = analyseur_lexical.o util.o analyseur_syntaxique.o premiers.o suivants.o \
-syntabs.o affiche_arbre_abstrait.o analyseur_semantique.o dico.o
+all: $(EXEC)
 
-all: compilateur
-
-compilateur: compilateur.c $(OBJ)
-	$(CC) $(CCFLAGS) -o compilateur compilateur.c $(OBJ)
+$(EXEC): $(OBJ)
+	$(CC) -o $(EXEC) $(EXEC).c $^ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(CCFLAGS) -c $^
-
-.PHONY : clean
+	$(CC) -o $@ -c $< $(CCFLAGS)
 
 clean:
-	- rm -f $(OBJ)
-	- rm -f compilateur
+	rm -f src/*.o
+	rm -f $(EXEC)
+
+buildAndRun:
+	make clean
+	make
+	cd test && sh -c "./testAll.sh"

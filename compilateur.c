@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "affiche_arbre_abstrait.h"
+#include "inc/affiche_arbre_abstrait.h"
 
-#include "analyseur_lexical.h"
-#include "analyseur_syntaxique.h"
-#include "analyseur_semantique.h"
+#include "inc/analyseur_lexical.h"
+#include "inc/analyseur_syntaxique.h"
+#include "inc/analyseur_semantique.h"
 
-#include "symboles.h"
+#include "inc/symboles.h"
 
 char yytext[100];
 FILE *yyin;
@@ -20,8 +20,9 @@ int main(int argc, char **argv) {
     int aflag = 0;
     int tflag = 0;
     int c;
-    n_prog *p = NULL;
     opterr = 0;
+
+    n_prog *p = NULL;
 
     while ((c = getopt (argc, argv, "slta")) != -1) {
         switch (c) {
