@@ -8,6 +8,12 @@ int adresseLocaleCourante = 0;
 int adresseArgumentCourant = 0;
 int trace_tab;
 
+int creg = 0;
+
+int newreg(void) {
+  return creg++ % 10;
+}
+
 void analyse_n_prog(n_prog *n);
 void analyse_l_instr(n_l_instr *n);
 void analyse_instr(n_instr *n);
@@ -51,6 +57,8 @@ int taille_n_l_dec(n_l_dec *liste) {
 /*-------------------------------------------------------------------------*/
 
 void analyse_n_prog(n_prog *n) {
+  printf("\t.data\n");
+
   analyse_l_dec(n->variables);
   analyse_l_dec(n->fonctions);
 }
@@ -195,6 +203,7 @@ void analyse_opExp(n_exp *n) {
 /*-------------------------------------------------------------------------*/
 
 void analyse_intExp(n_exp *n) {
+  printf("\tli $t%d %d\n", creg, n->u.entier);
 }
 
 /*-------------------------------------------------------------------------*/
@@ -231,6 +240,7 @@ void analyse_dec(n_dec *n) {
       analyse_tabDec(n);
     }
   }
+  printf("\t.text\n");
 }
 
 /*-------------------------------------------------------------------------*/
@@ -256,6 +266,7 @@ void analyse_varDec(n_dec *n) {
   if (rechercheDeclarative(n->nom) == -1) {
     if (contexte == C_VARIABLE_GLOBALE || contexte == C_VARIABLE_LOCALE) {
       ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseLocaleCourante, -1);
+      printf("%s :\t.word\n", n->nom);
       if (contexte == C_VARIABLE_GLOBALE) dico.base = dico.base + 1;
       adresseLocaleCourante += 4;
     } else if (contexte == C_ARGUMENT) {
@@ -288,8 +299,9 @@ void analyse_var(n_var *n) {
 
 /*-------------------------------------------------------------------------*/
 void analyse_var_simple(n_var *n) {
-  if (rechercheDeclarative(n->nom) && rechercheExecutable(n->nom)) {
+  if (rechercheDeclarative(n->nom) /*&& rechercheExecutable(n->nom)*/) {
     // TODO
+    printf("\tlw $t%d %s\n", creg, n->nom);
   }
 }
 
