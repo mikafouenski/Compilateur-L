@@ -19,12 +19,13 @@ int main(int argc, char **argv) {
     int lflag = 0;
     int aflag = 0;
     int tflag = 0;
+    int mflag = 0;
     int c;
     opterr = 0;
 
     n_prog *p = NULL;
 
-    while ((c = getopt (argc, argv, "slta")) != -1) {
+    while ((c = getopt (argc, argv, "sltam")) != -1) {
         switch (c) {
             case 's':
                 sflag = 1;
@@ -37,6 +38,9 @@ int main(int argc, char **argv) {
                 break;
             case 'a':
                 aflag = 1;
+                break;
+            case 'm':
+                mflag = 1;
                 break;
             case '?':
                 fprintf (stderr, "Option inconnu `\\x%x'.\n", optopt);
@@ -61,6 +65,6 @@ int main(int argc, char **argv) {
 
     if (aflag) affiche_n_prog(p);
 
-    semantique(p, tflag);
+    semantique(p, tflag, mflag);
     return 0;
 }

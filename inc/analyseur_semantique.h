@@ -3,6 +3,6 @@
 
 #include "syntabs.h"
 
-void semantique(n_prog *p, int trace_dico);
+void semantique(n_prog *p, int trace_dico, int print_mips);
 
 #endif
