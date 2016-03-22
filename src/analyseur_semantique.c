@@ -8,16 +8,6 @@ int adresseLocaleCourante = 0;
 int adresseArgumentCourant = 0;
 int trace_tab;
 int trace_mips;
-int creg = 0;
-
-typedef struct {
-  char type;
-  int numero;
-} Registre;
-
-int newreg(void) {
-  return creg++ % 10;
-}
 
 void analyse_n_prog(n_prog *n);
 void analyse_l_instr(n_l_instr *n);
@@ -31,20 +21,20 @@ void analyse_instr_appel(n_instr *n);
 void analyse_instr_retour(n_instr *n);
 void analyse_instr_ecrire(n_instr *n);
 void analyse_l_exp(n_l_exp *n);
-Registre analyse_exp(n_exp *n);
-Registre analyse_varExp(n_exp *n);
-Registre analyse_opExp(n_exp *n);
-Registre analyse_intExp(n_exp *n);
-Registre analyse_lireExp(n_exp *n);
-Registre analyse_appelExp(n_exp *n);
+void analyse_exp(n_exp *n);
+void analyse_varExp(n_exp *n);
+void analyse_opExp(n_exp *n);
+void analyse_intExp(n_exp *n);
+void analyse_lireExp(n_exp *n);
+void analyse_appelExp(n_exp *n);
 void analyse_l_dec(n_l_dec *n);
 void analyse_dec(n_dec *n);
 void analyse_foncDec(n_dec *n);
 void analyse_varDec(n_dec *n);
 void analyse_tabDec(n_dec *n);
-Registre analyse_var(n_var *n);
-Registre analyse_var_simple(n_var *n);
-Registre analyse_var_indicee(n_var *n);
+void analyse_var(n_var *n);
+void analyse_var_simple(n_var *n);
+void analyse_var_indicee(n_var *n);
 void analyse_appel(n_appel *n);
 
 void semantique(n_prog *p, int trace_dico, int print_mips) {
@@ -58,6 +48,40 @@ int taille_n_l_dec(n_l_dec *liste) {
     return 1 + taille_n_l_dec(liste->queue);
   }
   return 0;
+}
+
+void mips_debut_fonction() {
+  if (trace_mips) {
+    printf("\tsubi $sp, $sp, 4\t\t\t# debut fonction\n");
+    printf("\tsw $fp, ($sp)\n");
+    printf("\tmove $fp, $sp\n");
+    printf("\tsubi $sp, $sp, 4\n");
+    printf("\tsw $ra, ($sp)\t\t\t# debut fonction\n");
+  }
+}
+
+void mips_fin_function() {
+  if (trace_mips) {
+    printf("\tlw $ra, ($sp)\t\t\t# fin fonction\n");
+    printf("\taddi $sp\n");
+    printf("\tlw $fp, ($sp)\n");
+    printf("\taddi $sp, $sp, 4\n");
+    printf("\tjr $ra\t\t\t# fin fonction\n");
+  }
+}
+
+void mips_empile(int v) {
+  if (trace_mips) {
+    printf("\tsubi $sp, $sp, 4\t# Empile\n");
+    printf("\tsw $t%d, ($sp)\n", v);
+  }
+}
+
+void mips_depile(int v) {
+  if (trace_mips) {
+    printf("\tlw $t%d, ($sp)\t# Depile\n", v);
+    printf("\taddi $sp, $sp, 4\n");
+  }
 }
 
 /*-------------------------------------------------------------------------*/
@@ -100,7 +124,7 @@ void analyse_instr(n_instr *n) {
 
 /*-------------------------------------------------------------------------*/
 
-void analyse_instr_si(n_instr *n) {  
+void analyse_instr_si(n_instr *n) {
   analyse_exp(n->u.si_.test);
   analyse_instr(n->u.si_.alors);
   if(n->u.si_.sinon){
@@ -136,6 +160,7 @@ void analyse_instr_pour(n_instr *n) {
 void analyse_instr_affect(n_instr *n) {
   analyse_var(n->u.affecte_.var);
   analyse_exp(n->u.affecte_.exp);
+
 }
 
 /*-------------------------------------------------------------------------*/
@@ -158,9 +183,9 @@ void analyse_instr_retour(n_instr *n) {
 /*-------------------------------------------------------------------------*/
 
 void analyse_instr_ecrire(n_instr *n) {
-  Registre r = analyse_exp(n->u.ecrire_.expression);
+  analyse_exp(n->u.ecrire_.expression);
   if (trace_mips) {
-    printf("\tmove $a0, $%c%d\n\tli $v0 4\n\tsyscall\n", r.type, r.numero);
+    printf("\tmove $a0, $t0\n\tli $v0 4\n\tsyscall\n");
   }
 }
 
@@ -175,22 +200,22 @@ void analyse_l_exp(n_l_exp *n) {
 
 /*-------------------------------------------------------------------------*/
 
-Registre analyse_exp(n_exp *n) {
-  if(n->type == varExp) return analyse_varExp(n);
-  else if(n->type == opExp) return analyse_opExp(n);
-  else if(n->type == intExp) return analyse_intExp(n);
-  else if(n->type == appelExp) return analyse_appelExp(n);
-  else if(n->type == lireExp) return analyse_lireExp(n);
+void analyse_exp(n_exp *n) {
+  if(n->type == varExp) analyse_varExp(n);
+  else if(n->type == opExp) analyse_opExp(n);
+  else if(n->type == intExp) analyse_intExp(n);
+  else if(n->type == appelExp) analyse_appelExp(n);
+  else if(n->type == lireExp) analyse_lireExp(n);
 }
 
 /*-------------------------------------------------------------------------*/
 
-Registre analyse_varExp(n_exp *n) {
-  return analyse_var(n->u.var);
+void analyse_varExp(n_exp *n) {
+  analyse_var(n->u.var);
 }
 
 /*-------------------------------------------------------------------------*/
-Registre analyse_opExp(n_exp *n) {
+void analyse_opExp(n_exp *n) {
   /*if(n->u.opExp_.op == plus) analyse_texte("plus", trace_abs);
   else if(n->u.opExp_.op == moins) analyse_texte("moins", trace_abs);
   else if(n->u.opExp_.op == fois) analyse_texte("fois", trace_abs);
@@ -212,17 +237,20 @@ Registre analyse_opExp(n_exp *n) {
 
 /*-------------------------------------------------------------------------*/
 
-Registre analyse_intExp(n_exp *n) {
-  if (trace_mips) printf("\tli $t%d, %d\n", creg, n->u.entier);
+void analyse_intExp(n_exp *n) {
+  if (trace_mips) {
+    printf("\tli $t0, %d\n", n->u.entier);
+    mips_empile(0);
+  }
 }
 
 /*-------------------------------------------------------------------------*/
-Registre analyse_lireExp(n_exp *n) {
+void analyse_lireExp(n_exp *n) {
 }
 
 /*-------------------------------------------------------------------------*/
 
-Registre analyse_appelExp(n_exp *n) {
+void analyse_appelExp(n_exp *n) {
   analyse_appel(n->u.appel);
 }
 
@@ -260,13 +288,19 @@ void analyse_foncDec(n_dec *n) {
     ajouteIdentificateur(n->nom, contexte, T_FONCTION, 0, taille_n_l_dec(n->u.foncDec_.param));
     dico.base = dico.base + 1;
     entreeFonction();
+    mips_debut_fonction();
     contexte = C_ARGUMENT;
     analyse_l_dec(n->u.foncDec_.param);
     contexte = C_VARIABLE_LOCALE;
+    // for (int i = 0; i < taille_n_l_dec(n->u.foncDec_.param); ++i) {
+    //   if (trace_mips) {
+    //     printf("\tlw $t%d, %d($fp)\n", creg, 4 * ());
+    //   }
+    // }
     analyse_l_dec(n->u.foncDec_.variables);
     analyse_instr(n->u.foncDec_.corps);
     if (trace_tab) affiche_dico();
-    if (trace_mips) printf("\tjr $ra\n");
+    mips_fin_function();
     sortieFonction();
   }
 }
@@ -301,26 +335,29 @@ void analyse_tabDec(n_dec *n) {
 
 /*-------------------------------------------------------------------------*/
 
-Registre analyse_var(n_var *n) {
+void analyse_var(n_var *n) {
   if(n->type == simple) {
-    return analyse_var_simple(n);
+    analyse_var_simple(n);
   }
   else if(n->type == indicee) {
-    return analyse_var_indicee(n);
+    analyse_var_indicee(n);
   }
 }
 
 /*-------------------------------------------------------------------------*/
-Registre analyse_var_simple(n_var *n) {
-  if (trace_mips) printf("\tlw $t%d, %s\n", creg, n->nom);
-  Registre r;
-  r.type = 't';
-  r.numero = creg;
-  return r;
+void analyse_var_simple(n_var *n) {
+  //printf("HOP\n");
+  // if (trace_mips) {
+  //   Registre r;
+  //   r.type = 't';
+  //   r.numero = 0;
+  //   //printf("\tlw $%c%d, %s\n", r.type, r.numero, n->nom);
+  //   mips_empile(r);
+  // }
 }
 
 /*-------------------------------------------------------------------------*/
-Registre analyse_var_indicee(n_var *n) {
+void analyse_var_indicee(n_var *n) {
   analyse_exp( n->u.indicee_.indice );
 }
 /*-------------------------------------------------------------------------*/
