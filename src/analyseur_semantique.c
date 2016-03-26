@@ -8,6 +8,8 @@ int adresseLocaleCourante = 0;
 int adresseArgumentCourant = 0;
 int trace_tab;
 int trace_mips;
+int nb_args_function;
+int nb_var_local;
 
 void analyse_n_prog(n_prog *n);
 void analyse_l_instr(n_l_instr *n);
@@ -44,42 +46,40 @@ void semantique(n_prog *p, int trace_dico, int print_mips) {
 }
 
 int taille_n_l_dec(n_l_dec *liste) {
-  if (liste) {
-    return 1 + taille_n_l_dec(liste->queue);
-  }
+  if (liste) return 1 + taille_n_l_dec(liste->queue);
   return 0;
 }
 
 void mips_debut_fonction() {
   if (trace_mips) {
-    printf("\tsubi $sp, $sp, 4\t\t\t# debut fonction\n");
+    printf("\tsubi $sp, $sp, 4    # debut fonction\n");
     printf("\tsw $fp, ($sp)\n");
     printf("\tmove $fp, $sp\n");
     printf("\tsubi $sp, $sp, 4\n");
-    printf("\tsw $ra, ($sp)\t\t\t# debut fonction\n");
+    printf("\tsw $ra, ($sp)       # debut fonction\n");
   }
 }
 
 void mips_fin_function() {
   if (trace_mips) {
-    printf("\tlw $ra, ($sp)\t\t\t# fin fonction\n");
+    printf("\tlw $ra, ($sp)       # fin fonction\n");
     printf("\taddi $sp\n");
     printf("\tlw $fp, ($sp)\n");
     printf("\taddi $sp, $sp, 4\n");
-    printf("\tjr $ra\t\t\t# fin fonction\n");
+    printf("\tjr $ra              # fin fonction\n");
   }
 }
 
 void mips_empile(int v) {
   if (trace_mips) {
-    printf("\tsubi $sp, $sp, 4\t# Empile\n");
+    printf("\tsubi $sp, $sp, 4    # Empile\n");
     printf("\tsw $t%d, ($sp)\n", v);
   }
 }
 
 void mips_depile(int v) {
   if (trace_mips) {
-    printf("\tlw $t%d, ($sp)\t# Depile\n", v);
+    printf("\tlw $t%d, ($sp)       # Depile\n", v);
     printf("\taddi $sp, $sp, 4\n");
   }
 }
@@ -160,7 +160,6 @@ void analyse_instr_pour(n_instr *n) {
 void analyse_instr_affect(n_instr *n) {
   analyse_var(n->u.affecte_.var);
   analyse_exp(n->u.affecte_.exp);
-
 }
 
 /*-------------------------------------------------------------------------*/
@@ -172,6 +171,9 @@ void analyse_instr_appel(n_instr *n) {
 
 void analyse_appel(n_appel *n) {
   analyse_l_exp(n->args);
+  if (trace_mips) {
+    printf("\tjal %s\n", n->fonction);
+  }
 }
 
 /*-------------------------------------------------------------------------*/
@@ -216,23 +218,30 @@ void analyse_varExp(n_exp *n) {
 
 /*-------------------------------------------------------------------------*/
 void analyse_opExp(n_exp *n) {
-  /*if(n->u.opExp_.op == plus) analyse_texte("plus", trace_abs);
-  else if(n->u.opExp_.op == moins) analyse_texte("moins", trace_abs);
-  else if(n->u.opExp_.op == fois) analyse_texte("fois", trace_abs);
-  else if(n->u.opExp_.op == divise) analyse_texte("divise", trace_abs);
-  else if(n->u.opExp_.op == egal) analyse_texte("egal", trace_abs);
-  else if(n->u.opExp_.op == diff) analyse_texte("diff", trace_abs);
-  else if(n->u.opExp_.op == inf) analyse_texte("inf", trace_abs);
-  else if(n->u.opExp_.op == infeg) analyse_texte("infeg", trace_abs);
-  else if(n->u.opExp_.op == ou) analyse_texte("ou", trace_abs);
-  else if(n->u.opExp_.op == et) analyse_texte("et", trace_abs);
-  else if(n->u.opExp_.op == non) analyse_texte("non", trace_abs);*/
   if( n->u.opExp_.op1 != NULL ) {
     analyse_exp(n->u.opExp_.op1);
   }
   if( n->u.opExp_.op2 != NULL ) {
     analyse_exp(n->u.opExp_.op2);
   }
+  if(n->u.opExp_.op == plus) {
+    mips_depile(0);
+    mips_depile(1);
+    if (trace_mips) {
+      printf("\tadd $t0, $t1, $t0\n");
+      mips_empile(0);
+    }
+  }
+  else if(n->u.opExp_.op == moins) ;
+  else if(n->u.opExp_.op == fois) ;
+  else if(n->u.opExp_.op == divise) ;
+  else if(n->u.opExp_.op == egal) ;
+  else if(n->u.opExp_.op == diff) ;
+  else if(n->u.opExp_.op == inf) ;
+  else if(n->u.opExp_.op == infeg) ;
+  else if(n->u.opExp_.op == ou) ;
+  else if(n->u.opExp_.op == et) ;
+  else if(n->u.opExp_.op == non) ;
 }
 
 /*-------------------------------------------------------------------------*/
@@ -290,6 +299,7 @@ void analyse_foncDec(n_dec *n) {
     entreeFonction();
     mips_debut_fonction();
     contexte = C_ARGUMENT;
+    nb_args_function = taille_n_l_dec(n->u.foncDec_.param);
     analyse_l_dec(n->u.foncDec_.param);
     contexte = C_VARIABLE_LOCALE;
     // for (int i = 0; i < taille_n_l_dec(n->u.foncDec_.param); ++i) {
@@ -297,9 +307,17 @@ void analyse_foncDec(n_dec *n) {
     //     printf("\tlw $t%d, %d($fp)\n", creg, 4 * ());
     //   }
     // }
+    nb_var_local = taille_n_l_dec(n->u.foncDec_.variables);
+    if (trace_mips && nb_var_local > 0) {
+      printf("\tsubi $sp, $sp, %d\n", 4 * (nb_var_local + 1));
+    }
     analyse_l_dec(n->u.foncDec_.variables);
     analyse_instr(n->u.foncDec_.corps);
     if (trace_tab) affiche_dico();
+    mips_depile(0);
+    if (trace_mips) {
+      printf("\tsw $t0, %d($fp)\n", 4 * (nb_args_function + 1));
+    }
     mips_fin_function();
     sortieFonction();
   }
@@ -346,14 +364,12 @@ void analyse_var(n_var *n) {
 
 /*-------------------------------------------------------------------------*/
 void analyse_var_simple(n_var *n) {
-  //printf("HOP\n");
-  // if (trace_mips) {
-  //   Registre r;
-  //   r.type = 't';
-  //   r.numero = 0;
-  //   //printf("\tlw $%c%d, %s\n", r.type, r.numero, n->nom);
-  //   mips_empile(r);
-  // }
+  if (trace_mips) {
+    if (nb_args_function > 0) {
+      printf("\tlw t0, %d($fp)\n", 4 * nb_args_function);
+      mips_empile(0);
+    }
+  }
 }
 
 /*-------------------------------------------------------------------------*/

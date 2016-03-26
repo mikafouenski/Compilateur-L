@@ -1,7 +1,7 @@
 CC=gcc
 
 LIBS = -lm
-CCFLAGS= -Wall -ggdb -I./inc 
+CCFLAGS= -Wall -ggdb -I./inc
 LDFLAGS=
 
 SRC=$(wildcard src/*.c)
@@ -12,10 +12,10 @@ EXEC=compilateur
 all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CC) -o $(EXEC) $(EXEC).c $^ $(LDFLAGS)
+	$(CC) -o $(EXEC) $^ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) -o $@ -c $< $(CCFLAGS)
+	$(CC) $(CCFLAGS) -o $@ -c $<
 
 clean:
 	rm -f src/*.o

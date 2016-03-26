@@ -3,13 +3,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "inc/affiche_arbre_abstrait.h"
+#include "affiche_arbre_abstrait.h"
 
-#include "inc/analyseur_lexical.h"
-#include "inc/analyseur_syntaxique.h"
-#include "inc/analyseur_semantique.h"
-
-#include "inc/symboles.h"
+#include "analyseur_lexical.h"
+#include "analyseur_syntaxique.h"
+#include "analyseur_semantique.h"
 
 char yytext[100];
 FILE *yyin;
