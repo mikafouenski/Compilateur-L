@@ -50,12 +50,17 @@ int taille_n_l_dec(n_l_dec *liste) {
   return 0;
 }
 
+int taille_n_l_exp(n_l_exp *liste) {
+  if (liste) return 1 + taille_n_l_exp(liste->queue);
+  return 0;
+}
+
 void mips_debut_fonction() {
   if (trace_mips) {
     printf("\tsubi $sp, $sp, 4    # debut fonction\n");
-    printf("\tsw $fp, ($sp)\n");
-    printf("\tmove $fp, $sp\n");
-    printf("\tsubi $sp, $sp, 4\n");
+    printf("\tsw $fp, ($sp)       # debut fonction\n");
+    printf("\tmove $fp, $sp       # debut fonction\n");
+    printf("\tsubi $sp, $sp, 4    # debut fonction\n");
     printf("\tsw $ra, ($sp)       # debut fonction\n");
   }
 }
@@ -63,9 +68,9 @@ void mips_debut_fonction() {
 void mips_fin_function() {
   if (trace_mips) {
     printf("\tlw $ra, ($sp)       # fin fonction\n");
-    printf("\taddi $sp\n");
-    printf("\tlw $fp, ($sp)\n");
-    printf("\taddi $sp, $sp, 4\n");
+    printf("\taddi $sp            # fin fonction\n");
+    printf("\tlw $fp, ($sp)       # fin fonction\n");
+    printf("\taddi $sp, $sp, 4    # fin fonction\n");
     printf("\tjr $ra              # fin fonction\n");
   }
 }
@@ -73,14 +78,14 @@ void mips_fin_function() {
 void mips_empile(int v) {
   if (trace_mips) {
     printf("\tsubi $sp, $sp, 4    # Empile\n");
-    printf("\tsw $t%d, ($sp)\n", v);
+    printf("\tsw $t%d, ($sp)       # Empile\n", v);
   }
 }
 
 void mips_depile(int v) {
   if (trace_mips) {
     printf("\tlw $t%d, ($sp)       # Depile\n", v);
-    printf("\taddi $sp, $sp, 4\n");
+    printf("\taddi $sp, $sp, 4    # Depile\n");
   }
 }
 
@@ -173,6 +178,7 @@ void analyse_appel(n_appel *n) {
   analyse_l_exp(n->args);
   if (trace_mips) {
     printf("\tjal %s\n", n->fonction);
+    printf("\taddi $sp, $sp, %d\n", 4 * taille_n_l_exp(n->args));
   }
 }
 
@@ -302,11 +308,6 @@ void analyse_foncDec(n_dec *n) {
     nb_args_function = taille_n_l_dec(n->u.foncDec_.param);
     analyse_l_dec(n->u.foncDec_.param);
     contexte = C_VARIABLE_LOCALE;
-    // for (int i = 0; i < taille_n_l_dec(n->u.foncDec_.param); ++i) {
-    //   if (trace_mips) {
-    //     printf("\tlw $t%d, %d($fp)\n", creg, 4 * ());
-    //   }
-    // }
     nb_var_local = taille_n_l_dec(n->u.foncDec_.variables);
     if (trace_mips && nb_var_local > 0) {
       printf("\tsubi $sp, $sp, %d\n", 4 * (nb_var_local + 1));
@@ -316,7 +317,10 @@ void analyse_foncDec(n_dec *n) {
     if (trace_tab) affiche_dico();
     mips_depile(0);
     if (trace_mips) {
-      printf("\tsw $t0, %d($fp)\n", 4 * (nb_args_function + 1));
+      if (nb_var_local > 0)
+        printf("\tsw $t0, %d($fp)\n", -4 * (nb_var_local + 1));
+      else
+        printf("\tsw $t0, %d($fp)\n", 4 * (nb_args_function + 1));
     }
     mips_fin_function();
     sortieFonction();
