@@ -58,7 +58,7 @@ int taille_n_l_exp(n_l_exp *liste) {
 int etiquette = 0;
 
 int newEtiquette(void) {
-  return ++etiquette;
+  return etiquette++;
 }
 
 void mips_debut_fonction() {
@@ -303,10 +303,10 @@ void analyse_opExp(n_exp *n) {
     }
   }
   else if(n->u.opExp_.op == divise) {
-    mips_depile(0);
     mips_depile(1);
+    mips_depile(0);
     if (trace_mips){
-      printf("\tdiv $t1, $t0\n");
+      printf("\tdiv $t0, $t1\n");
       printf("\tmflo $t2\n");
       mips_empile(2);
     }
@@ -315,35 +315,72 @@ void analyse_opExp(n_exp *n) {
     mips_depile(0);
     mips_depile(1);
     if (trace_mips){
-      printf("\tbeq $t0, $t1, ETIQUETTE\n");
+      printf("\tli $t2, 1\n");
+      printf("\tbeq $t0, $t1, e%d\n", newEtiquette());
+      printf("\tli $t2, 0\n");
+      printf("e%d:\n", etiquette);
+      mips_empile(2);
     }
   }
   else if(n->u.opExp_.op == diff) {
     mips_depile(0);
     mips_depile(1);
     if (trace_mips){
-      printf("\tbne $t0, $t1,  ETIQUETTE\n");
-    }
-  }
-  else if(n->u.opExp_.op == inf) {
-    mips_depile(0);
-    mips_depile(1);
-    if (trace_mips){
       printf("\tli $t2, 1\n");
-      printf("\tblt $t1, $t0, e%d\n", newEtiquette());
+      printf("\tbne $t0, $t1, e%d\n", newEtiquette());
       printf("\tli $t2, 0\n");
       printf("e%d:\n", etiquette);
       mips_empile(2);
-      mips_depile(0);
-      printf("\tbeq $t0, $zero, ETIQUETTE\n");
+    }
+  }
+  else if(n->u.opExp_.op == inf) {
+    mips_depile(1);
+    mips_depile(0);
+    if (trace_mips){
+      printf("\tli $t2, 1\n");
+      printf("\tblt $t0, $t1, e%d\n", newEtiquette());
+      printf("\tli $t2, 0\n");
+      printf("e%d:\n", etiquette);
+      mips_empile(2);
     }
   }
   else if(n->u.opExp_.op == infeg) {
-    printf("\tble $t1, $t0, ETIQUETTE\n");
+    mips_depile(1);
+    mips_depile(0);
+    if (trace_mips){
+      printf("\tli $t2, 1\n");
+      printf("\tble $t0, $t1, e%d\n", newEtiquette());
+      printf("\tli $t2, 0\n");
+      printf("e%d:\n", etiquette);
+      mips_empile(2);
   }
-  else if(n->u.opExp_.op == ou) ;
-  else if(n->u.opExp_.op == et) ;
-  else if(n->u.opExp_.op == non) ;
+  else if(n->u.opExp_.op == ou) {
+    mips_depile(1);
+    mips_depile(0);
+    if (trace_mips) {
+      printf("\tli $t2, 1\n");
+      printf("\tbne $t0, $zero, e%d\n", newEtiquette());
+      printf("\tbne $t1, $zero, e%d\n", etiquette);
+      printf("\tli $t2, 0\n");
+      printf("e%d:\n", etiquette);
+      mips_empile(2);
+    }
+  }
+  else if(n->u.opExp_.op == et) {
+    mips_depile(1);
+    mips_depile(0);
+    if (trace_mips) {
+      printf("\tli $t2, 0\n");
+      printf("\tbeq $t0, $zero, e%d\n", newEtiquette());
+      printf("\tbeq $t1, $zero, e%d\n", etiquette);
+      printf("\tli $t2, 1\n");
+      printf("e%d:\n", etiquette);
+      mips_empile(2);
+    }
+  }
+  else if(n->u.opExp_.op == non) {
+    //Comment on fait un not ? ^^"
+  }
 }
 
 /*-------------------------------------------------------------------------*/
