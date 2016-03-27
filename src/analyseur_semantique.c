@@ -55,6 +55,12 @@ int taille_n_l_exp(n_l_exp *liste) {
   return 0;
 }
 
+int etiquette = 0;
+
+int newEtiquette(void) {
+  return etiquette++;
+}
+
 void mips_debut_fonction() {
   if (trace_mips) {
     printf("\tsubi $sp, $sp, 4    # debut fonction\n");
@@ -282,7 +288,13 @@ void analyse_opExp(n_exp *n) {
     mips_depile(0);
     mips_depile(1);
     if (trace_mips){
-      printf("\tblt $t1, $t0, ETIQUETTE\n");
+      printf("\tli $t2, 1\n");
+      printf("\tblt $t1, $t0, e%d\n", newEtiquette());
+      printf("\tli $t2, 0\n");
+      printf("e%d:\n", etiquette);
+      mips_empile(2);
+      mips_depile(0);
+      printf("\tbeq $t0, $zero, ETIQUETTE\n");
     }
   }
   else if(n->u.opExp_.op == infeg) {
