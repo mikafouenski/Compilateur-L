@@ -58,7 +58,8 @@ int taille_n_l_exp(n_l_exp *liste) {
 int etiquette = 0;
 
 int newEtiquette(void) {
-  return etiquette++;
+  etiquette = etiquette + 1;
+  return etiquette;
 }
 
 void mips_debut_fonction() {
