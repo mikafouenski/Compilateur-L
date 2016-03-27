@@ -58,7 +58,7 @@ int taille_n_l_exp(n_l_exp *liste) {
 int etiquette = 0;
 
 int newEtiquette(void) {
-  return etiquette++;
+  return ++etiquette;
 }
 
 void mips_debut_fonction() {
@@ -74,7 +74,7 @@ void mips_debut_fonction() {
 void mips_fin_function() {
   if (trace_mips) {
     printf("\tlw $ra, ($sp)       # fin fonction\n");
-    printf("\taddi $sp            # fin fonction\n");
+    printf("\taddi $sp, $sp, 4    # fin fonction\n");
     printf("\tlw $fp, ($sp)       # fin fonction\n");
     printf("\taddi $sp, $sp, 4    # fin fonction\n");
     printf("\tjr $ra              # fin fonction\n");
@@ -137,9 +137,21 @@ void analyse_instr(n_instr *n) {
 
 void analyse_instr_si(n_instr *n) {
   analyse_exp(n->u.si_.test);
+  mips_depile(0);
+  if (trace_mips) {
+    printf("\tbeq $t0, $zero, sifaux%d    # IF\n", newEtiquette());
+    printf("sivrai%d:\n", etiquette);
+  }
   analyse_instr(n->u.si_.alors);
+  if (trace_mips) {
+    printf("\tj sisuite%d\n", etiquette);
+    printf("sifaux%d:\n", etiquette);
+  }
   if(n->u.si_.sinon){
     analyse_instr(n->u.si_.sinon);
+  }
+  if (trace_mips) {
+    printf("sisuite%d:\n", etiquette);
   }
 }
 
@@ -147,23 +159,52 @@ void analyse_instr_si(n_instr *n) {
 
 void analyse_instr_tantque(n_instr *n) {
   analyse_exp(n->u.tantque_.test);
+  if (trace_mips) {
+    printf("tantque%d:\n", newEtiquette());
+    mips_depile(0);
+    printf("\tbeq $t0, $zero, tantquesuite%d    # TANTQUE\n", etiquette);
+  }
   analyse_instr(n->u.tantque_.faire);
+  if(trace_mips) {
+    printf("\tj tantque%d\n", etiquette);
+    printf("tantquesuite%d:\n", etiquette);
+  }
 }
 
 /*-------------------------------------------------------------------------*/
 
 void analyse_instr_faire(n_instr *n) {
+  if (trace_mips) {
+    printf("faire%d:\n", newEtiquette());
+  }
   analyse_instr(n->u.faire_.faire);
   analyse_exp(n->u.faire_.test);
+  if (trace_mips) {
+    mips_depile(0);
+    printf("\tbeq $t0, $zero, fairesuite%d\n    # FAIRE", etiquette);
+    printf("\tj faire%d\n", etiquette);
+    printf("fairesuite%d:\n", etiquette);
+  }
 }
 
 /*-------------------------------------------------------------------------*/
 
 void analyse_instr_pour(n_instr *n) {
   analyse_instr(n->u.pour_.init);
+  if (trace_mips) {
+    printf("pour%d:\n", newEtiquette());
+  }
   analyse_exp(n->u.pour_.test);
+  if (trace_mips) {
+    mips_depile(0);
+    printf("\tbeq $t0, $zero, poursuite%d\n    # POUR", etiquette);
+  }
   analyse_instr(n->u.pour_.faire);
   analyse_instr(n->u.pour_.incr);
+  if (trace_mips) {
+    printf("\tj pour%d\n", etiquette);
+    printf("poursuite%d:\n", etiquette);
+  }
 }
 
 /*-------------------------------------------------------------------------*/
