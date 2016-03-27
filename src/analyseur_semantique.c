@@ -238,13 +238,56 @@ void analyse_opExp(n_exp *n) {
       mips_empile(0);
     }
   }
-  else if(n->u.opExp_.op == moins) ;
-  else if(n->u.opExp_.op == fois) ;
-  else if(n->u.opExp_.op == divise) ;
-  else if(n->u.opExp_.op == egal) ;
-  else if(n->u.opExp_.op == diff) ;
-  else if(n->u.opExp_.op == inf) ;
-  else if(n->u.opExp_.op == infeg) ;
+  else if(n->u.opExp_.op == moins) {
+    mips_depile(0);
+    mips_depile(1);
+    if (trace_mips){
+      printf("\tsub $t0, $t1, $t0\n");
+      mips_empile(0);
+    }
+  }
+  else if(n->u.opExp_.op == fois) {
+    mips_depile(0);
+    mips_depile(1);
+    if (trace_mips) {
+      printf("\tmult $t0, $t1\n");
+      printf("\tmflo $t2\n");
+      mips_empile(2);
+    }
+  }
+  else if(n->u.opExp_.op == divise) {
+    mips_depile(0);
+    mips_depile(1);
+    if (trace_mips){
+      printf("\tdiv $t1, $t0\n");
+      printf("\tmflo $t2\n");
+      mips_empile(2);
+    }
+  }
+  else if(n->u.opExp_.op == egal) {
+    mips_depile(0);
+    mips_depile(1);
+    if (trace_mips){
+      printf("\tbeq $t0, $t1, ETIQUETTE\n");
+    }
+  }
+  else if(n->u.opExp_.op == diff) {
+    mips_depile(0);
+    mips_depile(1);
+    if (trace_mips){
+      printf("\tbne $t0, $t1,  ETIQUETTE\n");
+    }
+  }
+  else if(n->u.opExp_.op == inf) {
+    mips_depile(0);
+    mips_depile(1);
+    if (trace_mips){
+      printf("\tblt $t1, $t0, ETIQUETTE\n");
+    }
+  }
+  else if(n->u.opExp_.op == infeg) {
+    printf("\tble $t1, $t0, ETIQUETTE\n");
+  }
   else if(n->u.opExp_.op == ou) ;
   else if(n->u.opExp_.op == et) ;
   else if(n->u.opExp_.op == non) ;
