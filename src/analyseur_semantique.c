@@ -354,6 +354,7 @@ void analyse_opExp(n_exp *n) {
       printf("\tli $t2, 0\n");
       printf("e%d:\n", etiquette);
       mips_empile(2);
+    }
   }
   else if(n->u.opExp_.op == ou) {
     mips_depile(1);
