@@ -469,6 +469,7 @@ void analyse_tabDec(n_dec *n) {
     ajouteIdentificateur(n->nom, contexte, T_TABLEAU_ENTIER, adresseLocaleCourante, n->u.tabDec_.taille);
     dico.base = dico.base + 1;
     adresseLocaleCourante += 4 * n->u.tabDec_.taille;
+    if (trace_mips) printf("%s:\t.space\t%d\n", n->nom + 1, 4 * n->u.tabDec_.taille);
   }
 }
 
@@ -492,5 +493,5 @@ void analyse_var_simple(n_var *n) {
 }
 
 void analyse_var_indicee(n_var *n) {
-  analyse_exp( n->u.indicee_.indice );
+  analyse_exp(n->u.indicee_.indice);
 }
