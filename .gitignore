@@ -1,3 +1,4 @@
 *.o
 compilateur
 test/output/*
+a

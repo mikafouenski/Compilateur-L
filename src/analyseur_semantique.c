@@ -231,7 +231,7 @@ void analyse_instr_ecrire(n_instr *n) {
   if (trace_mips) {
     printf("\tlw\t$a0, 0($sp)      # Depile\n");
     printf("\taddi\t$sp, $sp, 4    # Depile\n");
-    printf("\tli\t$v0 1\n");
+    printf("\tli\t$v0, 1\n");
     printf("\tsyscall\n");
     printf("\tli\t$a0, '\\n'\n");
     printf("\tli\t$v0, 11\n");
@@ -258,7 +258,11 @@ void analyse_varExp(n_exp *n) {
   char* var = malloc(100 * sizeof (char));
   analyse_var(n->u.var, var);
   if (trace_mips) {
-    printf("\tlw\t$t0, %s\n", var + 1);
+    int pos = rechercheDeclarative(var);
+    if (pos && dico.tab[pos].classe == C_ARGUMENT)
+      printf("\tlw\t$t0, %d($fp)\n", 4 * (nb_args_function + 1) - 4 * rechercheDeclarative(var));
+    else
+      printf("\tlw\t$t0, %s\n", var + 1);
     mips_empile(0);
   }
 }
