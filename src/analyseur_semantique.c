@@ -13,6 +13,7 @@ int trace_tab;
 int trace_mips;
 int nb_args_function;
 int nb_var_local;
+int etiquette = 0;
 
 void analyse_n_prog(n_prog *n);
 void analyse_l_instr(n_l_instr *n);
@@ -58,8 +59,6 @@ int taille_n_l_exp(n_l_exp *liste) {
   return 0;
 }
 
-int etiquette = 0;
-
 int newEtiquette(void) {
   return etiquette++;
 }
@@ -84,16 +83,16 @@ void mips_fin_function() {
   }
 }
 
-void mips_empile(int v) {
+void mips_empile(char *s) {
   if (trace_mips) {
     printf("\tsubi\t$sp, $sp, 4      # Empile\n");
-    printf("\tsw\t$t%d, 0($sp)      # Empile\n", v);
+    printf("\tsw\t$%s, 0($sp)      # Empile\n", s);
   }
 }
 
-void mips_depile(int v) {
+void mips_depile(char *s) {
   if (trace_mips) {
-    printf("\tlw\t$t%d, 0($sp)      # Depile\n", v);
+    printf("\tlw\t$%s, 0($sp)      # Depile\n", s);
     printf("\taddi\t$sp, $sp, 4      # Depile\n");
   }
 }
@@ -103,7 +102,10 @@ void analyse_n_prog(n_prog *n) {
   analyse_l_dec(n->variables);
   if (trace_mips) {
     printf("\n\t.text\n");
-    printf("__start:\n\tjal\tmain\n\tli\t$v0, 10\n\tsyscall\n");
+    printf("__start:\n");
+    printf("\tjal\tmain\n");
+    printf("\tli\t$v0, 10\n");
+    printf("\tsyscall      # stoppe l'execution du processus\n");
   }
   analyse_l_dec(n->fonctions);
 }
@@ -133,17 +135,19 @@ void analyse_instr_si(n_instr *n) {
   int e1 = newEtiquette();
   int e2 = newEtiquette();
   analyse_exp(n->u.si_.test);
-  mips_depile(0);
+  mips_depile("t0");
   if (trace_mips) {
-    printf("\tbeq\t$t0, $zero, e%d    # IF\n", e1);
+    if(n->u.si_.sinon)
+      printf("\tbeq\t$t0, $zero, e%d    # IF\n", e1);
+    else
+      printf("\tbeq\t$t0, $zero, e%d    # IF\n", e2);
   }
   analyse_instr(n->u.si_.alors);
-  if (trace_mips) {
-    printf("\tj\te%d\n", e2);
-  }
-  if (trace_mips) 
-      printf("e%d:\n", e1);
   if(n->u.si_.sinon){
+    if (trace_mips) {
+      printf("\tj\te%d\n", e2);
+      printf("e%d:\n", e1);
+    }
     analyse_instr(n->u.si_.sinon);
   }
   if (trace_mips) {
@@ -152,19 +156,20 @@ void analyse_instr_si(n_instr *n) {
 }
 
 void analyse_instr_tantque(n_instr *n) {
-  int e = newEtiquette();
+  int e1 = newEtiquette();
+  int e2 = newEtiquette();
   if (trace_mips) {
-    printf("tantque%d:\n", e);
+    printf("e%d:\n", e1);
   }
   analyse_exp(n->u.tantque_.test);
   if (trace_mips) {
-    mips_depile(0);
-    printf("\tbeq\t$t0, $zero, tantquesuite%d    # TANTQUE\n", e);
+    mips_depile("t0");
+    printf("\tbeq\t$t0, $zero, e%d    # TANTQUE\n", e2);
   }
   analyse_instr(n->u.tantque_.faire);
   if(trace_mips) {
-    printf("\tj\ttantque%d\n", e);
-    printf("tantquesuite%d:\n", e);
+    printf("\tj\te%d\n", e1);
+    printf("e%d:\n", e2);
   }
 }
 
@@ -176,7 +181,7 @@ void analyse_instr_faire(n_instr *n) {
   analyse_instr(n->u.faire_.faire);
   analyse_exp(n->u.faire_.test);
   if (trace_mips) {
-    mips_depile(0);
+    mips_depile("t0");
     printf("\tbeq $t0, $zero, fairesuite%d\n    # FAIRE", e);
     printf("\tj faire%d\n", e);
     printf("fairesuite%d:\n", e);
@@ -191,7 +196,7 @@ void analyse_instr_pour(n_instr *n) {
   }
   analyse_exp(n->u.pour_.test);
   if (trace_mips) {
-    mips_depile(0);
+    mips_depile("t0");
     printf("\tbeq\t$t0, $zero, poursuite%d\n    # POUR", e);
   }
   analyse_instr(n->u.pour_.faire);
@@ -207,7 +212,7 @@ void analyse_instr_affect(n_instr *n) {
   analyse_var(n->u.affecte_.var, var);
   analyse_exp(n->u.affecte_.exp);
   if (trace_mips) {
-    mips_depile(0);
+    mips_depile("t0");
     int pos = rechercheExecutable(var);
     if (pos != -1 && dico.tab[pos].classe == C_VARIABLE_GLOBALE)
       printf("\tsw\t$t0, %s\n", var + 1);
@@ -222,7 +227,7 @@ void analyse_instr_appel(n_instr *n) {
 
 void analyse_appel(n_appel *n) {
   if (trace_mips) {
-    printf("\tsubi $sp, $sp, 4\n");
+    printf("\tsubi\t$sp, $sp, 4\n");
   }
   analyse_l_exp(n->args);
   if (trace_mips) {
@@ -233,9 +238,9 @@ void analyse_appel(n_appel *n) {
 
 void analyse_instr_retour(n_instr *n) {
   analyse_exp(n->u.retour_.expression);
-  mips_depile(0);
+  mips_depile("t0");
   if (trace_mips) {
-    printf("\tsw\tt0, %d($fp)\n", 4 * (nb_args_function + 1));
+    printf("\tsw\t$t0, %d($fp)\n", 4 * (nb_args_function + 1));
     mips_fin_function();
   }
 }
@@ -243,8 +248,7 @@ void analyse_instr_retour(n_instr *n) {
 void analyse_instr_ecrire(n_instr *n) {
   analyse_exp(n->u.ecrire_.expression);
   if (trace_mips) {
-    printf("\tlw\t$a0, 0($sp)      # Depile\n");
-    printf("\taddi\t$sp, $sp, 4    # Depile\n");
+    mips_depile("a0");
     printf("\tli\t$v0, 1\n");
     printf("\tsyscall\n");
     printf("\tli\t$a0, '\\n'\n");
@@ -279,7 +283,7 @@ void analyse_varExp(n_exp *n) {
       printf("\tlw\t$t0, %s\n", var + 1);
     else if (pos != -1 && dico.tab[pos].classe == C_VARIABLE_LOCALE)
       printf("\tlw\t$t0, %d($fp)\n", -1 * (8 + dico.tab[pos].adresse));
-    mips_empile(0);
+    mips_empile("t0");
   }
 }
 
@@ -291,118 +295,118 @@ void analyse_opExp(n_exp *n) {
     analyse_exp(n->u.opExp_.op2);
   }
   if(n->u.opExp_.op == plus) {
-    mips_depile(0);
-    mips_depile(1);
+    mips_depile("t0");
+    mips_depile("t1");
     if (trace_mips) {
       printf("\tadd\t$t0, $t1, $t0\n");
-      mips_empile(0);
+      mips_empile("t0");
     }
   }
   else if(n->u.opExp_.op == moins) {
-    mips_depile(0);
-    mips_depile(1);
+    mips_depile("t0");
+    mips_depile("t1");
     if (trace_mips){
       printf("\tsub\t$t0, $t1, $t0\n");
-      mips_empile(0);
+      mips_empile("t0");
     }
   }
   else if(n->u.opExp_.op == fois) {
-    mips_depile(0);
-    mips_depile(1);
+    mips_depile("t0");
+    mips_depile("t1");
     if (trace_mips) {
       printf("\tmult\t$t0, $t1\n");
       printf("\tmflo\t$t2\n");
-      mips_empile(2);
+      mips_empile("t2");
     }
   }
   else if(n->u.opExp_.op == divise) {
-    mips_depile(1);
-    mips_depile(0);
+    mips_depile("t1");
+    mips_depile("t0");
     if (trace_mips){
       printf("\tdiv\t$t0, $t1\n");
       printf("\tmflo\t$t2\n");
-      mips_empile(2);
+      mips_empile("t2");
     }
   }
   else if(n->u.opExp_.op == egal) {
     int e = newEtiquette();
-    mips_depile(0);
-    mips_depile(1);
+    mips_depile("t0");
+    mips_depile("t1");
     if (trace_mips){
       printf("\tli\t$t2, 1\n");
       printf("\tbeq\t$t0, $t1, e%d\n", e);
       printf("\tli\t$t2, 0\n");
       printf("e%d:\n", e);
-      mips_empile(2);
+      mips_empile("t2");
     }
   }
   else if(n->u.opExp_.op == diff) {
     int e = newEtiquette();
-    mips_depile(0);
-    mips_depile(1);
+    mips_depile("t0");
+    mips_depile("t1");
     if (trace_mips){
       printf("\tli\t$t2, 1\n");
       printf("\tbne\t$t0, $t1, e%d\n", e);
       printf("\tli\t$t2, 0\n");
       printf("e%d:\n", e);
-      mips_empile(2);
+      mips_empile("t2");
     }
   }
   else if(n->u.opExp_.op == inf) {
     int e = newEtiquette();
-    mips_depile(1);
-    mips_depile(0);
+    mips_depile("t1");
+    mips_depile("t0");
     if (trace_mips){
       printf("\tli\t$t2, 1\n");
       printf("\tblt\t$t0, $t1, e%d\n", e);
       printf("\tli\t$t2, 0\n");
       printf("e%d:\n", e);
-      mips_empile(2);
+      mips_empile("t2");
     }
   }
   else if(n->u.opExp_.op == infeg) {
     int e = newEtiquette();
-    mips_depile(1);
-    mips_depile(0);
+    mips_depile("t1");
+    mips_depile("t0");
     if (trace_mips){
       printf("\tli\t$t2, 1\n");
       printf("\tble\t$t0, $t1, e%d\n", e);
       printf("\tli\t$t2, 0\n");
       printf("e%d:\n", e);
-      mips_empile(2);
+      mips_empile("t2");
     }
   }
   else if(n->u.opExp_.op == ou) {
     int e = newEtiquette();
-    mips_depile(1);
-    mips_depile(0);
+    mips_depile("t1");
+    mips_depile("t0");
     if (trace_mips) {
       printf("\tli\t$t2, 1\n");
       printf("\tbne\t$t0, $zero, e%d\n", e);
       printf("\tbne\t$t1, $zero, e%d\n", e);
       printf("\tli\t$t2, 0\n");
       printf("e%d:\n", e);
-      mips_empile(2);
+      mips_empile("t2");
     }
   }
   else if(n->u.opExp_.op == et) {
     int e = newEtiquette();
-    mips_depile(1);
-    mips_depile(0);
+    mips_depile("t1");
+    mips_depile("t0");
     if (trace_mips) {
       printf("\tli\t$t2, 0\n");
       printf("\tbeq\t$t0, $zero, e%d\n", e);
       printf("\tbeq\t$t1, $zero, e%d\n", e);
       printf("\tli\t$t2, 1\n");
       printf("e%d:\n", e);
-      mips_empile(2);
+      mips_empile("t2");
     }
   }
   else if(n->u.opExp_.op == non) {
-    mips_depile(0);
+    mips_depile("t0");
     if (trace_mips) {
       printf("\tnot\t$t1, $t0\n");
-      mips_empile(1);
+      mips_empile("t1");
     }
   }
 }
@@ -410,7 +414,7 @@ void analyse_opExp(n_exp *n) {
 void analyse_intExp(n_exp *n) {
   if (trace_mips) {
     printf("\tli\t$t0, %d\n", n->u.entier);
-    mips_empile(0);
+    mips_empile("t0");
   }
 }
 
@@ -418,8 +422,7 @@ void analyse_lireExp(n_exp *n) {
   if (trace_mips) {
     printf("\tli\t$v0, 5\n");
     printf("\tsyscall\n");
-    printf("\tsubi\t$sp, $sp, 4      # Empile\n");
-    printf("\tsw\t$v0, 0($sp)        # Empile\n");
+    mips_empile("v0");
   }
 }
 
@@ -470,10 +473,7 @@ void analyse_foncDec(n_dec *n) {
     //mips_depile(0);
     if (trace_mips) {
       if (nb_var_local > 0)
-        printf("\tsw\t$t0, %d($fp)\n", -4 * (nb_var_local + 1));
-      else if (nb_var_local == 0) ;
-      else
-        printf("\tsw\t$t0, %d($fp)\n", 4 * (nb_args_function + 1));
+        printf("\taddi\t$sp, $sp, %d\n", 4 * nb_var_local);
     }
     mips_fin_function();
     sortieFonction();
@@ -511,6 +511,7 @@ void analyse_var(n_var *n, char *s) {
     analyse_var_simple(n);
   }
   else if(n->type == indicee) {
+    strcpy(s, n->nom);
     analyse_var_indicee(n);
   }
 }
