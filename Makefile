@@ -1,7 +1,7 @@
 CC=gcc
 
 LIBS = -lm
-CCFLAGS= -Wall -ggdb -I./inc
+CCFLAGS= -Wall -I./inc -g3
 LDFLAGS=
 
 SRC=$(wildcard src/*.c)
@@ -18,8 +18,8 @@ $(EXEC): $(OBJ)
 	$(CC) $(CCFLAGS) -o $@ -c $<
 
 clean:
-	rm -f src/*.o
-	rm -f $(EXEC)
+	rm -fv src/*.o
+	rm -fv $(EXEC)
 
 buildAndRun:
 	make clean
