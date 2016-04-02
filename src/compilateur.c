@@ -9,6 +9,8 @@
 #include "analyseur_syntaxique.h"
 #include "analyseur_semantique.h"
 
+#include "freedom.h"
+
 char yytext[100];
 FILE *yyin;
 
@@ -64,5 +66,8 @@ int main(int argc, char **argv) {
     if (aflag) affiche_n_prog(p);
 
     semantique(p, tflag, mflag);
+
+    fclose(yyin);
+    freedom(p);
     return 0;
 }

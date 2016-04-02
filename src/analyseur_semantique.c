@@ -194,25 +194,29 @@ void analyse_instr_affect(n_instr *n) {
   char var[100];
   analyse_exp(n->u.affecte_.exp);
   analyse_var(n->u.affecte_.var, var);
-  mips_depile("t0");
-  mips_print("\tsw\t$t0, %s\n", var);
+  mips_depile("t1");
+  mips_print("\tsw\t$t1, %s\n", var);
 }
 
 void analyse_instr_appel(n_instr *n) {
   analyse_appel(n->u.appel);
+  if (asreturn == 0)
+    mips_print("\taddi\t$sp, $sp, 4     # Valeur retour ignorée\n");
 }
 
 void analyse_appel(n_appel *n) {
-  mips_print("\tsubi\t$sp, $sp, 4\n");
+  mips_print("\tsubi\t$sp, $sp, 4     # allocation valeur de retour\n");
   analyse_l_exp(n->args);
   mips_print("\tjal\t%s\n", n->fonction);
-  mips_print("\taddi\t$sp, $sp, %d\n", 4 * taille_n_l_exp(n->args));
+  int nb_args_appel = taille_n_l_exp(n->args);
+  if (nb_args_appel > 0)
+    mips_print("\taddi\t$sp, $sp, %d     # desallocation parametres\n", 4 * nb_args_appel);
 }
 
 void analyse_instr_retour(n_instr *n) {
   analyse_exp(n->u.retour_.expression);
   mips_depile("t0");
-  //asreturn = 1;
+  asreturn = 1;
   mips_print("\tsw\t$t0, %d($fp)\n", 4 * (nb_args_function + 1));
   mips_fin_function();
 }
@@ -245,8 +249,8 @@ void analyse_exp(n_exp *n) {
 void analyse_varExp(n_exp *n) {
   char var[100];
   analyse_var(n->u.var, var);
-  mips_print("\tlw\t$t0, %s\n", var);
-  mips_empile("t0");
+  mips_print("\tlw\t$t1, %s\n", var);
+  mips_empile("t1");
 }
 
 void analyse_opExp(n_exp *n) {
@@ -255,16 +259,16 @@ void analyse_opExp(n_exp *n) {
   if( n->u.opExp_.op2 != NULL )
     analyse_exp(n->u.opExp_.op2);
   if(n->u.opExp_.op == plus) {
-    mips_depile("t0");
     mips_depile("t1");
-    mips_print("\tadd\t$t0, $t1, $t0\n");
-    mips_empile("t0");
+    mips_depile("t0");
+    mips_print("\tadd\t$t2, $t0, $t1\n");
+    mips_empile("t2");
   }
   else if(n->u.opExp_.op == moins) {
-    mips_depile("t0");
     mips_depile("t1");
-    mips_print("\tsub\t$t0, $t1, $t0\n");
-    mips_empile("t0");
+    mips_depile("t0");
+    mips_print("\tsub\t$t2, $t0, $t1\n");
+    mips_empile("t2");
   }
   else if(n->u.opExp_.op == fois) {
     mips_depile("t0");
@@ -282,9 +286,9 @@ void analyse_opExp(n_exp *n) {
   }
   else if(n->u.opExp_.op == egal) {
     int e = newEtiquette();
-    mips_depile("t0");
     mips_depile("t1");
-    mips_print("\tli\t$t2, 1\n");
+    mips_depile("t0");
+    mips_print("\tli\t$t2, -1\n");
     mips_print("\tbeq\t$t0, $t1, e%d\n", e);
     mips_print("\tli\t$t2, 0\n");
     mips_print("e%d:\n", e);
@@ -304,7 +308,7 @@ void analyse_opExp(n_exp *n) {
     int e = newEtiquette();
     mips_depile("t1");
     mips_depile("t0");
-    mips_print("\tli\t$t2, 1\n");
+    mips_print("\tli\t$t2, -1\n");
     mips_print("\tblt\t$t0, $t1, e%d\n", e);
     mips_print("\tli\t$t2, 0\n");
     mips_print("e%d:\n", e);
@@ -400,14 +404,12 @@ void analyse_foncDec(n_dec *n) {
     contexte = C_VARIABLE_LOCALE;
     nb_var_local = taille_n_l_dec(n->u.foncDec_.variables);
     if (nb_var_local > 0)
-      mips_print("\tsubi\t$sp, $sp, %d\n", 4 * nb_var_local);
+      mips_print("\tsubi\t$sp, $sp, %d      # allocation variables locales\n", 4 * nb_var_local);
     analyse_l_dec(n->u.foncDec_.variables);
     analyse_instr(n->u.foncDec_.corps);
     if (trace_tab) affiche_dico();
-    //if (asreturn == 0)
-    //  mips_print("\taddi\t$sp, $sp, 4     # Valeur retour ignorée\n");
     if (nb_var_local > 0)
-      mips_print("\taddi\t$sp, $sp, %d\n", 4 * nb_var_local);
+      mips_print("\taddi\t$sp, $sp, %d      # desallocation variables locales\n", 4 * nb_var_local);
     mips_fin_function();
     sortieFonction();
   }
