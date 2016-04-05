@@ -473,6 +473,7 @@ n_exp *negation (void) {
         affiche_balise_ouvrante("negation", trace_xml);
         EatTerminal();
         $$ = comparaison();
+        cree_n_exp_op(non, $$, NULL);
         affiche_balise_fermante("negation", trace_xml);
         return $$;
     } else if (est_premier(uniteCourante, _comparaison_)) {
@@ -639,7 +640,7 @@ n_exp *conjonctionBis (n_exp *herite) {
         affiche_balise_ouvrante("conjonctionBis", trace_xml);
         EatTerminal();
         $2 = negation();
-        herite_fils = cree_n_exp_op(non, herite, $2);
+        herite_fils = cree_n_exp_op(et, herite, $2);
         $$ = conjonctionBis(herite_fils);
         affiche_balise_fermante("conjonctionBis", trace_xml);
         return $$;

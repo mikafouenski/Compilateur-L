@@ -254,23 +254,31 @@ void analyse_varExp(n_exp *n) {
 }
 
 void analyse_opExp(n_exp *n) {
-  if( n->u.opExp_.op1 != NULL )
-    analyse_exp(n->u.opExp_.op1);
-  if( n->u.opExp_.op2 != NULL )
-    analyse_exp(n->u.opExp_.op2);
   if(n->u.opExp_.op == plus) {
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
     mips_depile("t1");
     mips_depile("t0");
     mips_print("\tadd\t$t2, $t0, $t1\n");
     mips_empile("t2");
   }
   else if(n->u.opExp_.op == moins) {
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
     mips_depile("t1");
     mips_depile("t0");
     mips_print("\tsub\t$t2, $t0, $t1\n");
     mips_empile("t2");
   }
   else if(n->u.opExp_.op == fois) {
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
     mips_depile("t0");
     mips_depile("t1");
     mips_print("\tmult\t$t0, $t1\n");
@@ -278,6 +286,10 @@ void analyse_opExp(n_exp *n) {
     mips_empile("t2");
   }
   else if(n->u.opExp_.op == divise) {
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
     mips_depile("t1");
     mips_depile("t0");
     mips_print("\tdiv\t$t0, $t1\n");
@@ -286,6 +298,10 @@ void analyse_opExp(n_exp *n) {
   }
   else if(n->u.opExp_.op == egal) {
     int e = newEtiquette();
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
     mips_depile("t1");
     mips_depile("t0");
     mips_print("\tli\t$t2, -1\n");
@@ -296,6 +312,10 @@ void analyse_opExp(n_exp *n) {
   }
   else if(n->u.opExp_.op == diff) {
     int e = newEtiquette();
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
     mips_depile("t0");
     mips_depile("t1");
     mips_print("\tli\t$t2, 1\n");
@@ -306,6 +326,10 @@ void analyse_opExp(n_exp *n) {
   }
   else if(n->u.opExp_.op == inf) {
     int e = newEtiquette();
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
     mips_depile("t1");
     mips_depile("t0");
     mips_print("\tli\t$t2, -1\n");
@@ -316,6 +340,10 @@ void analyse_opExp(n_exp *n) {
   }
   else if(n->u.opExp_.op == infeg) {
     int e = newEtiquette();
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
     mips_depile("t1");
     mips_depile("t0");
     mips_print("\tli\t$t2, 1\n");
@@ -325,28 +353,46 @@ void analyse_opExp(n_exp *n) {
     mips_empile("t2");
   }
   else if(n->u.opExp_.op == ou) {
-    int e = newEtiquette();
-    mips_depile("t1");
+    int e1 = newEtiquette();
+    int e2 = newEtiquette();
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
-    mips_print("\tli\t$t2, 1\n");
-    mips_print("\tbne\t$t0, $zero, e%d\n", e);
-    mips_print("\tbne\t$t1, $zero, e%d\n", e);
-    mips_print("\tli\t$t2, 0\n");
-    mips_print("e%d:\n", e);
-    mips_empile("t2");
+    mips_print("\tbgt\t$t0, $zero, e%d\n", e1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
+    mips_depile("t0");
+    mips_print("\tbgt\t$t0, $zero, e%d\n", e1);
+    mips_print("\tli\t$t1, 0\n");
+    mips_empile("t1");
+    mips_print("\tj\te%d\n", e2);
+    mips_print("e%d:\n", e1);
+    mips_print("\tli\t$t1, 1\n");
+    mips_empile("t1");
+    mips_print("e%d:\n", e2);
   }
   else if(n->u.opExp_.op == et) {
-    int e = newEtiquette();
-    mips_depile("t1");
+    int e1 = newEtiquette();
+    int e2 = newEtiquette();
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
-    mips_print("\tli\t$t2, 0\n");
-    mips_print("\tbeq\t$t0, $zero, e%d\n", e);
-    mips_print("\tbeq\t$t1, $zero, e%d\n", e);
-    mips_print("\tli\t$t2, 1\n");
-    mips_print("e%d:\n", e);
-    mips_empile("t2");
+    mips_print("\tble\t$t0, $zero, e%d\n", e1);
+    if(n->u.opExp_.op2 != NULL)
+      analyse_exp(n->u.opExp_.op2);
+    mips_depile("t0");
+    mips_print("\tble\t$t0, $zero, e%d\n", e1);
+    mips_print("\tli\t$t1, 1\n");
+    mips_empile("t1");
+    mips_print("\tj\te%d\n", e2);
+    mips_print("e%d:\n", e1);
+    mips_print("\tli\t$t1, 0\n");
+    mips_empile("t1");
+    mips_print("e%d:\n", e2);
   }
   else if(n->u.opExp_.op == non) {
+    if(n->u.opExp_.op1 != NULL)
+      analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
     mips_print("\tnot\t$t1, $t0\n");
     mips_empile("t1");
