@@ -391,11 +391,19 @@ void analyse_opExp(n_exp *n) {
     mips_print("e%d:\n", e2);
   }
   else if(n->u.opExp_.op == non) {
+    //int e = newEtiquette();
     if(n->u.opExp_.op1 != NULL)
       analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
     mips_print("\tnot\t$t1, $t0\n");
     mips_empile("t1");
+    /*mips_depile("t0");
+    mips_print("\tli\t$t1, $zero\n");
+    mips_print("\tli\t$t1, $zero\n");
+    mips_print("\tbgt\t$t0, $zero, e%d\n", e);
+    mips_print("\tli\t$t1, 1\n");
+    mips_print("e%d:\t\n", e);
+    mips_empile("t1");*/
   }
 }
 

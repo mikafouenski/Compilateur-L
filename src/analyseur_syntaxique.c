@@ -469,11 +469,12 @@ n_exp *conjonction (void) {
 }
 n_exp *negation (void) {
     n_exp *$$ = NULL;
+    n_exp *$1 = NULL;
     if (uniteCourante == NON) {
         affiche_balise_ouvrante("negation", trace_xml);
         EatTerminal();
-        $$ = comparaison();
-        cree_n_exp_op(non, $$, NULL);
+        $1 = comparaison();
+        $$ = cree_n_exp_op(non, $1, NULL);
         affiche_balise_fermante("negation", trace_xml);
         return $$;
     } else if (est_premier(uniteCourante, _comparaison_)) {
