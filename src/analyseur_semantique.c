@@ -22,8 +22,8 @@ void analyse_l_instr(n_l_instr *n);
 void analyse_instr(n_instr *n);
 void analyse_instr_si(n_instr *n);
 void analyse_instr_tantque(n_instr *n);
-void analyse_instr_faire(n_instr *n);      /* MODIFIE POUR EVAL */
-void analyse_instr_pour(n_instr *n);       /* MODIFIE POUR EVAL */
+void analyse_instr_faire(n_instr *n);
+void analyse_instr_pour(n_instr *n);
 void analyse_instr_affect(n_instr *n);
 void analyse_instr_appel(n_instr *n);
 void analyse_instr_retour(n_instr *n);
@@ -391,19 +391,18 @@ void analyse_opExp(n_exp *n) {
     mips_print("e%d:\n", e2);
   }
   else if(n->u.opExp_.op == non) {
-    //int e = newEtiquette();
+    int e1 = newEtiquette();
+    int e2 = newEtiquette();
     if(n->u.opExp_.op1 != NULL)
       analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
-    mips_print("\tnot\t$t1, $t0\n");
-    mips_empile("t1");
-    /*mips_depile("t0");
-    mips_print("\tli\t$t1, $zero\n");
-    mips_print("\tli\t$t1, $zero\n");
-    mips_print("\tbgt\t$t0, $zero, e%d\n", e);
+    mips_print("\tbgt\t$t0, $zero, e%d\n", e1);
     mips_print("\tli\t$t1, 1\n");
-    mips_print("e%d:\t\n", e);
-    mips_empile("t1");*/
+    mips_print("\tj\te%d\n", e2);
+    mips_print("e%d:\n", e1);
+    mips_print("\tli\t$t1, 0\n");
+    mips_print("e%d:\n", e2);
+    mips_empile("t1");
   }
 }
 

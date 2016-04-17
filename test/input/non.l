@@ -1,5 +1,5 @@
 main () 
 entier $a; {
-    $a = 0;
-    ecrire(! ($a + 1));
+    $a = 1;
+    ecrire(! 42);
 }
