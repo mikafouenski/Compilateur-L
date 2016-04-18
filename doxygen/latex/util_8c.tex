@@ -1,0 +1,119 @@
+\hypertarget{util_8c}{}\section{src/util.c File Reference}
+\label{util_8c}\index{src/util.\+c@{src/util.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{util_8c_a99211900ea59d15a5ad9bf8dabd72929}{erreur} (char $\ast$message)
+\item 
+void \hyperlink{util_8c_aaf92865ef2e023176ef6b766eca04acc}{erreur\+\_\+1s} (char $\ast$message, char $\ast$s)
+\item 
+char $\ast$ \hyperlink{util_8c_a58dd1f0763fcdec42fd0889312c63858}{duplique\+\_\+chaine} (char $\ast$src)
+\item 
+void \hyperlink{util_8c_a189eba34a209327583f582f69ce4dfe4}{indent} ()
+\item 
+void \hyperlink{util_8c_af57a02c88a859c4720e258088c664e17}{affiche\+\_\+balise\+\_\+ouvrante} (const char $\ast$fct\+\_\+, int \hyperlink{analyseur__syntaxique_8c_a15eb478ab1ae16e5963c2f900627c6f8}{trace\+\_\+xml})
+\item 
+void \hyperlink{util_8c_a4bc9321a01401f9ada8cfa6221454da2}{affiche\+\_\+balise\+\_\+fermante} (const char $\ast$fct\+\_\+, int \hyperlink{analyseur__syntaxique_8c_a15eb478ab1ae16e5963c2f900627c6f8}{trace\+\_\+xml})
+\item 
+void \hyperlink{util_8c_ae4f89d0a79e1224495be478281226230}{affiche\+\_\+texte} (char $\ast$texte\+\_\+, int \hyperlink{analyseur__syntaxique_8c_a15eb478ab1ae16e5963c2f900627c6f8}{trace\+\_\+xml})
+\item 
+void \hyperlink{util_8c_a595a17594abd1f0640455c3366e754ea}{affiche\+\_\+xml\+\_\+texte} (char $\ast$texte\+\_\+)
+\item 
+void \hyperlink{util_8c_add502c143271bd3480c69b3decc315e0}{affiche\+\_\+element} (char $\ast$fct\+\_\+, char $\ast$texte\+\_\+, int \hyperlink{analyseur__syntaxique_8c_a15eb478ab1ae16e5963c2f900627c6f8}{trace\+\_\+xml})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{util_8c_aca5989805239750a19a1999dacdf3b35}{nb\+\_\+ligne}
+\item 
+int \hyperlink{util_8c_a0e84fa259f79cc1d365dd7a093e49164}{indent\+\_\+xml} = 0
+\item 
+int \hyperlink{util_8c_a651835535e919890bb7765a5c40e7831}{indent\+\_\+step} = 1
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{util.\+c@{util.\+c}!affiche\+\_\+balise\+\_\+fermante@{affiche\+\_\+balise\+\_\+fermante}}
+\index{affiche\+\_\+balise\+\_\+fermante@{affiche\+\_\+balise\+\_\+fermante}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{affiche\+\_\+balise\+\_\+fermante(const char $\ast$fct\+\_\+, int trace\+\_\+xml)}{affiche_balise_fermante(const char *fct_, int trace_xml)}}]{\setlength{\rightskip}{0pt plus 5cm}void affiche\+\_\+balise\+\_\+fermante (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fct\+\_\+, }
+\item[{int}]{trace\+\_\+xml}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_a4bc9321a01401f9ada8cfa6221454da2}{}\label{util_8c_a4bc9321a01401f9ada8cfa6221454da2}
+\index{util.\+c@{util.\+c}!affiche\+\_\+balise\+\_\+ouvrante@{affiche\+\_\+balise\+\_\+ouvrante}}
+\index{affiche\+\_\+balise\+\_\+ouvrante@{affiche\+\_\+balise\+\_\+ouvrante}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{affiche\+\_\+balise\+\_\+ouvrante(const char $\ast$fct\+\_\+, int trace\+\_\+xml)}{affiche_balise_ouvrante(const char *fct_, int trace_xml)}}]{\setlength{\rightskip}{0pt plus 5cm}void affiche\+\_\+balise\+\_\+ouvrante (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fct\+\_\+, }
+\item[{int}]{trace\+\_\+xml}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_af57a02c88a859c4720e258088c664e17}{}\label{util_8c_af57a02c88a859c4720e258088c664e17}
+\index{util.\+c@{util.\+c}!affiche\+\_\+element@{affiche\+\_\+element}}
+\index{affiche\+\_\+element@{affiche\+\_\+element}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{affiche\+\_\+element(char $\ast$fct\+\_\+, char $\ast$texte\+\_\+, int trace\+\_\+xml)}{affiche_element(char *fct_, char *texte_, int trace_xml)}}]{\setlength{\rightskip}{0pt plus 5cm}void affiche\+\_\+element (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{fct\+\_\+, }
+\item[{char $\ast$}]{texte\+\_\+, }
+\item[{int}]{trace\+\_\+xml}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_add502c143271bd3480c69b3decc315e0}{}\label{util_8c_add502c143271bd3480c69b3decc315e0}
+\index{util.\+c@{util.\+c}!affiche\+\_\+texte@{affiche\+\_\+texte}}
+\index{affiche\+\_\+texte@{affiche\+\_\+texte}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{affiche\+\_\+texte(char $\ast$texte\+\_\+, int trace\+\_\+xml)}{affiche_texte(char *texte_, int trace_xml)}}]{\setlength{\rightskip}{0pt plus 5cm}void affiche\+\_\+texte (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{texte\+\_\+, }
+\item[{int}]{trace\+\_\+xml}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_ae4f89d0a79e1224495be478281226230}{}\label{util_8c_ae4f89d0a79e1224495be478281226230}
+\index{util.\+c@{util.\+c}!affiche\+\_\+xml\+\_\+texte@{affiche\+\_\+xml\+\_\+texte}}
+\index{affiche\+\_\+xml\+\_\+texte@{affiche\+\_\+xml\+\_\+texte}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{affiche\+\_\+xml\+\_\+texte(char $\ast$texte\+\_\+)}{affiche_xml_texte(char *texte_)}}]{\setlength{\rightskip}{0pt plus 5cm}void affiche\+\_\+xml\+\_\+texte (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{texte\+\_\+}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_a595a17594abd1f0640455c3366e754ea}{}\label{util_8c_a595a17594abd1f0640455c3366e754ea}
+\index{util.\+c@{util.\+c}!duplique\+\_\+chaine@{duplique\+\_\+chaine}}
+\index{duplique\+\_\+chaine@{duplique\+\_\+chaine}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{duplique\+\_\+chaine(char $\ast$src)}{duplique_chaine(char *src)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ duplique\+\_\+chaine (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{src}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_a58dd1f0763fcdec42fd0889312c63858}{}\label{util_8c_a58dd1f0763fcdec42fd0889312c63858}
+\index{util.\+c@{util.\+c}!erreur@{erreur}}
+\index{erreur@{erreur}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{erreur(char $\ast$message)}{erreur(char *message)}}]{\setlength{\rightskip}{0pt plus 5cm}void erreur (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{message}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_a99211900ea59d15a5ad9bf8dabd72929}{}\label{util_8c_a99211900ea59d15a5ad9bf8dabd72929}
+\index{util.\+c@{util.\+c}!erreur\+\_\+1s@{erreur\+\_\+1s}}
+\index{erreur\+\_\+1s@{erreur\+\_\+1s}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{erreur\+\_\+1s(char $\ast$message, char $\ast$s)}{erreur_1s(char *message, char *s)}}]{\setlength{\rightskip}{0pt plus 5cm}void erreur\+\_\+1s (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{message, }
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_aaf92865ef2e023176ef6b766eca04acc}{}\label{util_8c_aaf92865ef2e023176ef6b766eca04acc}
+\index{util.\+c@{util.\+c}!indent@{indent}}
+\index{indent@{indent}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{indent()}{indent()}}]{\setlength{\rightskip}{0pt plus 5cm}void indent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{util_8c_a189eba34a209327583f582f69ce4dfe4}{}\label{util_8c_a189eba34a209327583f582f69ce4dfe4}
+
+
+\subsection{Variable Documentation}
+\index{util.\+c@{util.\+c}!indent\+\_\+step@{indent\+\_\+step}}
+\index{indent\+\_\+step@{indent\+\_\+step}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{indent\+\_\+step}{indent_step}}]{\setlength{\rightskip}{0pt plus 5cm}int indent\+\_\+step = 1}\hypertarget{util_8c_a651835535e919890bb7765a5c40e7831}{}\label{util_8c_a651835535e919890bb7765a5c40e7831}
+\index{util.\+c@{util.\+c}!indent\+\_\+xml@{indent\+\_\+xml}}
+\index{indent\+\_\+xml@{indent\+\_\+xml}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{indent\+\_\+xml}{indent_xml}}]{\setlength{\rightskip}{0pt plus 5cm}int indent\+\_\+xml = 0}\hypertarget{util_8c_a0e84fa259f79cc1d365dd7a093e49164}{}\label{util_8c_a0e84fa259f79cc1d365dd7a093e49164}
+\index{util.\+c@{util.\+c}!nb\+\_\+ligne@{nb\+\_\+ligne}}
+\index{nb\+\_\+ligne@{nb\+\_\+ligne}!util.\+c@{util.\+c}}
+\subsubsection[{\texorpdfstring{nb\+\_\+ligne}{nb_ligne}}]{\setlength{\rightskip}{0pt plus 5cm}int nb\+\_\+ligne}\hypertarget{util_8c_aca5989805239750a19a1999dacdf3b35}{}\label{util_8c_aca5989805239750a19a1999dacdf3b35}

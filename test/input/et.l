@@ -1,5 +1,5 @@
 main () 
 entier $a; {
-    $a = 0;
+    $a = 1;
     ecrire($a & lire());
 }

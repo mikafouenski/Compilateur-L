@@ -45,6 +45,13 @@ void analyse_var_simple(n_var *n, char *s);
 void analyse_var_indicee(n_var *n, char *s);
 void analyse_appel(n_appel *n);
 
+/**
+ * @brief      Main function to parse syntaxique tree
+ *
+ * @param      p           The head of the tree
+ * @param[in]  trace_dico  boolean to display symbol table
+ * @param[in]  print_mips  boolean to display the mips output on stdin
+ */
 void semantique(n_prog *p, int trace_dico, int print_mips) {
   trace_tab = trace_dico;
   trace_mips = print_mips;
@@ -358,11 +365,11 @@ void analyse_opExp(n_exp *n) {
     if(n->u.opExp_.op1 != NULL)
       analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
-    mips_print("\tbgt\t$t0, $zero, e%d\n", e1);
+    mips_print("\tbne\t$t0, $zero, e%d\n", e1);
     if(n->u.opExp_.op2 != NULL)
       analyse_exp(n->u.opExp_.op2);
     mips_depile("t0");
-    mips_print("\tbgt\t$t0, $zero, e%d\n", e1);
+    mips_print("\tbne\t$t0, $zero, e%d\n", e1);
     mips_print("\tli\t$t1, 0\n");
     mips_empile("t1");
     mips_print("\tj\te%d\n", e2);
@@ -377,11 +384,11 @@ void analyse_opExp(n_exp *n) {
     if(n->u.opExp_.op1 != NULL)
       analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
-    mips_print("\tble\t$t0, $zero, e%d\n", e1);
+    mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
     if(n->u.opExp_.op2 != NULL)
       analyse_exp(n->u.opExp_.op2);
     mips_depile("t0");
-    mips_print("\tble\t$t0, $zero, e%d\n", e1);
+    mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
     mips_print("\tli\t$t1, 1\n");
     mips_empile("t1");
     mips_print("\tj\te%d\n", e2);
@@ -396,11 +403,11 @@ void analyse_opExp(n_exp *n) {
     if(n->u.opExp_.op1 != NULL)
       analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
-    mips_print("\tbgt\t$t0, $zero, e%d\n", e1);
-    mips_print("\tli\t$t1, 1\n");
+    mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
+    mips_print("\tli\t$t1, 0\n");
     mips_print("\tj\te%d\n", e2);
     mips_print("e%d:\n", e1);
-    mips_print("\tli\t$t1, 0\n");
+    mips_print("\tli\t$t1, 1\n");
     mips_print("e%d:\n", e2);
     mips_empile("t1");
   }

@@ -1,0 +1,275 @@
+\hypertarget{syntabs_8c}{}\section{src/syntabs.c File Reference}
+\label{syntabs_8c}\index{src/syntabs.\+c@{src/syntabs.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}util.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}syntabs.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{syntabs_8h_aef001b26fda49a7fbaf2f68c86313f3d}{n\+\_\+appel} $\ast$ \hyperlink{syntabs_8c_a8320c4e7fac9c7f7a803d82d7ea5a421}{cree\+\_\+n\+\_\+appel} (char $\ast$fonction, \hyperlink{syntabs_8h_a3046944eb0074d1c280a6d656b3cbd65}{n\+\_\+l\+\_\+exp} $\ast$args)
+\item 
+\hyperlink{syntabs_8h_a6602c160eaa441d4fdbd00cefdd4b8fa}{n\+\_\+prog} $\ast$ \hyperlink{syntabs_8c_af29f6410a1a28897d1658672104321a4}{cree\+\_\+n\+\_\+prog} (\hyperlink{syntabs_8h_ab260b396f6175518fe4d37ca38ded54e}{n\+\_\+l\+\_\+dec} $\ast$variables, \hyperlink{syntabs_8h_ab260b396f6175518fe4d37ca38ded54e}{n\+\_\+l\+\_\+dec} $\ast$fonctions)
+\item 
+\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\+\_\+var} $\ast$ \hyperlink{syntabs_8c_a10b976f83159c0d422863f20688cebd1}{cree\+\_\+n\+\_\+var\+\_\+simple} (char $\ast$\hyperlink{analyseur__syntaxique_8c_afe3b6c263907762f577a8aeb76514bc3}{nom})
+\item 
+\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\+\_\+var} $\ast$ \hyperlink{syntabs_8c_ac68c81dd993fa0373ab01786eccdcbd8}{cree\+\_\+n\+\_\+var\+\_\+indicee} (char $\ast$\hyperlink{analyseur__syntaxique_8c_afe3b6c263907762f577a8aeb76514bc3}{nom}, \hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$indice)
+\item 
+\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$ \hyperlink{syntabs_8c_a11d9c23d0f53186358c01dd0f52f4cc1}{cree\+\_\+n\+\_\+exp\+\_\+op} (\hyperlink{syntabs_8h_ad34e7fb3c33543e9f3a1e48486fa7692}{operation} op, \hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$op1, \hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$op2)
+\item 
+\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$ \hyperlink{syntabs_8c_aebb01ea43820528ce5faba504e213b60}{cree\+\_\+n\+\_\+exp\+\_\+appel} (\hyperlink{syntabs_8h_aef001b26fda49a7fbaf2f68c86313f3d}{n\+\_\+appel} $\ast$app)
+\item 
+\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$ \hyperlink{syntabs_8c_aacc66d3ea1b71b9372139f145f966761}{cree\+\_\+n\+\_\+exp\+\_\+incr} (\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\+\_\+var} $\ast$\hyperlink{analyseur__syntaxique_8h_a05b3477995cacf739dce9f55c1036717}{var})
+\item 
+\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$ \hyperlink{syntabs_8c_a39afe977b3f6e6dc124e0b34f3f30e56}{cree\+\_\+n\+\_\+exp\+\_\+var} (\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\+\_\+var} $\ast$\hyperlink{analyseur__syntaxique_8h_a05b3477995cacf739dce9f55c1036717}{var})
+\item 
+\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$ \hyperlink{syntabs_8c_a60a912c9163bb28bd242ffe86dee8f9d}{cree\+\_\+n\+\_\+exp\+\_\+entier} (int entier)
+\item 
+\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$ \hyperlink{syntabs_8c_a8121d555ec0b1f72f0bccfd4ee81c6f7}{cree\+\_\+n\+\_\+exp\+\_\+lire} ()
+\item 
+\hyperlink{syntabs_8h_a3046944eb0074d1c280a6d656b3cbd65}{n\+\_\+l\+\_\+exp} $\ast$ \hyperlink{syntabs_8c_ac30627e7c11d7eefa6da125449e17c4e}{cree\+\_\+n\+\_\+l\+\_\+exp} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$tete, \hyperlink{syntabs_8h_a3046944eb0074d1c280a6d656b3cbd65}{n\+\_\+l\+\_\+exp} $\ast$queue)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_ace99eefc46a4591c67c0165e0a1f9f64}{cree\+\_\+n\+\_\+instr\+\_\+incr} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$incr)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_ac5427d0bad29d5695b18434eb9fd8a34}{cree\+\_\+n\+\_\+instr\+\_\+si} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$test, \hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$alors, \hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$sinon)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_ad98abacd3e91ea245442a6d6d91fb65d}{cree\+\_\+n\+\_\+instr\+\_\+tantque} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$test, \hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$faire)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_aa104ff158258ed2e7372b245a9723ad6}{cree\+\_\+n\+\_\+instr\+\_\+faire} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$faire, \hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$test)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_aaa8f5dcd1b8bc31b6e530468148dd98a}{cree\+\_\+n\+\_\+instr\+\_\+pour} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$init, \hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$test, \hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$incr, \hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$faire)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_a7d03de7bcb721f68c03da2f2b8ffd79f}{cree\+\_\+n\+\_\+instr\+\_\+affect} (\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\+\_\+var} $\ast$\hyperlink{analyseur__syntaxique_8h_a05b3477995cacf739dce9f55c1036717}{var}, \hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$exp)
+\item 
+\hyperlink{syntabs_8h_adfcd664b3142429eceecbe740cc7ef5d}{n\+\_\+l\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_aaaabb8fb916c9ab9a0f45bc10317f5a7}{cree\+\_\+n\+\_\+l\+\_\+instr} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$tete, \hyperlink{syntabs_8h_adfcd664b3142429eceecbe740cc7ef5d}{n\+\_\+l\+\_\+instr} $\ast$queue)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_a102463ecf3d9c6bedcae92104dd2dc9e}{cree\+\_\+n\+\_\+instr\+\_\+bloc} (\hyperlink{syntabs_8h_adfcd664b3142429eceecbe740cc7ef5d}{n\+\_\+l\+\_\+instr} $\ast$liste)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_ac3ed7ba9fbf05f70f5fbe5e7e04e6323}{cree\+\_\+n\+\_\+instr\+\_\+appel} (\hyperlink{syntabs_8h_aef001b26fda49a7fbaf2f68c86313f3d}{n\+\_\+appel} $\ast$app)
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_a7bf313a5032da6ca20068945c24a27f5}{cree\+\_\+n\+\_\+instr\+\_\+ecrire} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$\hyperlink{analyseur__syntaxique_8h_a3985b72fc1615457cd4fa65b7c3c1cb3}{expression})
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_a37844ee0c1defb3e6b3cef63a08b36d7}{cree\+\_\+n\+\_\+instr\+\_\+retour} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$\hyperlink{analyseur__syntaxique_8h_a3985b72fc1615457cd4fa65b7c3c1cb3}{expression})
+\item 
+\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$ \hyperlink{syntabs_8c_a28174891a7f11eb9e2c6a70f8b000372}{cree\+\_\+n\+\_\+instr\+\_\+vide} (void)
+\item 
+\hyperlink{syntabs_8h_a61a9fbd94b7b974b74f0b9839ec4457d}{n\+\_\+dec} $\ast$ \hyperlink{syntabs_8c_a4b5bb4c53c25146fd0e35be584b9b515}{cree\+\_\+n\+\_\+dec\+\_\+var} (char $\ast$\hyperlink{analyseur__syntaxique_8c_afe3b6c263907762f577a8aeb76514bc3}{nom})
+\item 
+\hyperlink{syntabs_8h_a61a9fbd94b7b974b74f0b9839ec4457d}{n\+\_\+dec} $\ast$ \hyperlink{syntabs_8c_a918283fdb71743524c70130d497b3292}{cree\+\_\+n\+\_\+dec\+\_\+tab} (char $\ast$\hyperlink{analyseur__syntaxique_8c_afe3b6c263907762f577a8aeb76514bc3}{nom}, int taille)
+\item 
+\hyperlink{syntabs_8h_a61a9fbd94b7b974b74f0b9839ec4457d}{n\+\_\+dec} $\ast$ \hyperlink{syntabs_8c_a8da8e0bdfc1cc7b1f63f6be14d783e0d}{cree\+\_\+n\+\_\+dec\+\_\+fonc} (char $\ast$\hyperlink{analyseur__syntaxique_8c_afe3b6c263907762f577a8aeb76514bc3}{nom}, \hyperlink{syntabs_8h_ab260b396f6175518fe4d37ca38ded54e}{n\+\_\+l\+\_\+dec} $\ast$param, \hyperlink{syntabs_8h_ab260b396f6175518fe4d37ca38ded54e}{n\+\_\+l\+\_\+dec} $\ast$variables, \hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$corps)
+\item 
+\hyperlink{syntabs_8h_ab260b396f6175518fe4d37ca38ded54e}{n\+\_\+l\+\_\+dec} $\ast$ \hyperlink{syntabs_8c_aced7af14b72a6aec8d6e6cc21242e67a}{cree\+\_\+n\+\_\+l\+\_\+dec} (\hyperlink{syntabs_8h_a61a9fbd94b7b974b74f0b9839ec4457d}{n\+\_\+dec} $\ast$tete, \hyperlink{syntabs_8h_ab260b396f6175518fe4d37ca38ded54e}{n\+\_\+l\+\_\+dec} $\ast$queue)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+appel@{cree\+\_\+n\+\_\+appel}}
+\index{cree\+\_\+n\+\_\+appel@{cree\+\_\+n\+\_\+appel}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+appel(char $\ast$fonction, n\+\_\+l\+\_\+exp $\ast$args)}{cree_n_appel(char *fonction, n_l_exp *args)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+appel}$\ast$ cree\+\_\+n\+\_\+appel (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{fonction, }
+\item[{{\bf n\+\_\+l\+\_\+exp} $\ast$}]{args}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a8320c4e7fac9c7f7a803d82d7ea5a421}{}\label{syntabs_8c_a8320c4e7fac9c7f7a803d82d7ea5a421}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+dec\+\_\+fonc@{cree\+\_\+n\+\_\+dec\+\_\+fonc}}
+\index{cree\+\_\+n\+\_\+dec\+\_\+fonc@{cree\+\_\+n\+\_\+dec\+\_\+fonc}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+dec\+\_\+fonc(char $\ast$nom, n\+\_\+l\+\_\+dec $\ast$param, n\+\_\+l\+\_\+dec $\ast$variables, n\+\_\+instr $\ast$corps)}{cree_n_dec_fonc(char *nom, n_l_dec *param, n_l_dec *variables, n_instr *corps)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+dec}$\ast$ cree\+\_\+n\+\_\+dec\+\_\+fonc (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{nom, }
+\item[{{\bf n\+\_\+l\+\_\+dec} $\ast$}]{param, }
+\item[{{\bf n\+\_\+l\+\_\+dec} $\ast$}]{variables, }
+\item[{{\bf n\+\_\+instr} $\ast$}]{corps}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a8da8e0bdfc1cc7b1f63f6be14d783e0d}{}\label{syntabs_8c_a8da8e0bdfc1cc7b1f63f6be14d783e0d}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+dec\+\_\+tab@{cree\+\_\+n\+\_\+dec\+\_\+tab}}
+\index{cree\+\_\+n\+\_\+dec\+\_\+tab@{cree\+\_\+n\+\_\+dec\+\_\+tab}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+dec\+\_\+tab(char $\ast$nom, int taille)}{cree_n_dec_tab(char *nom, int taille)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+dec}$\ast$ cree\+\_\+n\+\_\+dec\+\_\+tab (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{nom, }
+\item[{int}]{taille}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a918283fdb71743524c70130d497b3292}{}\label{syntabs_8c_a918283fdb71743524c70130d497b3292}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+dec\+\_\+var@{cree\+\_\+n\+\_\+dec\+\_\+var}}
+\index{cree\+\_\+n\+\_\+dec\+\_\+var@{cree\+\_\+n\+\_\+dec\+\_\+var}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+dec\+\_\+var(char $\ast$nom)}{cree_n_dec_var(char *nom)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+dec}$\ast$ cree\+\_\+n\+\_\+dec\+\_\+var (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{nom}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a4b5bb4c53c25146fd0e35be584b9b515}{}\label{syntabs_8c_a4b5bb4c53c25146fd0e35be584b9b515}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+exp\+\_\+appel@{cree\+\_\+n\+\_\+exp\+\_\+appel}}
+\index{cree\+\_\+n\+\_\+exp\+\_\+appel@{cree\+\_\+n\+\_\+exp\+\_\+appel}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+exp\+\_\+appel(n\+\_\+appel $\ast$app)}{cree_n_exp_appel(n_appel *app)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+exp}$\ast$ cree\+\_\+n\+\_\+exp\+\_\+appel (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+appel} $\ast$}]{app}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_aebb01ea43820528ce5faba504e213b60}{}\label{syntabs_8c_aebb01ea43820528ce5faba504e213b60}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+exp\+\_\+entier@{cree\+\_\+n\+\_\+exp\+\_\+entier}}
+\index{cree\+\_\+n\+\_\+exp\+\_\+entier@{cree\+\_\+n\+\_\+exp\+\_\+entier}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+exp\+\_\+entier(int entier)}{cree_n_exp_entier(int entier)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+exp}$\ast$ cree\+\_\+n\+\_\+exp\+\_\+entier (
+\begin{DoxyParamCaption}
+\item[{int}]{entier}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a60a912c9163bb28bd242ffe86dee8f9d}{}\label{syntabs_8c_a60a912c9163bb28bd242ffe86dee8f9d}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+exp\+\_\+incr@{cree\+\_\+n\+\_\+exp\+\_\+incr}}
+\index{cree\+\_\+n\+\_\+exp\+\_\+incr@{cree\+\_\+n\+\_\+exp\+\_\+incr}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+exp\+\_\+incr(n\+\_\+var $\ast$var)}{cree_n_exp_incr(n_var *var)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+exp}$\ast$ cree\+\_\+n\+\_\+exp\+\_\+incr (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+var} $\ast$}]{var}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_aacc66d3ea1b71b9372139f145f966761}{}\label{syntabs_8c_aacc66d3ea1b71b9372139f145f966761}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+exp\+\_\+lire@{cree\+\_\+n\+\_\+exp\+\_\+lire}}
+\index{cree\+\_\+n\+\_\+exp\+\_\+lire@{cree\+\_\+n\+\_\+exp\+\_\+lire}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+exp\+\_\+lire()}{cree_n_exp_lire()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+exp}$\ast$ cree\+\_\+n\+\_\+exp\+\_\+lire (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a8121d555ec0b1f72f0bccfd4ee81c6f7}{}\label{syntabs_8c_a8121d555ec0b1f72f0bccfd4ee81c6f7}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+exp\+\_\+op@{cree\+\_\+n\+\_\+exp\+\_\+op}}
+\index{cree\+\_\+n\+\_\+exp\+\_\+op@{cree\+\_\+n\+\_\+exp\+\_\+op}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+exp\+\_\+op(operation op, n\+\_\+exp $\ast$op1, n\+\_\+exp $\ast$op2)}{cree_n_exp_op(operation op, n_exp *op1, n_exp *op2)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+exp}$\ast$ cree\+\_\+n\+\_\+exp\+\_\+op (
+\begin{DoxyParamCaption}
+\item[{{\bf operation}}]{op, }
+\item[{{\bf n\+\_\+exp} $\ast$}]{op1, }
+\item[{{\bf n\+\_\+exp} $\ast$}]{op2}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a11d9c23d0f53186358c01dd0f52f4cc1}{}\label{syntabs_8c_a11d9c23d0f53186358c01dd0f52f4cc1}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+exp\+\_\+var@{cree\+\_\+n\+\_\+exp\+\_\+var}}
+\index{cree\+\_\+n\+\_\+exp\+\_\+var@{cree\+\_\+n\+\_\+exp\+\_\+var}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+exp\+\_\+var(n\+\_\+var $\ast$var)}{cree_n_exp_var(n_var *var)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+exp}$\ast$ cree\+\_\+n\+\_\+exp\+\_\+var (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+var} $\ast$}]{var}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a39afe977b3f6e6dc124e0b34f3f30e56}{}\label{syntabs_8c_a39afe977b3f6e6dc124e0b34f3f30e56}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+affect@{cree\+\_\+n\+\_\+instr\+\_\+affect}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+affect@{cree\+\_\+n\+\_\+instr\+\_\+affect}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+affect(n\+\_\+var $\ast$var, n\+\_\+exp $\ast$exp)}{cree_n_instr_affect(n_var *var, n_exp *exp)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+affect (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+var} $\ast$}]{var, }
+\item[{{\bf n\+\_\+exp} $\ast$}]{exp}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a7d03de7bcb721f68c03da2f2b8ffd79f}{}\label{syntabs_8c_a7d03de7bcb721f68c03da2f2b8ffd79f}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+appel@{cree\+\_\+n\+\_\+instr\+\_\+appel}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+appel@{cree\+\_\+n\+\_\+instr\+\_\+appel}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+appel(n\+\_\+appel $\ast$app)}{cree_n_instr_appel(n_appel *app)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+appel (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+appel} $\ast$}]{app}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_ac3ed7ba9fbf05f70f5fbe5e7e04e6323}{}\label{syntabs_8c_ac3ed7ba9fbf05f70f5fbe5e7e04e6323}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+bloc@{cree\+\_\+n\+\_\+instr\+\_\+bloc}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+bloc@{cree\+\_\+n\+\_\+instr\+\_\+bloc}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+bloc(n\+\_\+l\+\_\+instr $\ast$liste)}{cree_n_instr_bloc(n_l_instr *liste)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+bloc (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+l\+\_\+instr} $\ast$}]{liste}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a102463ecf3d9c6bedcae92104dd2dc9e}{}\label{syntabs_8c_a102463ecf3d9c6bedcae92104dd2dc9e}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+ecrire@{cree\+\_\+n\+\_\+instr\+\_\+ecrire}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+ecrire@{cree\+\_\+n\+\_\+instr\+\_\+ecrire}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+ecrire(n\+\_\+exp $\ast$expression)}{cree_n_instr_ecrire(n_exp *expression)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+ecrire (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{expression}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a7bf313a5032da6ca20068945c24a27f5}{}\label{syntabs_8c_a7bf313a5032da6ca20068945c24a27f5}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+faire@{cree\+\_\+n\+\_\+instr\+\_\+faire}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+faire@{cree\+\_\+n\+\_\+instr\+\_\+faire}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+faire(n\+\_\+instr $\ast$faire, n\+\_\+exp $\ast$test)}{cree_n_instr_faire(n_instr *faire, n_exp *test)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+faire (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{faire, }
+\item[{{\bf n\+\_\+exp} $\ast$}]{test}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_aa104ff158258ed2e7372b245a9723ad6}{}\label{syntabs_8c_aa104ff158258ed2e7372b245a9723ad6}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+incr@{cree\+\_\+n\+\_\+instr\+\_\+incr}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+incr@{cree\+\_\+n\+\_\+instr\+\_\+incr}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+incr(n\+\_\+exp $\ast$incr)}{cree_n_instr_incr(n_exp *incr)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+incr (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{incr}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_ace99eefc46a4591c67c0165e0a1f9f64}{}\label{syntabs_8c_ace99eefc46a4591c67c0165e0a1f9f64}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+pour@{cree\+\_\+n\+\_\+instr\+\_\+pour}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+pour@{cree\+\_\+n\+\_\+instr\+\_\+pour}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+pour(n\+\_\+instr $\ast$init, n\+\_\+exp $\ast$test, n\+\_\+instr $\ast$incr, n\+\_\+instr $\ast$faire)}{cree_n_instr_pour(n_instr *init, n_exp *test, n_instr *incr, n_instr *faire)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+pour (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{init, }
+\item[{{\bf n\+\_\+exp} $\ast$}]{test, }
+\item[{{\bf n\+\_\+instr} $\ast$}]{incr, }
+\item[{{\bf n\+\_\+instr} $\ast$}]{faire}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_aaa8f5dcd1b8bc31b6e530468148dd98a}{}\label{syntabs_8c_aaa8f5dcd1b8bc31b6e530468148dd98a}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+retour@{cree\+\_\+n\+\_\+instr\+\_\+retour}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+retour@{cree\+\_\+n\+\_\+instr\+\_\+retour}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+retour(n\+\_\+exp $\ast$expression)}{cree_n_instr_retour(n_exp *expression)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+retour (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{expression}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a37844ee0c1defb3e6b3cef63a08b36d7}{}\label{syntabs_8c_a37844ee0c1defb3e6b3cef63a08b36d7}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+si@{cree\+\_\+n\+\_\+instr\+\_\+si}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+si@{cree\+\_\+n\+\_\+instr\+\_\+si}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+si(n\+\_\+exp $\ast$test, n\+\_\+instr $\ast$alors, n\+\_\+instr $\ast$sinon)}{cree_n_instr_si(n_exp *test, n_instr *alors, n_instr *sinon)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+si (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{test, }
+\item[{{\bf n\+\_\+instr} $\ast$}]{alors, }
+\item[{{\bf n\+\_\+instr} $\ast$}]{sinon}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_ac5427d0bad29d5695b18434eb9fd8a34}{}\label{syntabs_8c_ac5427d0bad29d5695b18434eb9fd8a34}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+tantque@{cree\+\_\+n\+\_\+instr\+\_\+tantque}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+tantque@{cree\+\_\+n\+\_\+instr\+\_\+tantque}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+tantque(n\+\_\+exp $\ast$test, n\+\_\+instr $\ast$faire)}{cree_n_instr_tantque(n_exp *test, n_instr *faire)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+tantque (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{test, }
+\item[{{\bf n\+\_\+instr} $\ast$}]{faire}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_ad98abacd3e91ea245442a6d6d91fb65d}{}\label{syntabs_8c_ad98abacd3e91ea245442a6d6d91fb65d}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+instr\+\_\+vide@{cree\+\_\+n\+\_\+instr\+\_\+vide}}
+\index{cree\+\_\+n\+\_\+instr\+\_\+vide@{cree\+\_\+n\+\_\+instr\+\_\+vide}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+instr\+\_\+vide(void)}{cree_n_instr_vide(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+instr\+\_\+vide (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a28174891a7f11eb9e2c6a70f8b000372}{}\label{syntabs_8c_a28174891a7f11eb9e2c6a70f8b000372}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+l\+\_\+dec@{cree\+\_\+n\+\_\+l\+\_\+dec}}
+\index{cree\+\_\+n\+\_\+l\+\_\+dec@{cree\+\_\+n\+\_\+l\+\_\+dec}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+l\+\_\+dec(n\+\_\+dec $\ast$tete, n\+\_\+l\+\_\+dec $\ast$queue)}{cree_n_l_dec(n_dec *tete, n_l_dec *queue)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+l\+\_\+dec}$\ast$ cree\+\_\+n\+\_\+l\+\_\+dec (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+dec} $\ast$}]{tete, }
+\item[{{\bf n\+\_\+l\+\_\+dec} $\ast$}]{queue}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_aced7af14b72a6aec8d6e6cc21242e67a}{}\label{syntabs_8c_aced7af14b72a6aec8d6e6cc21242e67a}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+l\+\_\+exp@{cree\+\_\+n\+\_\+l\+\_\+exp}}
+\index{cree\+\_\+n\+\_\+l\+\_\+exp@{cree\+\_\+n\+\_\+l\+\_\+exp}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+l\+\_\+exp(n\+\_\+exp $\ast$tete, n\+\_\+l\+\_\+exp $\ast$queue)}{cree_n_l_exp(n_exp *tete, n_l_exp *queue)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+l\+\_\+exp}$\ast$ cree\+\_\+n\+\_\+l\+\_\+exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{tete, }
+\item[{{\bf n\+\_\+l\+\_\+exp} $\ast$}]{queue}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_ac30627e7c11d7eefa6da125449e17c4e}{}\label{syntabs_8c_ac30627e7c11d7eefa6da125449e17c4e}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+l\+\_\+instr@{cree\+\_\+n\+\_\+l\+\_\+instr}}
+\index{cree\+\_\+n\+\_\+l\+\_\+instr@{cree\+\_\+n\+\_\+l\+\_\+instr}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+l\+\_\+instr(n\+\_\+instr $\ast$tete, n\+\_\+l\+\_\+instr $\ast$queue)}{cree_n_l_instr(n_instr *tete, n_l_instr *queue)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+l\+\_\+instr}$\ast$ cree\+\_\+n\+\_\+l\+\_\+instr (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{tete, }
+\item[{{\bf n\+\_\+l\+\_\+instr} $\ast$}]{queue}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_aaaabb8fb916c9ab9a0f45bc10317f5a7}{}\label{syntabs_8c_aaaabb8fb916c9ab9a0f45bc10317f5a7}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+prog@{cree\+\_\+n\+\_\+prog}}
+\index{cree\+\_\+n\+\_\+prog@{cree\+\_\+n\+\_\+prog}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+prog(n\+\_\+l\+\_\+dec $\ast$variables, n\+\_\+l\+\_\+dec $\ast$fonctions)}{cree_n_prog(n_l_dec *variables, n_l_dec *fonctions)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+prog}$\ast$ cree\+\_\+n\+\_\+prog (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+l\+\_\+dec} $\ast$}]{variables, }
+\item[{{\bf n\+\_\+l\+\_\+dec} $\ast$}]{fonctions}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_af29f6410a1a28897d1658672104321a4}{}\label{syntabs_8c_af29f6410a1a28897d1658672104321a4}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+var\+\_\+indicee@{cree\+\_\+n\+\_\+var\+\_\+indicee}}
+\index{cree\+\_\+n\+\_\+var\+\_\+indicee@{cree\+\_\+n\+\_\+var\+\_\+indicee}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+var\+\_\+indicee(char $\ast$nom, n\+\_\+exp $\ast$indice)}{cree_n_var_indicee(char *nom, n_exp *indice)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+var}$\ast$ cree\+\_\+n\+\_\+var\+\_\+indicee (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{nom, }
+\item[{{\bf n\+\_\+exp} $\ast$}]{indice}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_ac68c81dd993fa0373ab01786eccdcbd8}{}\label{syntabs_8c_ac68c81dd993fa0373ab01786eccdcbd8}
+\index{syntabs.\+c@{syntabs.\+c}!cree\+\_\+n\+\_\+var\+\_\+simple@{cree\+\_\+n\+\_\+var\+\_\+simple}}
+\index{cree\+\_\+n\+\_\+var\+\_\+simple@{cree\+\_\+n\+\_\+var\+\_\+simple}!syntabs.\+c@{syntabs.\+c}}
+\subsubsection[{\texorpdfstring{cree\+\_\+n\+\_\+var\+\_\+simple(char $\ast$nom)}{cree_n_var_simple(char *nom)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+var}$\ast$ cree\+\_\+n\+\_\+var\+\_\+simple (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{nom}
+\end{DoxyParamCaption}
+)}\hypertarget{syntabs_8c_a10b976f83159c0d422863f20688cebd1}{}\label{syntabs_8c_a10b976f83159c0d422863f20688cebd1}

@@ -1,0 +1,98 @@
+\hypertarget{structn__exp__}{}\section{n\+\_\+exp\+\_\+ Struct Reference}
+\label{structn__exp__}\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+
+
+{\ttfamily \#include $<$syntabs.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \\*
+\hyperlink{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a12e72501f4d8cfd5fee83ac87456788d}{var\+Exp}, 
+\hyperlink{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83af23fd217859651cb6b6f4bc18454c689}{op\+Exp}, 
+\hyperlink{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83ac4629f221aaab0de299cb93c31c95c50}{int\+Exp}, 
+\hyperlink{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83ab311f07ff152fdeb7246e48e393e97b0}{appel\+Exp}, 
+\\*
+\hyperlink{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a2d8a01a385eb8df0561ff590bd008e61}{lire\+Exp}, 
+\hyperlink{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a0cb424b7ed53c974f44c7900833bd2db}{incr\+Exp}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+enum n\+\_\+exp\+\_\+\+:: \{ ... \}  \hyperlink{structn__exp___a885a8dfa3936b9f7161a86c710b0295d}{type}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>\hyperlink{syntabs_8h_ad34e7fb3c33543e9f3a1e48486fa7692}{operation} \hyperlink{structn__exp___a0fbfb77ce24ca76ebb3d14c08eff495e}{op}\\
+\>\>struct \hyperlink{structn__exp__}{n\_exp\_} $\ast$ \hyperlink{structn__exp___a77b0f52635f46b119b79c76ffa9ecb13}{op1}\\
+\>\>struct \hyperlink{structn__exp__}{n\_exp\_} $\ast$ \hyperlink{structn__exp___af1d5707ba3f56f28de64916ec6883d06}{op2}\\
+\>\} \hyperlink{structn__exp___adcf66bf19213c70f9fa7f7b492a003de}{opExp\_}\\
+\>\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\_var} $\ast$ \hyperlink{structn__exp___ac87b093b17ae6635f33ca65b7343e9fe}{var}\\
+\>\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\_var} $\ast$ \hyperlink{structn__exp___a7084c09985f01b8c9f84fa7484095e44}{incr}\\
+\>int \hyperlink{structn__exp___aa93b6c7dbc1b7b96048e03d19cd6a787}{entier}\\
+\>\hyperlink{syntabs_8h_aef001b26fda49a7fbaf2f68c86313f3d}{n\_appel} $\ast$ \hyperlink{structn__exp___a5d0fe44c9580c72986708e6527158164}{appel}\\
+\} \hyperlink{structn__exp___a8c4088fb555e77092073185e713cb224}{u}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\subsubsection[{\texorpdfstring{anonymous enum}{anonymous enum}}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\hypertarget{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83}{}\label{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{var\+Exp@{var\+Exp}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!var\+Exp@{var\+Exp}}\item[{\em 
+var\+Exp\hypertarget{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a12e72501f4d8cfd5fee83ac87456788d}{}\label{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a12e72501f4d8cfd5fee83ac87456788d}
+}]\index{op\+Exp@{op\+Exp}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!op\+Exp@{op\+Exp}}\item[{\em 
+op\+Exp\hypertarget{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83af23fd217859651cb6b6f4bc18454c689}{}\label{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83af23fd217859651cb6b6f4bc18454c689}
+}]\index{int\+Exp@{int\+Exp}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!int\+Exp@{int\+Exp}}\item[{\em 
+int\+Exp\hypertarget{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83ac4629f221aaab0de299cb93c31c95c50}{}\label{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83ac4629f221aaab0de299cb93c31c95c50}
+}]\index{appel\+Exp@{appel\+Exp}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!appel\+Exp@{appel\+Exp}}\item[{\em 
+appel\+Exp\hypertarget{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83ab311f07ff152fdeb7246e48e393e97b0}{}\label{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83ab311f07ff152fdeb7246e48e393e97b0}
+}]\index{lire\+Exp@{lire\+Exp}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!lire\+Exp@{lire\+Exp}}\item[{\em 
+lire\+Exp\hypertarget{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a2d8a01a385eb8df0561ff590bd008e61}{}\label{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a2d8a01a385eb8df0561ff590bd008e61}
+}]\index{incr\+Exp@{incr\+Exp}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!incr\+Exp@{incr\+Exp}}\item[{\em 
+incr\+Exp\hypertarget{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a0cb424b7ed53c974f44c7900833bd2db}{}\label{structn__exp___ae137d0654317b7ad0e3eba2a11e27c83a0cb424b7ed53c974f44c7900833bd2db}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Field Documentation}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!appel@{appel}}
+\index{appel@{appel}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{appel}{appel}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+appel}$\ast$ n\+\_\+exp\+\_\+\+::appel}\hypertarget{structn__exp___a5d0fe44c9580c72986708e6527158164}{}\label{structn__exp___a5d0fe44c9580c72986708e6527158164}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!entier@{entier}}
+\index{entier@{entier}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{entier}{entier}}]{\setlength{\rightskip}{0pt plus 5cm}int n\+\_\+exp\+\_\+\+::entier}\hypertarget{structn__exp___aa93b6c7dbc1b7b96048e03d19cd6a787}{}\label{structn__exp___aa93b6c7dbc1b7b96048e03d19cd6a787}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!incr@{incr}}
+\index{incr@{incr}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{incr}{incr}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+var}$\ast$ n\+\_\+exp\+\_\+\+::incr}\hypertarget{structn__exp___a7084c09985f01b8c9f84fa7484095e44}{}\label{structn__exp___a7084c09985f01b8c9f84fa7484095e44}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!op@{op}}
+\index{op@{op}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{op}{op}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf operation} n\+\_\+exp\+\_\+\+::op}\hypertarget{structn__exp___a0fbfb77ce24ca76ebb3d14c08eff495e}{}\label{structn__exp___a0fbfb77ce24ca76ebb3d14c08eff495e}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!op1@{op1}}
+\index{op1@{op1}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{op1}{op1}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf n\+\_\+exp\+\_\+}$\ast$ n\+\_\+exp\+\_\+\+::op1}\hypertarget{structn__exp___a77b0f52635f46b119b79c76ffa9ecb13}{}\label{structn__exp___a77b0f52635f46b119b79c76ffa9ecb13}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!op2@{op2}}
+\index{op2@{op2}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{op2}{op2}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf n\+\_\+exp\+\_\+}$\ast$ n\+\_\+exp\+\_\+\+::op2}\hypertarget{structn__exp___af1d5707ba3f56f28de64916ec6883d06}{}\label{structn__exp___af1d5707ba3f56f28de64916ec6883d06}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!op\+Exp\+\_\+@{op\+Exp\+\_\+}}
+\index{op\+Exp\+\_\+@{op\+Exp\+\_\+}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{op\+Exp\+\_\+}{opExp_}}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   n\+\_\+exp\+\_\+\+::op\+Exp\+\_\+}\hypertarget{structn__exp___adcf66bf19213c70f9fa7f7b492a003de}{}\label{structn__exp___adcf66bf19213c70f9fa7f7b492a003de}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!type@{type}}
+\index{type@{type}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{type}{type}}]{\setlength{\rightskip}{0pt plus 5cm}enum \{ ... \}   n\+\_\+exp\+\_\+\+::type}\hypertarget{structn__exp___a885a8dfa3936b9f7161a86c710b0295d}{}\label{structn__exp___a885a8dfa3936b9f7161a86c710b0295d}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!u@{u}}
+\index{u@{u}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{u}{u}}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \}  n\+\_\+exp\+\_\+\+::u}\hypertarget{structn__exp___a8c4088fb555e77092073185e713cb224}{}\label{structn__exp___a8c4088fb555e77092073185e713cb224}
+\index{n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}!var@{var}}
+\index{var@{var}!n\+\_\+exp\+\_\+@{n\+\_\+exp\+\_\+}}
+\subsubsection[{\texorpdfstring{var}{var}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\+\_\+var}$\ast$ n\+\_\+exp\+\_\+\+::var}\hypertarget{structn__exp___ac87b093b17ae6635f33ca65b7343e9fe}{}\label{structn__exp___ac87b093b17ae6635f33ca65b7343e9fe}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inc/\hyperlink{syntabs_8h}{syntabs.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,410 @@
+\hypertarget{analyseur__semantique_8c}{}\section{src/analyseur\+\_\+semantique.c File Reference}
+\label{analyseur__semantique_8c}\index{src/analyseur\+\_\+semantique.\+c@{src/analyseur\+\_\+semantique.\+c}}
+{\ttfamily \#include $<$stdarg.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}analyseur\+\_\+semantique.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}syntabs.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}util.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}dico.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{analyseur__semantique_8c_aaa20abe50cf0d888adb762f7764219cd}{analyse\+\_\+n\+\_\+prog} (\hyperlink{syntabs_8h_a6602c160eaa441d4fdbd00cefdd4b8fa}{n\+\_\+prog} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a18a81f9f6b0fea1a73a7b8826e48ec97}{analyse\+\_\+l\+\_\+instr} (\hyperlink{syntabs_8h_adfcd664b3142429eceecbe740cc7ef5d}{n\+\_\+l\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a345227a390ac9b29ee1dbaacac44d900}{analyse\+\_\+instr} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a1d2547bde5b5ebe7dd7a51c1339d6295}{analyse\+\_\+instr\+\_\+si} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a0da752dff563f4a0ae0ebd4b416ea732}{analyse\+\_\+instr\+\_\+tantque} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a32bcdf93989b49ce0e10700e7f497c4c}{analyse\+\_\+instr\+\_\+faire} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_adf28c11f238b896183168e4abcbd87bc}{analyse\+\_\+instr\+\_\+pour} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_abf085a3d03030f1b33cc3b11f31029f5}{analyse\+\_\+instr\+\_\+affect} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a914c922499100cac7727ba522f69dbe1}{analyse\+\_\+instr\+\_\+appel} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a71f79f77377273e9275ea68e2078f7de}{analyse\+\_\+instr\+\_\+retour} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a43515d6c24b82f0f414014850da4ccaf}{analyse\+\_\+instr\+\_\+ecrire} (\hyperlink{syntabs_8h_a23ea3d0367a10d34c91c5349a8a9433c}{n\+\_\+instr} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a22b4febbae6648598f3720f59f5d9d32}{analyse\+\_\+l\+\_\+exp} (\hyperlink{syntabs_8h_a3046944eb0074d1c280a6d656b3cbd65}{n\+\_\+l\+\_\+exp} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a8a8703330e4c284a0a39806dd912f030}{analyse\+\_\+exp} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a40d2b4fb372873d741bbf25a4bfc032a}{analyse\+\_\+var\+Exp} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a00b63aaf07c160e1dccd61eaf2405ba9}{analyse\+\_\+op\+Exp} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_afb16e5adc3d3769206322842b8e74021}{analyse\+\_\+int\+Exp} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_ab331257de51e0eebb338ade3055b32db}{analyse\+\_\+lire\+Exp} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a7eb0286f0629161b2a5a97db530776b6}{analyse\+\_\+appel\+Exp} (\hyperlink{syntabs_8h_a9648f2af191445619fc50968978276c1}{n\+\_\+exp} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a61e386ca88e7f1acfd9d59a92da8e2e8}{analyse\+\_\+l\+\_\+dec} (\hyperlink{syntabs_8h_ab260b396f6175518fe4d37ca38ded54e}{n\+\_\+l\+\_\+dec} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a5fb5551911d759f27743c04569a33ba4}{analyse\+\_\+dec} (\hyperlink{syntabs_8h_a61a9fbd94b7b974b74f0b9839ec4457d}{n\+\_\+dec} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a95fa75127d21531f5fe3338d96ea5d57}{analyse\+\_\+fonc\+Dec} (\hyperlink{syntabs_8h_a61a9fbd94b7b974b74f0b9839ec4457d}{n\+\_\+dec} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a084caf019749ad68ecc424ac59ed5836}{analyse\+\_\+var\+Dec} (\hyperlink{syntabs_8h_a61a9fbd94b7b974b74f0b9839ec4457d}{n\+\_\+dec} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a4b8a750f0221fe4e49d6e41581019fc7}{analyse\+\_\+tab\+Dec} (\hyperlink{syntabs_8h_a61a9fbd94b7b974b74f0b9839ec4457d}{n\+\_\+dec} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a31abc0ecd4f44a902963e93066023051}{analyse\+\_\+var} (\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\+\_\+var} $\ast$n, char $\ast$s)
+\item 
+void \hyperlink{analyseur__semantique_8c_a8a21cd9712e84394914ac0882417db3f}{analyse\+\_\+var\+\_\+simple} (\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\+\_\+var} $\ast$n, char $\ast$s)
+\item 
+void \hyperlink{analyseur__semantique_8c_ae8f4553c9cb7d259531e8af88ab95794}{analyse\+\_\+var\+\_\+indicee} (\hyperlink{syntabs_8h_ab219ef4489b1e38a9427841614795796}{n\+\_\+var} $\ast$n, char $\ast$s)
+\item 
+void \hyperlink{analyseur__semantique_8c_af9f80a3c277b9f2258a7ee223a02b418}{analyse\+\_\+appel} (\hyperlink{syntabs_8h_aef001b26fda49a7fbaf2f68c86313f3d}{n\+\_\+appel} $\ast$n)
+\item 
+void \hyperlink{analyseur__semantique_8c_a5d04c1e1b14fb5879bac4d1d3157aca2}{semantique} (\hyperlink{syntabs_8h_a6602c160eaa441d4fdbd00cefdd4b8fa}{n\+\_\+prog} $\ast$p, int trace\+\_\+dico, int print\+\_\+mips)
+\begin{DoxyCompactList}\small\item\em Main function to parse syntaxique tree. \end{DoxyCompactList}\item 
+int \hyperlink{analyseur__semantique_8c_ab6de26da0736cfa1694067232e4e13e8}{taille\+\_\+n\+\_\+l\+\_\+dec} (\hyperlink{syntabs_8h_ab260b396f6175518fe4d37ca38ded54e}{n\+\_\+l\+\_\+dec} $\ast$liste)
+\item 
+int \hyperlink{analyseur__semantique_8c_aeca1bf994c91cd96f8a6b0a0145f1f32}{taille\+\_\+n\+\_\+l\+\_\+exp} (\hyperlink{syntabs_8h_a3046944eb0074d1c280a6d656b3cbd65}{n\+\_\+l\+\_\+exp} $\ast$liste)
+\item 
+int \hyperlink{analyseur__semantique_8c_af5d621798e8d0862a7d38e52938e2e39}{new\+Etiquette} (void)
+\item 
+int \hyperlink{analyseur__semantique_8c_a2e9bcef5cf5ae2e640eea3e0b226508a}{mips\+\_\+print} (const char $\ast$format,...)
+\item 
+void \hyperlink{analyseur__semantique_8c_a613dc2fa9269984a90cd0f59965584d1}{mips\+\_\+debut\+\_\+fonction} ()
+\item 
+void \hyperlink{analyseur__semantique_8c_a84e40c8c9d6d65dcbbf42ac612746b60}{mips\+\_\+fin\+\_\+function} ()
+\item 
+void \hyperlink{analyseur__semantique_8c_aef557d8095231c305755ec9c72dc4bd0}{mips\+\_\+empile} (char $\ast$s)
+\item 
+void \hyperlink{analyseur__semantique_8c_a5fce06d91b2cbc968cd2f4790127af71}{mips\+\_\+depile} (char $\ast$s)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{analyseur__semantique_8c_a1ccbedac059d04884ebe846645b252f5}{contexte} = \hyperlink{dico_8h_a6b468a0600c1c4cafc2ba52b059525f4}{C\+\_\+\+V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+G\+L\+O\+B\+A\+LE}
+\item 
+int \hyperlink{analyseur__semantique_8c_a08415310e74aa16b15e9d2304f23fbc1}{adresse\+Locale\+Courante} = 0
+\item 
+int \hyperlink{analyseur__semantique_8c_a159763836ed78a0faeba043b2306457d}{adresse\+Argument\+Courant} = 0
+\item 
+int \hyperlink{analyseur__semantique_8c_a921282a2b1351abf6464c047127a7e57}{trace\+\_\+tab}
+\item 
+int \hyperlink{analyseur__semantique_8c_aaf4e26072f4f192740dc8d1e208b98a6}{trace\+\_\+mips}
+\item 
+int \hyperlink{analyseur__semantique_8c_a968330a5b6b387e151780fc71bc4cccf}{nb\+\_\+args\+\_\+function}
+\item 
+int \hyperlink{analyseur__semantique_8c_af7b5642303f3bbef5c49274434b92d9f}{nb\+\_\+var\+\_\+local}
+\item 
+int \hyperlink{analyseur__semantique_8c_af3c7715e2d109fe4e836d4614767db3c}{etiquette} = 0
+\item 
+int \hyperlink{analyseur__semantique_8c_aaba679173c2164f9c9c75441b3714c6e}{asreturn}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+appel@{analyse\+\_\+appel}}
+\index{analyse\+\_\+appel@{analyse\+\_\+appel}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+appel(n\+\_\+appel $\ast$n)}{analyse_appel(n_appel *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+appel (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+appel} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_af9f80a3c277b9f2258a7ee223a02b418}{}\label{analyseur__semantique_8c_af9f80a3c277b9f2258a7ee223a02b418}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+appel\+Exp@{analyse\+\_\+appel\+Exp}}
+\index{analyse\+\_\+appel\+Exp@{analyse\+\_\+appel\+Exp}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+appel\+Exp(n\+\_\+exp $\ast$n)}{analyse_appelExp(n_exp *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+appel\+Exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a7eb0286f0629161b2a5a97db530776b6}{}\label{analyseur__semantique_8c_a7eb0286f0629161b2a5a97db530776b6}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+dec@{analyse\+\_\+dec}}
+\index{analyse\+\_\+dec@{analyse\+\_\+dec}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+dec(n\+\_\+dec $\ast$n)}{analyse_dec(n_dec *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+dec (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+dec} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a5fb5551911d759f27743c04569a33ba4}{}\label{analyseur__semantique_8c_a5fb5551911d759f27743c04569a33ba4}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+exp@{analyse\+\_\+exp}}
+\index{analyse\+\_\+exp@{analyse\+\_\+exp}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+exp(n\+\_\+exp $\ast$n)}{analyse_exp(n_exp *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a8a8703330e4c284a0a39806dd912f030}{}\label{analyseur__semantique_8c_a8a8703330e4c284a0a39806dd912f030}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+fonc\+Dec@{analyse\+\_\+fonc\+Dec}}
+\index{analyse\+\_\+fonc\+Dec@{analyse\+\_\+fonc\+Dec}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+fonc\+Dec(n\+\_\+dec $\ast$n)}{analyse_foncDec(n_dec *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+fonc\+Dec (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+dec} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a95fa75127d21531f5fe3338d96ea5d57}{}\label{analyseur__semantique_8c_a95fa75127d21531f5fe3338d96ea5d57}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr@{analyse\+\_\+instr}}
+\index{analyse\+\_\+instr@{analyse\+\_\+instr}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr(n\+\_\+instr $\ast$n)}{analyse_instr(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a345227a390ac9b29ee1dbaacac44d900}{}\label{analyseur__semantique_8c_a345227a390ac9b29ee1dbaacac44d900}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr\+\_\+affect@{analyse\+\_\+instr\+\_\+affect}}
+\index{analyse\+\_\+instr\+\_\+affect@{analyse\+\_\+instr\+\_\+affect}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr\+\_\+affect(n\+\_\+instr $\ast$n)}{analyse_instr_affect(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr\+\_\+affect (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_abf085a3d03030f1b33cc3b11f31029f5}{}\label{analyseur__semantique_8c_abf085a3d03030f1b33cc3b11f31029f5}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr\+\_\+appel@{analyse\+\_\+instr\+\_\+appel}}
+\index{analyse\+\_\+instr\+\_\+appel@{analyse\+\_\+instr\+\_\+appel}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr\+\_\+appel(n\+\_\+instr $\ast$n)}{analyse_instr_appel(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr\+\_\+appel (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a914c922499100cac7727ba522f69dbe1}{}\label{analyseur__semantique_8c_a914c922499100cac7727ba522f69dbe1}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr\+\_\+ecrire@{analyse\+\_\+instr\+\_\+ecrire}}
+\index{analyse\+\_\+instr\+\_\+ecrire@{analyse\+\_\+instr\+\_\+ecrire}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr\+\_\+ecrire(n\+\_\+instr $\ast$n)}{analyse_instr_ecrire(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr\+\_\+ecrire (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a43515d6c24b82f0f414014850da4ccaf}{}\label{analyseur__semantique_8c_a43515d6c24b82f0f414014850da4ccaf}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr\+\_\+faire@{analyse\+\_\+instr\+\_\+faire}}
+\index{analyse\+\_\+instr\+\_\+faire@{analyse\+\_\+instr\+\_\+faire}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr\+\_\+faire(n\+\_\+instr $\ast$n)}{analyse_instr_faire(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr\+\_\+faire (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a32bcdf93989b49ce0e10700e7f497c4c}{}\label{analyseur__semantique_8c_a32bcdf93989b49ce0e10700e7f497c4c}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr\+\_\+pour@{analyse\+\_\+instr\+\_\+pour}}
+\index{analyse\+\_\+instr\+\_\+pour@{analyse\+\_\+instr\+\_\+pour}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr\+\_\+pour(n\+\_\+instr $\ast$n)}{analyse_instr_pour(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr\+\_\+pour (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_adf28c11f238b896183168e4abcbd87bc}{}\label{analyseur__semantique_8c_adf28c11f238b896183168e4abcbd87bc}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr\+\_\+retour@{analyse\+\_\+instr\+\_\+retour}}
+\index{analyse\+\_\+instr\+\_\+retour@{analyse\+\_\+instr\+\_\+retour}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr\+\_\+retour(n\+\_\+instr $\ast$n)}{analyse_instr_retour(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr\+\_\+retour (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a71f79f77377273e9275ea68e2078f7de}{}\label{analyseur__semantique_8c_a71f79f77377273e9275ea68e2078f7de}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr\+\_\+si@{analyse\+\_\+instr\+\_\+si}}
+\index{analyse\+\_\+instr\+\_\+si@{analyse\+\_\+instr\+\_\+si}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr\+\_\+si(n\+\_\+instr $\ast$n)}{analyse_instr_si(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr\+\_\+si (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a1d2547bde5b5ebe7dd7a51c1339d6295}{}\label{analyseur__semantique_8c_a1d2547bde5b5ebe7dd7a51c1339d6295}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+instr\+\_\+tantque@{analyse\+\_\+instr\+\_\+tantque}}
+\index{analyse\+\_\+instr\+\_\+tantque@{analyse\+\_\+instr\+\_\+tantque}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+instr\+\_\+tantque(n\+\_\+instr $\ast$n)}{analyse_instr_tantque(n_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+instr\+\_\+tantque (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a0da752dff563f4a0ae0ebd4b416ea732}{}\label{analyseur__semantique_8c_a0da752dff563f4a0ae0ebd4b416ea732}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+int\+Exp@{analyse\+\_\+int\+Exp}}
+\index{analyse\+\_\+int\+Exp@{analyse\+\_\+int\+Exp}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+int\+Exp(n\+\_\+exp $\ast$n)}{analyse_intExp(n_exp *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+int\+Exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_afb16e5adc3d3769206322842b8e74021}{}\label{analyseur__semantique_8c_afb16e5adc3d3769206322842b8e74021}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+l\+\_\+dec@{analyse\+\_\+l\+\_\+dec}}
+\index{analyse\+\_\+l\+\_\+dec@{analyse\+\_\+l\+\_\+dec}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+l\+\_\+dec(n\+\_\+l\+\_\+dec $\ast$n)}{analyse_l_dec(n_l_dec *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+l\+\_\+dec (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+l\+\_\+dec} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a61e386ca88e7f1acfd9d59a92da8e2e8}{}\label{analyseur__semantique_8c_a61e386ca88e7f1acfd9d59a92da8e2e8}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+l\+\_\+exp@{analyse\+\_\+l\+\_\+exp}}
+\index{analyse\+\_\+l\+\_\+exp@{analyse\+\_\+l\+\_\+exp}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+l\+\_\+exp(n\+\_\+l\+\_\+exp $\ast$n)}{analyse_l_exp(n_l_exp *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+l\+\_\+exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+l\+\_\+exp} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a22b4febbae6648598f3720f59f5d9d32}{}\label{analyseur__semantique_8c_a22b4febbae6648598f3720f59f5d9d32}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+l\+\_\+instr@{analyse\+\_\+l\+\_\+instr}}
+\index{analyse\+\_\+l\+\_\+instr@{analyse\+\_\+l\+\_\+instr}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+l\+\_\+instr(n\+\_\+l\+\_\+instr $\ast$n)}{analyse_l_instr(n_l_instr *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+l\+\_\+instr (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+l\+\_\+instr} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a18a81f9f6b0fea1a73a7b8826e48ec97}{}\label{analyseur__semantique_8c_a18a81f9f6b0fea1a73a7b8826e48ec97}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+lire\+Exp@{analyse\+\_\+lire\+Exp}}
+\index{analyse\+\_\+lire\+Exp@{analyse\+\_\+lire\+Exp}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+lire\+Exp(n\+\_\+exp $\ast$n)}{analyse_lireExp(n_exp *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+lire\+Exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_ab331257de51e0eebb338ade3055b32db}{}\label{analyseur__semantique_8c_ab331257de51e0eebb338ade3055b32db}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+n\+\_\+prog@{analyse\+\_\+n\+\_\+prog}}
+\index{analyse\+\_\+n\+\_\+prog@{analyse\+\_\+n\+\_\+prog}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+n\+\_\+prog(n\+\_\+prog $\ast$n)}{analyse_n_prog(n_prog *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+n\+\_\+prog (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+prog} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_aaa20abe50cf0d888adb762f7764219cd}{}\label{analyseur__semantique_8c_aaa20abe50cf0d888adb762f7764219cd}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+op\+Exp@{analyse\+\_\+op\+Exp}}
+\index{analyse\+\_\+op\+Exp@{analyse\+\_\+op\+Exp}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+op\+Exp(n\+\_\+exp $\ast$n)}{analyse_opExp(n_exp *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+op\+Exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a00b63aaf07c160e1dccd61eaf2405ba9}{}\label{analyseur__semantique_8c_a00b63aaf07c160e1dccd61eaf2405ba9}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+tab\+Dec@{analyse\+\_\+tab\+Dec}}
+\index{analyse\+\_\+tab\+Dec@{analyse\+\_\+tab\+Dec}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+tab\+Dec(n\+\_\+dec $\ast$n)}{analyse_tabDec(n_dec *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+tab\+Dec (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+dec} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a4b8a750f0221fe4e49d6e41581019fc7}{}\label{analyseur__semantique_8c_a4b8a750f0221fe4e49d6e41581019fc7}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+var@{analyse\+\_\+var}}
+\index{analyse\+\_\+var@{analyse\+\_\+var}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+var(n\+\_\+var $\ast$n, char $\ast$s)}{analyse_var(n_var *n, char *s)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+var (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+var} $\ast$}]{n, }
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a31abc0ecd4f44a902963e93066023051}{}\label{analyseur__semantique_8c_a31abc0ecd4f44a902963e93066023051}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+var\+\_\+indicee@{analyse\+\_\+var\+\_\+indicee}}
+\index{analyse\+\_\+var\+\_\+indicee@{analyse\+\_\+var\+\_\+indicee}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+var\+\_\+indicee(n\+\_\+var $\ast$n, char $\ast$s)}{analyse_var_indicee(n_var *n, char *s)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+var\+\_\+indicee (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+var} $\ast$}]{n, }
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_ae8f4553c9cb7d259531e8af88ab95794}{}\label{analyseur__semantique_8c_ae8f4553c9cb7d259531e8af88ab95794}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+var\+\_\+simple@{analyse\+\_\+var\+\_\+simple}}
+\index{analyse\+\_\+var\+\_\+simple@{analyse\+\_\+var\+\_\+simple}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+var\+\_\+simple(n\+\_\+var $\ast$n, char $\ast$s)}{analyse_var_simple(n_var *n, char *s)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+var\+\_\+simple (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+var} $\ast$}]{n, }
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a8a21cd9712e84394914ac0882417db3f}{}\label{analyseur__semantique_8c_a8a21cd9712e84394914ac0882417db3f}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+var\+Dec@{analyse\+\_\+var\+Dec}}
+\index{analyse\+\_\+var\+Dec@{analyse\+\_\+var\+Dec}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+var\+Dec(n\+\_\+dec $\ast$n)}{analyse_varDec(n_dec *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+var\+Dec (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+dec} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a084caf019749ad68ecc424ac59ed5836}{}\label{analyseur__semantique_8c_a084caf019749ad68ecc424ac59ed5836}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!analyse\+\_\+var\+Exp@{analyse\+\_\+var\+Exp}}
+\index{analyse\+\_\+var\+Exp@{analyse\+\_\+var\+Exp}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{analyse\+\_\+var\+Exp(n\+\_\+exp $\ast$n)}{analyse_varExp(n_exp *n)}}]{\setlength{\rightskip}{0pt plus 5cm}void analyse\+\_\+var\+Exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+exp} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a40d2b4fb372873d741bbf25a4bfc032a}{}\label{analyseur__semantique_8c_a40d2b4fb372873d741bbf25a4bfc032a}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!mips\+\_\+debut\+\_\+fonction@{mips\+\_\+debut\+\_\+fonction}}
+\index{mips\+\_\+debut\+\_\+fonction@{mips\+\_\+debut\+\_\+fonction}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{mips\+\_\+debut\+\_\+fonction()}{mips_debut_fonction()}}]{\setlength{\rightskip}{0pt plus 5cm}void mips\+\_\+debut\+\_\+fonction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a613dc2fa9269984a90cd0f59965584d1}{}\label{analyseur__semantique_8c_a613dc2fa9269984a90cd0f59965584d1}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!mips\+\_\+depile@{mips\+\_\+depile}}
+\index{mips\+\_\+depile@{mips\+\_\+depile}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{mips\+\_\+depile(char $\ast$s)}{mips_depile(char *s)}}]{\setlength{\rightskip}{0pt plus 5cm}void mips\+\_\+depile (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a5fce06d91b2cbc968cd2f4790127af71}{}\label{analyseur__semantique_8c_a5fce06d91b2cbc968cd2f4790127af71}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!mips\+\_\+empile@{mips\+\_\+empile}}
+\index{mips\+\_\+empile@{mips\+\_\+empile}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{mips\+\_\+empile(char $\ast$s)}{mips_empile(char *s)}}]{\setlength{\rightskip}{0pt plus 5cm}void mips\+\_\+empile (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_aef557d8095231c305755ec9c72dc4bd0}{}\label{analyseur__semantique_8c_aef557d8095231c305755ec9c72dc4bd0}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!mips\+\_\+fin\+\_\+function@{mips\+\_\+fin\+\_\+function}}
+\index{mips\+\_\+fin\+\_\+function@{mips\+\_\+fin\+\_\+function}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{mips\+\_\+fin\+\_\+function()}{mips_fin_function()}}]{\setlength{\rightskip}{0pt plus 5cm}void mips\+\_\+fin\+\_\+function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a84e40c8c9d6d65dcbbf42ac612746b60}{}\label{analyseur__semantique_8c_a84e40c8c9d6d65dcbbf42ac612746b60}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!mips\+\_\+print@{mips\+\_\+print}}
+\index{mips\+\_\+print@{mips\+\_\+print}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{mips\+\_\+print(const char $\ast$format,...)}{mips_print(const char *format,...)}}]{\setlength{\rightskip}{0pt plus 5cm}int mips\+\_\+print (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{format, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a2e9bcef5cf5ae2e640eea3e0b226508a}{}\label{analyseur__semantique_8c_a2e9bcef5cf5ae2e640eea3e0b226508a}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!new\+Etiquette@{new\+Etiquette}}
+\index{new\+Etiquette@{new\+Etiquette}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{new\+Etiquette(void)}{newEtiquette(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int new\+Etiquette (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_af5d621798e8d0862a7d38e52938e2e39}{}\label{analyseur__semantique_8c_af5d621798e8d0862a7d38e52938e2e39}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!semantique@{semantique}}
+\index{semantique@{semantique}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{semantique(n\+\_\+prog $\ast$p, int trace\+\_\+dico, int print\+\_\+mips)}{semantique(n_prog *p, int trace_dico, int print_mips)}}]{\setlength{\rightskip}{0pt plus 5cm}void semantique (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+prog} $\ast$}]{p, }
+\item[{int}]{trace\+\_\+dico, }
+\item[{int}]{print\+\_\+mips}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_a5d04c1e1b14fb5879bac4d1d3157aca2}{}\label{analyseur__semantique_8c_a5d04c1e1b14fb5879bac4d1d3157aca2}
+
+
+Main function to parse syntaxique tree. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em p} & The head of the tree \\
+\hline
+\mbox{\tt in}  & {\em trace\+\_\+dico} & boolean to display symbol table \\
+\hline
+\mbox{\tt in}  & {\em print\+\_\+mips} & boolean to display the mips output on stdin \\
+\hline
+\end{DoxyParams}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!taille\+\_\+n\+\_\+l\+\_\+dec@{taille\+\_\+n\+\_\+l\+\_\+dec}}
+\index{taille\+\_\+n\+\_\+l\+\_\+dec@{taille\+\_\+n\+\_\+l\+\_\+dec}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{taille\+\_\+n\+\_\+l\+\_\+dec(n\+\_\+l\+\_\+dec $\ast$liste)}{taille_n_l_dec(n_l_dec *liste)}}]{\setlength{\rightskip}{0pt plus 5cm}int taille\+\_\+n\+\_\+l\+\_\+dec (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+l\+\_\+dec} $\ast$}]{liste}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_ab6de26da0736cfa1694067232e4e13e8}{}\label{analyseur__semantique_8c_ab6de26da0736cfa1694067232e4e13e8}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!taille\+\_\+n\+\_\+l\+\_\+exp@{taille\+\_\+n\+\_\+l\+\_\+exp}}
+\index{taille\+\_\+n\+\_\+l\+\_\+exp@{taille\+\_\+n\+\_\+l\+\_\+exp}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{taille\+\_\+n\+\_\+l\+\_\+exp(n\+\_\+l\+\_\+exp $\ast$liste)}{taille_n_l_exp(n_l_exp *liste)}}]{\setlength{\rightskip}{0pt plus 5cm}int taille\+\_\+n\+\_\+l\+\_\+exp (
+\begin{DoxyParamCaption}
+\item[{{\bf n\+\_\+l\+\_\+exp} $\ast$}]{liste}
+\end{DoxyParamCaption}
+)}\hypertarget{analyseur__semantique_8c_aeca1bf994c91cd96f8a6b0a0145f1f32}{}\label{analyseur__semantique_8c_aeca1bf994c91cd96f8a6b0a0145f1f32}
+
+
+\subsection{Variable Documentation}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!adresse\+Argument\+Courant@{adresse\+Argument\+Courant}}
+\index{adresse\+Argument\+Courant@{adresse\+Argument\+Courant}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{adresse\+Argument\+Courant}{adresseArgumentCourant}}]{\setlength{\rightskip}{0pt plus 5cm}int adresse\+Argument\+Courant = 0}\hypertarget{analyseur__semantique_8c_a159763836ed78a0faeba043b2306457d}{}\label{analyseur__semantique_8c_a159763836ed78a0faeba043b2306457d}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!adresse\+Locale\+Courante@{adresse\+Locale\+Courante}}
+\index{adresse\+Locale\+Courante@{adresse\+Locale\+Courante}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{adresse\+Locale\+Courante}{adresseLocaleCourante}}]{\setlength{\rightskip}{0pt plus 5cm}int adresse\+Locale\+Courante = 0}\hypertarget{analyseur__semantique_8c_a08415310e74aa16b15e9d2304f23fbc1}{}\label{analyseur__semantique_8c_a08415310e74aa16b15e9d2304f23fbc1}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!asreturn@{asreturn}}
+\index{asreturn@{asreturn}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{asreturn}{asreturn}}]{\setlength{\rightskip}{0pt plus 5cm}int asreturn}\hypertarget{analyseur__semantique_8c_aaba679173c2164f9c9c75441b3714c6e}{}\label{analyseur__semantique_8c_aaba679173c2164f9c9c75441b3714c6e}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!contexte@{contexte}}
+\index{contexte@{contexte}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{contexte}{contexte}}]{\setlength{\rightskip}{0pt plus 5cm}int contexte = {\bf C\+\_\+\+V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+G\+L\+O\+B\+A\+LE}}\hypertarget{analyseur__semantique_8c_a1ccbedac059d04884ebe846645b252f5}{}\label{analyseur__semantique_8c_a1ccbedac059d04884ebe846645b252f5}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!etiquette@{etiquette}}
+\index{etiquette@{etiquette}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{etiquette}{etiquette}}]{\setlength{\rightskip}{0pt plus 5cm}int etiquette = 0}\hypertarget{analyseur__semantique_8c_af3c7715e2d109fe4e836d4614767db3c}{}\label{analyseur__semantique_8c_af3c7715e2d109fe4e836d4614767db3c}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!nb\+\_\+args\+\_\+function@{nb\+\_\+args\+\_\+function}}
+\index{nb\+\_\+args\+\_\+function@{nb\+\_\+args\+\_\+function}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{nb\+\_\+args\+\_\+function}{nb_args_function}}]{\setlength{\rightskip}{0pt plus 5cm}int nb\+\_\+args\+\_\+function}\hypertarget{analyseur__semantique_8c_a968330a5b6b387e151780fc71bc4cccf}{}\label{analyseur__semantique_8c_a968330a5b6b387e151780fc71bc4cccf}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!nb\+\_\+var\+\_\+local@{nb\+\_\+var\+\_\+local}}
+\index{nb\+\_\+var\+\_\+local@{nb\+\_\+var\+\_\+local}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{nb\+\_\+var\+\_\+local}{nb_var_local}}]{\setlength{\rightskip}{0pt plus 5cm}int nb\+\_\+var\+\_\+local}\hypertarget{analyseur__semantique_8c_af7b5642303f3bbef5c49274434b92d9f}{}\label{analyseur__semantique_8c_af7b5642303f3bbef5c49274434b92d9f}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!trace\+\_\+mips@{trace\+\_\+mips}}
+\index{trace\+\_\+mips@{trace\+\_\+mips}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{trace\+\_\+mips}{trace_mips}}]{\setlength{\rightskip}{0pt plus 5cm}int trace\+\_\+mips}\hypertarget{analyseur__semantique_8c_aaf4e26072f4f192740dc8d1e208b98a6}{}\label{analyseur__semantique_8c_aaf4e26072f4f192740dc8d1e208b98a6}
+\index{analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}!trace\+\_\+tab@{trace\+\_\+tab}}
+\index{trace\+\_\+tab@{trace\+\_\+tab}!analyseur\+\_\+semantique.\+c@{analyseur\+\_\+semantique.\+c}}
+\subsubsection[{\texorpdfstring{trace\+\_\+tab}{trace_tab}}]{\setlength{\rightskip}{0pt plus 5cm}int trace\+\_\+tab}\hypertarget{analyseur__semantique_8c_a921282a2b1351abf6464c047127a7e57}{}\label{analyseur__semantique_8c_a921282a2b1351abf6464c047127a7e57}
