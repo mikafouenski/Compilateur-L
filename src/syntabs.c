@@ -85,6 +85,14 @@ n_exp *cree_n_exp_lire()
   return n;
 }
 
+n_exp *cree_n_exp_tern(n_exp *cond, n_exp *vrai, n_exp *faux) {
+  n_exp *n = malloc(sizeof(n_exp));
+  n->type = tern;
+  n->u.tern_.test = cond;
+  n->u.tern_.vrai = vrai;
+  n->u.tern_.faux = faux;
+  return n;
+}
 
 n_l_exp *cree_n_l_exp(n_exp *tete, n_l_exp *queue)
 {

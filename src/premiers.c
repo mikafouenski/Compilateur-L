@@ -82,9 +82,19 @@ void initialise_premiers(void){
     premiers[_expression_][ID_FCT] = 1;
     premiers[_expression_][ID_VAR] = 1;
     premiers[_expression_][LIRE] = 1;
+    //COND
+    premiers[_condition_][NON] = 1;
+    premiers[_condition_][PARENTHESE_OUVRANTE] = 1;
+    premiers[_condition_][NOMBRE] = 1;
+    premiers[_condition_][ID_FCT] = 1;
+    premiers[_condition_][ID_VAR] = 1;
+    premiers[_condition_][LIRE] = 1;
     //EXPB
-    premiers[_expressionBis_][OU] = 1;
+    premiers[_expressionBis_][POINT_INTEROGATION] = 1;
     premiers[_expressionBis_][EPSILON] = 1;
+    //CONDB
+    premiers[_conditionBis_][OU] = 1;
+    premiers[_conditionBis_][EPSILON] = 1;
     //CONJ
     premiers[_conjonction_][NON] = 1;
     premiers[_conjonction_][PARENTHESE_OUVRANTE] = 1;

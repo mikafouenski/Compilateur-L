@@ -42,9 +42,10 @@ n_dec *cree_n_dec_fonc(char *nom, n_l_dec *param, n_l_dec *variables, n_instr *c
 typedef enum {plus, moins, fois, divise, modulo, egal, diff, inf, sup, infeg, supeg, ou, et, non, negatif} operation; 
 
 struct n_exp_ {
-  enum{varExp, opExp, intExp, appelExp, lireExp, incrExp} type;
+  enum{varExp, opExp, intExp, appelExp, lireExp, incrExp, tern} type;
   union{
     struct{operation op; struct n_exp_ *op1; struct n_exp_ *op2;} opExp_;
+    struct{n_exp *test; n_exp *vrai; n_exp *faux;} tern_;
     n_var *var;
     n_var *incr;    
     int entier;
@@ -58,6 +59,7 @@ n_exp *cree_n_exp_var(n_var *var);
 n_exp *cree_n_exp_appel(n_appel *app);
 n_exp *cree_n_exp_lire(void);
 n_exp *cree_n_exp_incr(n_var *var);
+n_exp *cree_n_exp_tern(n_exp *cond, n_exp *vrai, n_exp *faux);
 
 /*-------------------------------------------------------------------------*/
 

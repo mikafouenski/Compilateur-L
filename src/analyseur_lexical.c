@@ -108,6 +108,8 @@ int yylex(void)
   else if (c == '&') return ET;
   else if (c == '|') return OU;
   else if (c == '!') return NON;
+  else if (c == '?') return POINT_INTEROGATION;
+  else if (c == ':') return DEUX_POINTS;
 
   /* Nombre */
   if (is_num(c)) {
@@ -181,6 +183,8 @@ void nom_token( int token, char *nom, char *valeur ) {
   else if(token == NON) strcpy(valeur, "NON");
   else if(token == FIN) strcpy(valeur, "FIN");
   else if(token == VIRGULE) strcpy(valeur, "VIRGULE");
+  else if(token == POINT_INTEROGATION) strcpy(valeur, "POINT_INTEROGATION");
+  else if(token == DEUX_POINTS) strcpy(valeur, "DEUX_POINTS");
 
   else if( token == ID_VAR ) {
     strcpy( nom, "id_variable" );  

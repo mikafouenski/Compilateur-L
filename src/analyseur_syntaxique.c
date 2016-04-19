@@ -416,18 +416,72 @@ n_instr *instructionPour (void) {
     return $$;
 }
 n_exp *expression (void) {
+    // n_exp *$$ = NULL;
+    // n_exp *$1 = NULL;
+    // if (est_premier(uniteCourante, _conjonction_)) {
+    //     affiche_balise_ouvrante("expression", trace_xml);
+    //     $1 = conjonction();
+    //     $$ = expressionBis($1);
+    //     affiche_balise_fermante("expression", trace_xml);
+    //     return $$;
+    // }
+    // DisplayErreur();
+    // return $$;
+
     n_exp *$$ = NULL;
     n_exp *$1 = NULL;
-    if (est_premier(uniteCourante, _conjonction_)) {
+    if (est_premier(uniteCourante, _condition_)) {
         affiche_balise_ouvrante("expression", trace_xml);
-        $1 = conjonction();
-        $$ = expressionBis($1);
+        $1 = condition();
+        $$ = conditionBis($1);
         affiche_balise_fermante("expression", trace_xml);
         return $$;
     }
     DisplayErreur();
     return $$;
 }
+
+n_exp *condition(void) {
+    n_exp *$$ = NULL;
+    n_exp *$1 = NULL;
+    if (est_premier(uniteCourante, _conjonction_)) {
+        affiche_balise_ouvrante("condition", trace_xml);
+        $1 = conjonction();
+        $$ = conditionBis($1);
+        affiche_balise_fermante("condition", trace_xml);
+        return $$;
+    }
+    DisplayErreur();
+    return $$;
+}
+
+n_exp *conditionBis (n_exp *herite) {
+    n_exp *$$ = NULL;
+    n_exp *$1 = NULL;
+    n_exp *$2 = NULL;
+    if (uniteCourante == POINT_INTEROGATION) {
+        affiche_balise_ouvrante("conditionBis", trace_xml);
+        EatTerminal();
+        $1 = expression();
+        if (uniteCourante == DEUX_POINTS) {
+            EatTerminal();
+            $2 = expression();
+            $$ = cree_n_exp_tern(herite, $1, $2);
+            affiche_balise_fermante("conditionBis", trace_xml);
+            return $$;
+        } else {
+            DisplayErreur();
+        }
+    } else if (est_suivant(uniteCourante, _conditionBis_)) {
+        affiche_balise_ouvrante("conditionBis", trace_xml);
+        affiche_balise_fermante("conditionBis", trace_xml);
+        $$ = herite;
+        return $$;
+    }
+    DisplayErreur();
+    return $$;
+}
+
 n_appel *appelFct (void) {
     n_appel *$$ = NULL;
     n_l_exp *$2 = NULL;

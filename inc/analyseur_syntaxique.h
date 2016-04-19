@@ -44,6 +44,8 @@ n_exp *expressionBis (n_exp *herite);
 n_instr *instructionFaire (void);
 n_l_dec *optListeDecVariables (void);
 n_instr *instructionPour (void);
+n_exp *condition (void);
+n_exp *conditionBis (n_exp *herite);
 
 void EatTerminal(void);
 void DisplayErreur(void);

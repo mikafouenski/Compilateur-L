@@ -44,6 +44,7 @@ void analyse_var(n_var *n, char *s);
 void analyse_var_simple(n_var *n, char *s);
 void analyse_var_indicee(n_var *n, char *s);
 void analyse_appel(n_appel *n);
+void analyse_tern(n_exp *n);
 
 /**
  * @brief      Main function to parse syntaxique tree
@@ -265,6 +266,23 @@ void analyse_exp(n_exp *n) {
   else if(n->type == intExp) analyse_intExp(n);
   else if(n->type == appelExp) analyse_appelExp(n);
   else if(n->type == lireExp) analyse_lireExp(n);
+  else if(n->type == tern) analyse_tern(n);
+}
+
+void analyse_tern(n_exp *n) {
+  int e1 = newEtiquette();
+  int e2 = newEtiquette();
+  if (n->u.tern_.test != NULL)
+    analyse_exp(n->u.tern_.test);
+  mips_depile("t0");
+  mips_print("\tbeq $t0, $zero, e%d\n", e1);
+  if (n->u.tern_.vrai != NULL)
+    analyse_exp(n->u.tern_.vrai);
+  mips_print("\tj\te%d\n", e2);
+  mips_print("e%d:\n", e1);
+  if (n->u.tern_.faux != NULL)
+    analyse_exp(n->u.tern_.faux);
+  mips_print("e%d:\n", e2);
 }
 
 void analyse_varExp(n_exp *n) {
