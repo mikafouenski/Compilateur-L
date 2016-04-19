@@ -29,10 +29,9 @@ void affiche_var(n_var *n);
 void affiche_var_simple(n_var *n);
 void affiche_var_indicee(n_var *n);
 void affiche_appel(n_appel *n);
+void affiche_tern(n_exp *n);
 
 int trace_abs = 1;
-
-/*-------------------------------------------------------------------------*/
 
 void affiche_n_prog(n_prog *n)
 {
@@ -44,8 +43,6 @@ void affiche_n_prog(n_prog *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
-/*-------------------------------------------------------------------------*/
 
 void affiche_l_instr(n_l_instr *n)
 {
@@ -58,7 +55,6 @@ void affiche_l_instr(n_l_instr *n)
   }
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr(n_instr *n)
 {
@@ -75,7 +71,6 @@ void affiche_instr(n_instr *n)
   }
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr_si(n_instr *n)
 {  
@@ -90,7 +85,6 @@ void affiche_instr_si(n_instr *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr_tantque(n_instr *n)
 {
@@ -102,7 +96,6 @@ void affiche_instr_tantque(n_instr *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr_faire(n_instr *n)          /* MODIFIE POUR EVAL */
 {                                             /* MODIFIE POUR EVAL */
@@ -113,7 +106,6 @@ void affiche_instr_faire(n_instr *n)          /* MODIFIE POUR EVAL */
   affiche_balise_fermante(fct, trace_abs);    /* MODIFIE POUR EVAL */
 }                                             /* MODIFIE POUR EVAL */
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr_pour(n_instr *n)                /* MODIFIE POUR EVAL */
 {                                                  /* MODIFIE POUR EVAL */
@@ -126,7 +118,6 @@ void affiche_instr_pour(n_instr *n)                /* MODIFIE POUR EVAL */
   affiche_balise_fermante(fct, trace_abs);         /* MODIFIE POUR EVAL */
 }                                                  /* MODIFIE POUR EVAL */
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr_affect(n_instr *n)
 {
@@ -139,7 +130,6 @@ void affiche_instr_affect(n_instr *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr_appel(n_instr *n)
 {
@@ -150,7 +140,6 @@ void affiche_instr_appel(n_instr *n)
   affiche_appel(n->u.appel);
   affiche_balise_fermante(fct, trace_abs);
 }
-/*-------------------------------------------------------------------------*/
 
 void affiche_appel(n_appel *n)
 {
@@ -161,7 +150,6 @@ void affiche_appel(n_appel *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr_retour(n_instr *n)
 {
@@ -172,7 +160,6 @@ void affiche_instr_retour(n_instr *n)
 
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_instr_ecrire(n_instr *n)
 {
@@ -182,7 +169,6 @@ void affiche_instr_ecrire(n_instr *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_l_exp(n_l_exp *n)
 {
@@ -196,7 +182,6 @@ void affiche_l_exp(n_l_exp *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_exp(n_exp *n)
 {
@@ -206,9 +191,22 @@ void affiche_exp(n_exp *n)
   else if(n->type == intExp) affiche_intExp(n);
   else if(n->type == appelExp) affiche_appelExp(n);
   else if(n->type == lireExp) affiche_lireExp(n);
+  else if(n->type == tern) affiche_tern(n);
 }
 
-/*-------------------------------------------------------------------------*/
+void affiche_tern(n_exp *n) {
+  char *fct = "opExp";
+  affiche_balise_ouvrante(fct, trace_abs);
+  affiche_texte("condexp", trace_abs);
+  if(n->u.tern_.test != NULL)
+    affiche_exp(n->u.tern_.test);
+  if(n->u.tern_.vrai != NULL)
+    affiche_exp(n->u.tern_.vrai);
+  if(n->u.tern_.faux != NULL)
+    affiche_exp(n->u.tern_.faux);
+  affiche_balise_fermante(fct, trace_abs);
+}
+
 
 void affiche_varExp(n_exp *n)
 {
@@ -218,7 +216,6 @@ void affiche_varExp(n_exp *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 void affiche_opExp(n_exp *n)
 {
   char *fct = "opExp";
@@ -243,7 +240,6 @@ void affiche_opExp(n_exp *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_intExp(n_exp *n)
 {
@@ -252,7 +248,6 @@ void affiche_intExp(n_exp *n)
   affiche_element( "intExp", texte, trace_abs );
 }
 
-/*-------------------------------------------------------------------------*/
 void affiche_lireExp(n_exp *n)
 {
   char *fct = "lireExp";
@@ -261,7 +256,6 @@ void affiche_lireExp(n_exp *n)
 
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_appelExp(n_exp *n)
 {
@@ -271,7 +265,6 @@ void affiche_appelExp(n_exp *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_l_dec(n_l_dec *n)
 {
@@ -285,7 +278,6 @@ void affiche_l_dec(n_l_dec *n)
   }
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_dec(n_dec *n)
 {
@@ -303,7 +295,6 @@ void affiche_dec(n_dec *n)
   }
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_foncDec(n_dec *n)
 {
@@ -316,14 +307,12 @@ void affiche_foncDec(n_dec *n)
   affiche_balise_fermante(fct, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_varDec(n_dec *n)
 {
   affiche_element("varDec", n->nom, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_tabDec(n_dec *n)
 {
@@ -332,7 +321,6 @@ void affiche_tabDec(n_dec *n)
   affiche_element( "tabDec", texte, trace_abs );
 }
 
-/*-------------------------------------------------------------------------*/
 
 void affiche_var(n_var *n)
 {
@@ -344,13 +332,11 @@ void affiche_var(n_var *n)
   }
 }
 
-/*-------------------------------------------------------------------------*/
 void affiche_var_simple(n_var *n)
 {
   affiche_element("var_simple", n->nom, trace_abs);
 }
 
-/*-------------------------------------------------------------------------*/
 void affiche_var_indicee(n_var *n)
 {
   char *fct = "var_indicee";
@@ -359,4 +345,3 @@ void affiche_var_indicee(n_var *n)
   affiche_exp( n->u.indicee_.indice );
   affiche_balise_fermante(fct, trace_abs);
 }
-/*-------------------------------------------------------------------------*/

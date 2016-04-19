@@ -188,7 +188,7 @@ void analyse_instr_faire(n_instr *n) {
   analyse_instr(n->u.faire_.faire);
   analyse_exp(n->u.faire_.test);
   mips_depile("t0");
-  mips_print("\tbeq $t0, $zero, e%d    # FAIRE\n", e2);
+  mips_print("\tbeq\t$t0, $zero, e%d    # FAIRE\n", e2);
   mips_print("\tj e%d\n", e1);
   mips_print("e%d:\n", e2);
 }
@@ -275,7 +275,7 @@ void analyse_tern(n_exp *n) {
   if (n->u.tern_.test != NULL)
     analyse_exp(n->u.tern_.test);
   mips_depile("t0");
-  mips_print("\tbeq $t0, $zero, e%d\n", e1);
+  mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
   if (n->u.tern_.vrai != NULL)
     analyse_exp(n->u.tern_.vrai);
   mips_print("\tj\te%d\n", e2);
@@ -456,17 +456,22 @@ void analyse_opExp(n_exp *n) {
     mips_print("e%d:\n", e1);
   }
   else if(n->u.opExp_.op == non) {
-    int e1 = newEtiquette();
-    int e2 = newEtiquette();
+    // int e1 = newEtiquette();
+    // int e2 = newEtiquette();
+    // if(n->u.opExp_.op1 != NULL)
+    //  analyse_exp(n->u.opExp_.op1);
+    // mips_depile("t0");
+    // mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
+    // mips_print("\tli\t$t1, 0\n");
+    // mips_print("\tj\te%d\n", e2);
+    // mips_print("e%d:\n", e1);
+    // mips_print("\tli\t$t1, 1\n");
+    // mips_print("e%d:\n", e2);
+    // mips_empile("t1");
     if(n->u.opExp_.op1 != NULL)
       analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
-    mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
-    mips_print("\tli\t$t1, 0\n");
-    mips_print("\tj\te%d\n", e2);
-    mips_print("e%d:\n", e1);
-    mips_print("\tli\t$t1, 1\n");
-    mips_print("e%d:\n", e2);
+    mips_print("\tnot\t$t1, $t0\n");
     mips_empile("t1");
   }
 }

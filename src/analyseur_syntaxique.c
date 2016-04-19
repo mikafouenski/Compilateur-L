@@ -433,7 +433,7 @@ n_exp *expression (void) {
     if (est_premier(uniteCourante, _condition_)) {
         affiche_balise_ouvrante("expression", trace_xml);
         $1 = condition();
-        $$ = conditionBis($1);
+        $$ = expressionBis($1);
         affiche_balise_fermante("expression", trace_xml);
         return $$;
     }
@@ -455,26 +455,26 @@ n_exp *condition(void) {
     return $$;
 }
 
-n_exp *conditionBis (n_exp *herite) {
+n_exp *expressionBis (n_exp *herite) {
     n_exp *$$ = NULL;
     n_exp *$1 = NULL;
     n_exp *$2 = NULL;
     if (uniteCourante == POINT_INTEROGATION) {
-        affiche_balise_ouvrante("conditionBis", trace_xml);
+        affiche_balise_ouvrante("expressionBis", trace_xml);
         EatTerminal();
         $1 = expression();
         if (uniteCourante == DEUX_POINTS) {
             EatTerminal();
             $2 = expression();
             $$ = cree_n_exp_tern(herite, $1, $2);
-            affiche_balise_fermante("conditionBis", trace_xml);
+            affiche_balise_fermante("expressionBis", trace_xml);
             return $$;
         } else {
             DisplayErreur();
         }
-    } else if (est_suivant(uniteCourante, _conditionBis_)) {
-        affiche_balise_ouvrante("conditionBis", trace_xml);
-        affiche_balise_fermante("conditionBis", trace_xml);
+    } else if (est_suivant(uniteCourante, _expressionBis_)) {
+        affiche_balise_ouvrante("expressionBis", trace_xml);
+        affiche_balise_fermante("expressionBis", trace_xml);
         $$ = herite;
         return $$;
     }
@@ -899,21 +899,21 @@ n_exp *termeBis (n_exp *herite) {
     DisplayErreur();
     return $$;
 }
-n_exp *expressionBis (n_exp *herite) {
+n_exp *conditionBis (n_exp *herite) {
     n_exp *$2= NULL;
     n_exp *$$= NULL;
     n_exp *herite_fils= NULL;
     if (uniteCourante == OU) {
-        affiche_balise_ouvrante("expressionBis", trace_xml);
+        affiche_balise_ouvrante("conditionBis", trace_xml);
         EatTerminal();
         $2 = conjonction();
         herite_fils = cree_n_exp_op(ou, herite, $2);
         $$ = expressionBis(herite_fils);
-        affiche_balise_fermante("expressionBis", trace_xml);
+        affiche_balise_fermante("conditionBis", trace_xml);
         return $$;
-    } else if (est_suivant(uniteCourante, _expressionBis_)) {
-        affiche_balise_ouvrante("expressionBis", trace_xml);
-        affiche_balise_fermante("expressionBis", trace_xml);
+    } else if (est_suivant(uniteCourante, _conditionBis_)) {
+        affiche_balise_ouvrante("conditionBis", trace_xml);
+        affiche_balise_fermante("conditionBis", trace_xml);
         $$ = herite;
         return $$;
     }

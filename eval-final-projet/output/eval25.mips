@@ -1,0 +1,61 @@
+	.data
+v$a:	.space	4
+
+	.text
+__start:
+	jal	main
+	li	$v0, 10
+	syscall          # stoppe l'execution du processus
+main:
+	subi	$sp, $sp, 4      # debut fonction
+	sw	$fp, 0($sp)      # debut fonction
+	move	$fp, $sp         # debut fonction
+	subi	$sp, $sp, 4      # debut fonction
+	sw	$ra, 0($sp)      # debut fonction
+	li	$v0, 5
+	syscall
+	subi	$sp, $sp, 4      # Empile
+	sw	$v0, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	sw	$t1, v$a
+	lw	$t1, v$a
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	li	$t0, 10
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$t2, -1
+	blt	$t0, $t1, e2
+	li	$t2, 0
+e2:
+	subi	$sp, $sp, 4      # Empile
+	sw	$t2, 0($sp)      # Empile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	beq	$t0, $zero, e0
+	li	$t0, 0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	j	e1
+e0:
+	li	$t0, 1
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+e1:
+	lw	$a0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$v0, 1
+	syscall
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall
+	lw	$ra, 0($sp)      # fin fonction
+	addi	$sp, $sp, 4      # fin fonction
+	lw	$fp, 0($sp)      # fin fonction
+	addi	$sp, $sp, 4      # fin fonction
+	jr	$ra              # fin fonction

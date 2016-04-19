@@ -1,0 +1,221 @@
+	.data
+
+	.text
+__start:
+	jal	main
+	li	$v0, 10
+	syscall          # stoppe l'execution du processus
+main:
+	subi	$sp, $sp, 4      # debut fonction
+	sw	$fp, 0($sp)      # debut fonction
+	move	$fp, $sp         # debut fonction
+	subi	$sp, $sp, 4      # debut fonction
+	sw	$ra, 0($sp)      # debut fonction
+	subi	$sp, $sp, 16      # allocation variables locales
+	li	$v0, 5
+	syscall
+	subi	$sp, $sp, 4      # Empile
+	sw	$v0, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	sw	$t1, -8($fp)
+	lw	$t1, -8($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	li	$t0, 0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$t2, -1
+	blt	$t0, $t1, e3
+	li	$t2, 0
+e3:
+	subi	$sp, $sp, 4      # Empile
+	sw	$t2, 0($sp)      # Empile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	bne	$t0, $zero, e2
+	lw	$t1, -8($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	li	$t0, 0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$t2, -1
+	beq	$t0, $t1, e4
+	li	$t2, 0
+e4:
+	subi	$sp, $sp, 4      # Empile
+	sw	$t2, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	or	$t2, $t0, $t1
+	subi	$sp, $sp, 4      # Empile
+	sw	$t2, 0($sp)      # Empile
+e2:
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	beq	$t0, $zero, e0
+	li	$t0, 1
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	j	e1
+e0:
+	li	$t0, 0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+e1:
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	sw	$t1, -12($fp)
+	lw	$t1, -8($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	li	$t0, 100
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$t2, -1
+	blt	$t0, $t1, e8
+	li	$t2, 0
+e8:
+	subi	$sp, $sp, 4      # Empile
+	sw	$t2, 0($sp)      # Empile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	beq	$t0, $zero, e7
+	li	$t0, 0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	lw	$t1, -8($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$t2, -1
+	blt	$t0, $t1, e9
+	li	$t2, 0
+e9:
+	subi	$sp, $sp, 4      # Empile
+	sw	$t2, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	and	$t2, $t0, $t1
+	subi	$sp, $sp, 4      # Empile
+	sw	$t2, 0($sp)      # Empile
+e7:
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	beq	$t0, $zero, e5
+	li	$t0, 1
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	j	e6
+e5:
+	li	$t0, 0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+e6:
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	sw	$t1, -16($fp)
+	lw	$t1, -12($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	not	$t1, $t0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	beq	$t0, $zero, e12
+	lw	$t1, -16($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	not	$t1, $t0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	and	$t2, $t0, $t1
+	subi	$sp, $sp, 4      # Empile
+	sw	$t2, 0($sp)      # Empile
+e12:
+	lw	$t0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	beq	$t0, $zero, e10
+	li	$t0, 1
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	j	e11
+e10:
+	li	$t0, 0
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+e11:
+	lw	$t1, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	sw	$t1, -20($fp)
+	lw	$t1, -12($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	lw	$a0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$v0, 1
+	syscall
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall
+	lw	$t1, -16($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	lw	$a0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$v0, 1
+	syscall
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall
+	lw	$t1, -20($fp)
+	subi	$sp, $sp, 4      # Empile
+	sw	$t1, 0($sp)      # Empile
+	lw	$a0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$v0, 1
+	syscall
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall
+	addi	$sp, $sp, 16      # desallocation variables locales
+	lw	$ra, 0($sp)      # fin fonction
+	addi	$sp, $sp, 4      # fin fonction
+	lw	$fp, 0($sp)      # fin fonction
+	addi	$sp, $sp, 4      # fin fonction
+	jr	$ra              # fin fonction
