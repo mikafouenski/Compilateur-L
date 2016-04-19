@@ -1,0 +1,18 @@
+------------------------------------------
+base = 3
+sommet = 6
+0 $a GLOBALE ENTIER 0 -1
+1 $b GLOBALE ENTIER 4 -1
+2 pgcd GLOBALE FONCTION 0 2
+3 $a ARGUMENT ENTIER 0 -1
+4 $b ARGUMENT ENTIER 4 -1
+5 $c LOCALE ENTIER 0 -1
+------------------------------------------
+------------------------------------------
+base = 4
+sommet = 4
+0 $a GLOBALE ENTIER 0 -1
+1 $b GLOBALE ENTIER 4 -1
+2 pgcd GLOBALE FONCTION 0 2
+3 main GLOBALE FONCTION 0 0
+------------------------------------------

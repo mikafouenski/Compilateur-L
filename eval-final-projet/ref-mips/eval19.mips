@@ -1,0 +1,44 @@
+	.data
+
+	.text
+___start:
+	jal	f_main
+	li	$v0, 10
+	syscall		 # stoppe l'execution du processus
+f_main:
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$fp, 0($sp)
+	move	$fp, $sp		 # nouvelle valeur de $fp
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$ra, 0($sp)
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	beq	$t0, $zero, i_cc0
+	li	$t0, 2
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	and	$t2, $t0, $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t2, 0($sp)
+i_cc0:
+	lw	$a0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$v0, 1
+	syscall		 # ecriture
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall		 # ecrire char
+	lw	$ra, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$fp, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	jr	$ra

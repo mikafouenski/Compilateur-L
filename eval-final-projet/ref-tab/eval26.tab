@@ -1,0 +1,9 @@
+------------------------------------------
+base = 1
+sommet = 5
+0 main GLOBALE FONCTION 0 0
+1 $temp LOCALE ENTIER 0 -1
+2 $g LOCALE ENTIER 4 -1
+3 $l LOCALE ENTIER 8 -1
+4 $v LOCALE ENTIER 12 -1
+------------------------------------------

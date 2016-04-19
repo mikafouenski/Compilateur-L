@@ -1,0 +1,147 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{fancyheadings}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage[top=1.9cm]{geometry}
+%\usepackage{fguill}
+\usepackage{tipa}
+\usepackage{longtable}
+\newcommand{\gui}[1]{\og{#1}\fg}
+\newcommand{\ouf}{\vspace{3mm}}
+
+\newcounter{serie} \setcounter{serie}1
+\newcounter{numexo}
+\newcommand{\exonum}{Q.\theserie.\addtocounter{numexo}{1}\thenumexo.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\vspace{-1em}Evaluation finale du compilateur 2015/2016\vspace{-1em}} 
+%\author{}
+\date{}
+%\date{4 janvier 2009}
+
+\begin{document}
+\setlength{\parindent}{0cm}
+
+\maketitle
+
+\lhead{\emph{Université Aix Marseille - L3 Informatique}}
+\rhead{\emph{Compilation}}
+%\setlength{\headrulewidth}{0.25pt} 
+\thispagestyle{fancy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+NOM~:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PRENOM~:\\
+NOM~:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PRENOM~:\\
+
+
+%Le sujet de l'évaluation se trouve à l'adresse suivante~:\\
+%{\tt http://pageperso.lif.univ-mrs.fr/\~{}alexis.nasr/Ens/Compilation/eval\_2012.html}\\
+
+
+\subsection*{0 Compilation du compilateur}
+
+\begin{longtable}{|l|l|} \hline
+Arbre abstrait & ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~\\ 
+& \\\hline
+Table des symboles & \\ 
+& \\\hline
+Génération de code & \\ 
+& \\\hline
+Extensions/améliorations & \\ 
+& \\\hline
+\end{longtable}
+
+\subsection*{1 Exécution sur des exemples existants}
+
+\begin{longtable}{|p{2.5cm}|l|l|l|l|} \hline
+source       & reco & syntabs & tab & mips \\ \hline
+\endhead
+{\tt eval1.l} &~~~~~~~~~~~~~~~~  &~~~~~~~~~~~~~~~~     &~~~~~~~~~~~~~~~~      &~~~~~~~~~~~~~~~~         \\ \hline
+{\tt eval2.l} &      &      &      &         \\ \hline
+{\tt eval3.l} &      &      &      &         \\ \hline
+{\tt eval4.l} &      &      &      &         \\ \hline
+{\tt eval5.l} &      &      &      &         \\ \hline \hline
+{\tt eval1-err.l} &      & ------------ & ------------ &  ------------    \\ \hline
+\end{longtable}
+
+\subsection*{2 Exécution sur de nouveaux exemples}
+
+\subsubsection*{2.1 Exemples compilés OK}
+
+
+\begin{longtable}{|p{2.5cm}|l|l|l|l|} \hline
+source       & reco & syntabs & tab & mips \\ \hline
+\endhead
+{\tt eval6.l} &~~~~~~~~~~~~~~~~   &~~~~~~~~~~~~~~~~   &~~~~~~~~~~~~~~~~ &~~~~~~~~~~~~~~~~        \\ \hline
+{\tt eval7.l} &      &      &      &         \\ \hline
+{\tt eval8.l} &      &      &      &         \\ \hline
+{\tt eval9.l} &      &      &      &         \\ \hline
+{\tt eval10.l} &      &      &      &         \\ \hline
+{\tt eval11.l} &      &      &      &         \\ \hline
+{\tt eval12.l} &      &      &      &         \\ \hline
+{\tt eval13.l} &      &      &      &         \\ \hline
+{\tt eval14.l} &      &      &      &         \\ \hline
+{\tt eval15.l} &      &      &      &         \\ \hline
+{\tt eval16.l} &      &      &      &         \\ \hline
+{\tt eval17.l} &      &      &      &         \\ \hline
+{\tt eval18.l} &      &      &      &         \\ \hline
+{\tt eval19.l} &      &      &      &         \\ \hline
+{\tt eval20.l} &      &      &      &         \\ \hline
+{\tt eval21.l} &      &      &      &         \\ \hline
+{\tt eval22.l} &      &      &      &         \\ \hline
+{\tt eval23.l} &      &      &      &         \\ \hline
+{\tt eval24.l} &      &      &      &         \\ \hline
+\end{longtable}
+
+%\begin{tabular}{|l|l|l|} \hline
+%fichier de test & compilation & exécution \\ \hline
+%{\tt eval4.l} &     &      &         &     &     \\ \hline
+%{\tt eval5.l} &     &      &         &     &     \\ \hline
+%{\tt eval6.l} &     &      &         &     &     \\ \hline
+%\end{tabular}
+
+\subsubsection*{2.2 Exemples pas compilés}
+
+\begin{longtable}{|p{2.5cm}|l|} \hline
+source       & reco \\ \hline
+{\tt eval2-err.l} &~~~~~~~~~~~~~~~~  \\ \hline
+{\tt eval3-err.l} &      \\ \hline
+{\tt eval4-err.l} &      \\ \hline
+{\tt eval5-err.l} &      \\ \hline
+{\tt eval6-err.l} &      \\ \hline
+{\tt eval7-err.l} &      \\ \hline
+{\tt eval8-err.l} &      \\ \hline
+{\tt eval9-err.l} &      \\ \hline
+{\tt eval10-err.l} &      \\ \hline
+{\tt eval11-err.l} &      \\ \hline
+{\tt eval12-err.l} &      \\ \hline
+
+\end{longtable}
+
+\subsection*{3 Nouvelle fonctionnalité}
+
+\begin{longtable}{|p{2.5cm}|l|l|l|l|} \hline
+source       & reco & syntabs & tab & mips \\ \hline
+{\tt eval25.l} &~~~~~~~~~~~~~~~~      &~~~~~~~~~~~~~~~~ &~~~~~~~~~~~~~~~~ &~~~~~~~~~~~~~~~~        \\ \hline
+{\tt eval26.l} &      &      &      &         \\ \hline
+{\tt eval27.l} &      &      &      &         \\ \hline
+{\tt eval13-err.l} &      &   ------------    &   ------------    &  ------------ \\ \hline
+\end{longtable}
+
+\subsubsection*{Remarques}
+
+\begin{longtable}{|p{3cm}|p{11cm}|} \hline
+& \\
+programmation & \\ 
+& \\\hline
+& \\
+compilation & \\
+& \\\hline
+\end{longtable}
+
+
+\end{document}

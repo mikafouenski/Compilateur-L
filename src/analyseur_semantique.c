@@ -58,6 +58,13 @@ void semantique(n_prog *p, int trace_dico, int print_mips) {
   analyse_n_prog(p);
 }
 
+char* prefix_string (char* s, char* p) {
+  char* ss = malloc ((strlen(s) + 1) * sizeof (char));
+  strcpy(ss, p);
+  strcat(ss, s);
+  return ss;
+}
+
 int taille_n_l_dec(n_l_dec *liste) {
   if (liste) return 1 + taille_n_l_dec(liste->queue);
   return 0;
@@ -212,10 +219,13 @@ void analyse_instr_appel(n_instr *n) {
 }
 
 void analyse_appel(n_appel *n) {
+  int nb_args_appel = taille_n_l_exp(n->args);
+  int pos = rechercheExecutable(n->fonction);
+  if (pos == -1) erreur("Fonction non déclarée !");
+  if (nb_args_appel != dico.tab[pos].complement) erreur("Nombre d'arguments incorect !");
   mips_print("\tsubi\t$sp, $sp, 4     # allocation valeur de retour\n");
   analyse_l_exp(n->args);
   mips_print("\tjal\t%s\n", n->fonction);
-  int nb_args_appel = taille_n_l_exp(n->args);
   if (nb_args_appel > 0)
     mips_print("\taddi\t$sp, $sp, %d     # desallocation parametres\n", 4 * nb_args_appel);
 }
@@ -225,6 +235,8 @@ void analyse_instr_retour(n_instr *n) {
   mips_depile("t0");
   asreturn = 1;
   mips_print("\tsw\t$t0, %d($fp)\n", 4 * (nb_args_function + 1));
+  if (nb_var_local > 0)
+      mips_print("\taddi\t$sp, $sp, %d      # desallocation variables locales\n", 4 * nb_var_local);
   mips_fin_function();
 }
 
@@ -286,8 +298,8 @@ void analyse_opExp(n_exp *n) {
       analyse_exp(n->u.opExp_.op1);
     if(n->u.opExp_.op2 != NULL)
       analyse_exp(n->u.opExp_.op2);
-    mips_depile("t0");
     mips_depile("t1");
+    mips_depile("t0");
     mips_print("\tmult\t$t0, $t1\n");
     mips_print("\tmflo\t$t2\n");
     mips_empile("t2");
@@ -360,42 +372,68 @@ void analyse_opExp(n_exp *n) {
     mips_empile("t2");
   }
   else if(n->u.opExp_.op == ou) {
+    // int e1 = newEtiquette();
+    // int e2 = newEtiquette();
+    // if(n->u.opExp_.op1 != NULL)
+    //   analyse_exp(n->u.opExp_.op1);
+    // mips_depile("t0");
+    // mips_print("\tbne\t$t0, $zero, e%d\n", e1);
+    // if(n->u.opExp_.op2 != NULL)
+    //   analyse_exp(n->u.opExp_.op2);
+    // mips_depile("t0");
+    // mips_print("\tbne\t$t0, $zero, e%d\n", e1);
+    // mips_print("\tli\t$t1, 0\n");
+    // mips_empile("t1");
+    // mips_print("\tj\te%d\n", e2);
+    // mips_print("e%d:\n", e1);
+    // mips_print("\tli\t$t1, 1\n");
+    // mips_empile("t1");
+    // mips_print("e%d:\n", e2);
     int e1 = newEtiquette();
-    int e2 = newEtiquette();
     if(n->u.opExp_.op1 != NULL)
       analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
+    mips_empile("t0");
     mips_print("\tbne\t$t0, $zero, e%d\n", e1);
     if(n->u.opExp_.op2 != NULL)
       analyse_exp(n->u.opExp_.op2);
+    mips_depile("t1");
     mips_depile("t0");
-    mips_print("\tbne\t$t0, $zero, e%d\n", e1);
-    mips_print("\tli\t$t1, 0\n");
-    mips_empile("t1");
-    mips_print("\tj\te%d\n", e2);
+    mips_print("\tor\t$t2, $t0, $t1\n");
+    mips_empile("t2");
     mips_print("e%d:\n", e1);
-    mips_print("\tli\t$t1, 1\n");
-    mips_empile("t1");
-    mips_print("e%d:\n", e2);
   }
   else if(n->u.opExp_.op == et) {
+    // int e1 = newEtiquette();
+    // int e2 = newEtiquette();
+    // if(n->u.opExp_.op1 != NULL)
+    //   analyse_exp(n->u.opExp_.op1);
+    // mips_depile("t0");
+    // mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
+    // if(n->u.opExp_.op2 != NULL)
+    //   analyse_exp(n->u.opExp_.op2);
+    // mips_depile("t0");
+    // mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
+    // mips_print("\tli\t$t1, 1\n");
+    // mips_empile("t1");
+    // mips_print("\tj\te%d\n", e2);
+    // mips_print("e%d:\n", e1);
+    // mips_print("\tli\t$t1, 0\n");
+    // mips_empile("t1");
+    // mips_print("e%d:\n", e2);
     int e1 = newEtiquette();
-    int e2 = newEtiquette();
     if(n->u.opExp_.op1 != NULL)
       analyse_exp(n->u.opExp_.op1);
     mips_depile("t0");
+    mips_empile("t0");
     mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
     if(n->u.opExp_.op2 != NULL)
       analyse_exp(n->u.opExp_.op2);
+    mips_depile("t1");
     mips_depile("t0");
-    mips_print("\tbeq\t$t0, $zero, e%d\n", e1);
-    mips_print("\tli\t$t1, 1\n");
-    mips_empile("t1");
-    mips_print("\tj\te%d\n", e2);
+    mips_print("\tand\t$t2, $t0, $t1\n");
+    mips_empile("t2");
     mips_print("e%d:\n", e1);
-    mips_print("\tli\t$t1, 0\n");
-    mips_empile("t1");
-    mips_print("e%d:\n", e2);
   }
   else if(n->u.opExp_.op == non) {
     int e1 = newEtiquette();
@@ -481,7 +519,7 @@ void analyse_varDec(n_dec *n) {
       ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseLocaleCourante, -1);
       if (contexte == C_VARIABLE_GLOBALE) {
         dico.base = dico.base + 1;
-        mips_print("%s:\t.space\t4\n", n->nom + 1);
+        mips_print("%s:\t.space\t4\n", prefix_string(n->nom, "v"));
       }
       adresseLocaleCourante += 4;
     } else if (contexte == C_ARGUMENT) {
@@ -496,7 +534,7 @@ void analyse_tabDec(n_dec *n) {
     ajouteIdentificateur(n->nom, contexte, T_TABLEAU_ENTIER, adresseLocaleCourante, n->u.tabDec_.taille);
     dico.base = dico.base + 1;
     adresseLocaleCourante += 4 * n->u.tabDec_.taille;
-    mips_print("%s:\t.space\t%d\n", n->nom + 1, 4 * n->u.tabDec_.taille);
+    mips_print("%s:\t.space\t%d\n", prefix_string(n->nom, "v"), 4 * n->u.tabDec_.taille);
   }
 }
 
@@ -509,8 +547,9 @@ void analyse_var(n_var *n, char *s) {
 
 void analyse_var_simple(n_var *n, char *s) {
   int pos = rechercheExecutable(n->nom);
+  if (pos == -1) erreur("Variable non déclarée !");
   if (dico.tab[pos].classe == C_VARIABLE_GLOBALE)
-    sprintf(s, "%s", n->nom + 1);
+    sprintf(s, "%s", prefix_string(n->nom, "v"));
   else if (dico.tab[pos].classe == C_VARIABLE_LOCALE)
     sprintf(s, "%d($fp)", -1 * (8 + dico.tab[pos].adresse));
   else if (dico.tab[pos].classe == C_ARGUMENT)
@@ -522,5 +561,5 @@ void analyse_var_indicee(n_var *n, char *s) {
   mips_depile("t0");
   mips_print("\tadd\t$t0, $t0, $t0\n");
   mips_print("\tadd\t$t0, $t0, $t0\n");
-  sprintf(s, "%s($t0)", n->nom + 1);
+  sprintf(s, "%s($t0)", prefix_string(n->nom, "v"));
 }

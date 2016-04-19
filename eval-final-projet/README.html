@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Carlos Ramisch - personal page</title>
+	<link rel="stylesheet" href="http://pageperso.lif.univ-mrs.fr/~carlos.ramisch/main.css" type="text/css" media="screen"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>		
+</head>
+<body>
+<div id="page_body">
+<H1 >Évaluation finale du compilateur 2015/2016</H1>
+
+<H2>0 - Compilation du compilateur</H2>
+
+Compilez votre compilateur à l'aide d'un Makefile.
+
+<H2>1 - Exécution sur des exemples existants</H2>
+
+
+<p>Modifiez le script <tt>testAll.sh</tt> fourni (version d'évaluation) en modifiant le chemin vers l'exécutable de votre compilateur. Ouvrez le script et lisez attentivement les instructions pour modifier également les options/chemins qui permettent de générer du XML arbre abstrait, table des symboles et mips. Ensuite, exécutez-le pour effectuer les tests ci-dessous 100% automatiquement</p>
+
+<p>Analysez les programmes suivants (il s'agit des exemples connus, fournis comme base de tests minimale):</p>
+
+<table border="1pt">
+<tr><td>eval1.l</td></tr>
+<tr><td>eval2.l</td></tr>
+<tr><td>eval3.l</td></tr>
+<tr><td>eval4.l</td></tr>
+<tr><td>eval5.l</td></tr>
+<tr><td>eval1-err.l</td></tr>
+</table>
+
+<H2>2 - Exécution sur de nouveaux exemples</H2>
+
+<h3>2.1 Exemples compilés OK</h3>
+
+<p>Compilez à l'aide de votre compilateur, les programmes suivants, et vérifiez que tout se passe bien :</p>
+
+<table border="1pt">
+<tr><td>eval6.l</td><td>eval16.l</td></tr>
+<tr><td>eval7.l</td><td>eval17.l</td></tr>
+<tr><td>eval8.l</td><td>eval18.l</td></tr>
+<tr><td>eval9.l</td><td>eval19.l</td></tr>
+<tr><td>eval10.l</td><td>eval20.l</td></tr>
+<tr><td>eval11.l</td><td>eval21.l</td></tr>
+<tr><td>eval12.l</td><td>eval22.l</td></tr>
+<tr><td>eval13.l</td><td>eval23.l</td></tr>
+<tr><td>eval14.l</td><td>eval24.l</td></tr>
+<tr><td>eval15.l</td><td></td></tr>
+</table>
+
+<h3>2.2 Exemples pas compilés</h3>
+
+<p>Vérifiez que les programmes suivants ne compilent pas :</p>
+
+<table border="1pt">
+<tr><td>eval2-err.l</td></tr>
+<tr><td>eval3-err.l</td></tr>
+<tr><td>eval4-err.l</td></tr>
+<tr><td>eval5-err.l</td></tr>
+<tr><td>eval6-err.l</td></tr>
+<tr><td>eval7-err.l</td></tr>
+<tr><td>eval8-err.l</td></tr>
+<tr><td>eval9-err.l</td></tr>
+<tr><td>eval10-err.l</td></tr>
+<tr><td>eval11-err.l</td></tr>
+<tr><td>eval12-err.l</td></tr>
+</table>
+
+<H2>3 - Ajout de l'expression conditionnelle <tt>?:</tt></H2>
+
+<p>On désire ajouter à notre langage une expression conditionnelle à l'aide des opérateurs <tt>?</tt> et <tt>:</tt> dont voici la syntaxe:</p>
+
+<p><tt>expression -> condition '?' expression<sub>vrai</sub> ':' expression<sub>faux</sub> | condition</tt><br><br></p>
+
+<p>Cette expression donne la valeur de <tt>expression<sub>vrai</sub></tt> si la valeur de <tt>condition</tt> est vraie, et la valeur de <tt>expression<sub>faux</sub></tt> si la valeur de <tt>condition</tt> est fausse. Autrement dit, c'est comme une instruction <tt>si</tt> qui, au lieu de choisir entre deux blocs d'instructions, choisit entre les valeurs de deux expressions. Par exemple, <tt>$a > 10 ? 1 : 0</tt> vaut 1 si <tt>$a = 11, 12, 13...</tt> et zéro pour toute valeur de $a inférieure ou égale à 10.</p>
+
+<p>Sa précédence est la moins importante de toutes, inférieures à celle du <tt>ou</tt>. Vous devez donc la rajouter au niveau du non-terminal <tt>expression</tt> dans la grammaire. Contrairement aux autres expressions du langage L, cette expression est associative droite, c'est-à-dire, <tt>1 ? 0 : 1 ? 0 : 1</tt> doit être interprété comme <tt>1 ? 0 : (1 ? 0 : 1)</tt> et vaut 0.</p>
+
+<p>Modifiez l'analyseur lexical, l'analyseur syntaxique, la structure de
+l'arbre abstrait, et la génération de code afin de prendre en compte cette nouvelle instruction.</p>
+
+<p>Vous testerez votre nouvel analyseur sur les programmes suivants:</p>
+
+<table border="1pt">
+<tr><td>eval25.l</td></tr>
+<tr><td>eval26.l</td></tr>
+<tr><td>eval27.l</td></tr>
+<tr><td>eval13-err.l - ne doit pas compiler</td></tr>
+</table>
+<br/>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,22 @@
+<prog>
+  <l_dec>
+    <foncDec>
+      main
+      <l_instr>
+        <instr_si>
+          <opExp>
+            ou
+            <intExp>1</intExp>
+            <lireExp>
+            </lireExp>
+          </opExp>
+          <l_instr>
+            <instr_ecrire>
+              <intExp>5</intExp>
+            </instr_ecrire>
+          </l_instr>
+        </instr_si>
+      </l_instr>
+    </foncDec>
+  </l_dec>
+</prog>

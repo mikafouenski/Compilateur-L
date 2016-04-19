@@ -1,0 +1,16 @@
+<prog>
+  <l_dec>
+    <foncDec>
+      main
+      <l_instr>
+        <instr_ecrire>
+          <opExp>
+            et
+            <intExp>1</intExp>
+            <intExp>2</intExp>
+          </opExp>
+        </instr_ecrire>
+      </l_instr>
+    </foncDec>
+  </l_dec>
+</prog>

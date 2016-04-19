@@ -1,0 +1,42 @@
+	.data
+
+	.text
+__start:
+	jal	main
+	li	$v0, 10
+	syscall          # stoppe l'execution du processus
+procedure:
+	subi	$sp, $sp, 4      # debut fonction
+	sw	$fp, 0($sp)      # debut fonction
+	move	$fp, $sp         # debut fonction
+	subi	$sp, $sp, 4      # debut fonction
+	sw	$ra, 0($sp)      # debut fonction
+	li	$t0, 1
+	subi	$sp, $sp, 4      # Empile
+	sw	$t0, 0($sp)      # Empile
+	lw	$a0, 0($sp)      # Depile
+	addi	$sp, $sp, 4      # Depile
+	li	$v0, 1
+	syscall
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall
+	lw	$ra, 0($sp)      # fin fonction
+	addi	$sp, $sp, 4      # fin fonction
+	lw	$fp, 0($sp)      # fin fonction
+	addi	$sp, $sp, 4      # fin fonction
+	jr	$ra              # fin fonction
+main:
+	subi	$sp, $sp, 4      # debut fonction
+	sw	$fp, 0($sp)      # debut fonction
+	move	$fp, $sp         # debut fonction
+	subi	$sp, $sp, 4      # debut fonction
+	sw	$ra, 0($sp)      # debut fonction
+	subi	$sp, $sp, 4     # allocation valeur de retour
+	jal	procedure
+	addi	$sp, $sp, 4     # Valeur retour ignorée
+	lw	$ra, 0($sp)      # fin fonction
+	addi	$sp, $sp, 4      # fin fonction
+	lw	$fp, 0($sp)      # fin fonction
+	addi	$sp, $sp, 4      # fin fonction
+	jr	$ra              # fin fonction

@@ -1,0 +1,13 @@
+------------------------------------------
+base = 1
+sommet = 2
+0 fact GLOBALE FONCTION 0 1
+1 $f ARGUMENT ENTIER 0 -1
+------------------------------------------
+------------------------------------------
+base = 2
+sommet = 3
+0 fact GLOBALE FONCTION 0 1
+1 main GLOBALE FONCTION 0 0
+2 $a LOCALE ENTIER 0 -1
+------------------------------------------

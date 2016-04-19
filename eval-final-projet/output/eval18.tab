@@ -1,0 +1,31 @@
+------------------------------------------
+base = 9
+sommet = 13
+0 $t0 GLOBALE ENTIER 0 -1
+1 $t1 GLOBALE ENTIER 4 -1
+2 $123 GLOBALE ENTIER 8 -1
+3 $ GLOBALE ENTIER 12 -1
+4 $$ GLOBALE ENTIER 16 -1
+5 $$$ GLOBALE ENTIER 20 -1
+6 $f GLOBALE ENTIER 24 -1
+7 $_ GLOBALE ENTIER 28 -1
+8 f GLOBALE FONCTION 0 1
+9 $$ ARGUMENT ENTIER 0 -1
+10 $$$ LOCALE ENTIER 0 -1
+11 $f LOCALE ENTIER 4 -1
+12 $_ LOCALE ENTIER 8 -1
+------------------------------------------
+------------------------------------------
+base = 10
+sommet = 10
+0 $t0 GLOBALE ENTIER 0 -1
+1 $t1 GLOBALE ENTIER 4 -1
+2 $123 GLOBALE ENTIER 8 -1
+3 $ GLOBALE ENTIER 12 -1
+4 $$ GLOBALE ENTIER 16 -1
+5 $$$ GLOBALE ENTIER 20 -1
+6 $f GLOBALE ENTIER 24 -1
+7 $_ GLOBALE ENTIER 28 -1
+8 f GLOBALE FONCTION 0 1
+9 main GLOBALE FONCTION 0 0
+------------------------------------------

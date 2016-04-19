@@ -1,0 +1,221 @@
+	.data
+
+	.text
+___start:
+	jal	f_main
+	li	$v0, 10
+	syscall		 # stoppe l'execution du processus
+f_main:
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$fp, 0($sp)
+	move	$fp, $sp		 # nouvelle valeur de $fp
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$ra, 0($sp)
+	subi	$sp, $sp, 16	# allocation variables locales
+	li	$v0, 5
+	syscall		 # lecture
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$v0, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	sw	$t1, -8($fp)		 # stocke variable
+	lw	$t1, -8($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$t2, -1		 # inf
+	blt	$t0, $t1, i_e0
+	li	$t2, 0
+i_e0:
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t2, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	bne	$t0, $zero, i_cc1
+	lw	$t1, -8($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$t2, -1		 # egal
+	beq	$t0, $t1, i_e2
+	li	$t2, 0
+i_e2:
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t2, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	or	$t2, $t0, $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t2, 0($sp)
+i_cc1:
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f4
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s3
+i_condexp_f4:
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+i_condexp_s3:
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	sw	$t1, -12($fp)		 # stocke variable
+	lw	$t1, -8($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	li	$t0, 100
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$t2, -1		 # inf
+	blt	$t0, $t1, i_e5
+	li	$t2, 0
+i_e5:
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t2, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	beq	$t0, $zero, i_cc6
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t1, -8($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$t2, -1		 # inf
+	blt	$t0, $t1, i_e7
+	li	$t2, 0
+i_e7:
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t2, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	and	$t2, $t0, $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t2, 0($sp)
+i_cc6:
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f9
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s8
+i_condexp_f9:
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+i_condexp_s8:
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	sw	$t1, -16($fp)		 # stocke variable
+	lw	$t1, -12($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	not	$t1, $t0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	beq	$t0, $zero, i_cc10
+	lw	$t1, -16($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	not	$t1, $t0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	and	$t2, $t0, $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t2, 0($sp)
+i_cc10:
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f12
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s11
+i_condexp_f12:
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+i_condexp_s11:
+	lw	$t1, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	sw	$t1, -20($fp)		 # stocke variable
+	lw	$t1, -12($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	lw	$a0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$v0, 1
+	syscall		 # ecriture
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall		 # ecrire char
+	lw	$t1, -16($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	lw	$a0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$v0, 1
+	syscall		 # ecriture
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall		 # ecrire char
+	lw	$t1, -20($fp)		 # lit variable dans $t1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t1, 0($sp)
+	lw	$a0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$v0, 1
+	syscall		 # ecriture
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall		 # ecrire char
+	addi	$sp, $sp, 16	# desallocation variables locales
+	lw	$ra, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$fp, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	jr	$ra

@@ -1,0 +1,120 @@
+	.data
+
+	.text
+___start:
+	jal	f_main
+	li	$v0, 10
+	syscall		 # stoppe l'execution du processus
+f_main:
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$fp, 0($sp)
+	move	$fp, $sp		 # nouvelle valeur de $fp
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$ra, 0($sp)
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f1
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s0
+i_condexp_f1:
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f3
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s2
+i_condexp_f3:
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+i_condexp_s2:
+i_condexp_s0:
+	lw	$a0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$v0, 1
+	syscall		 # ecriture
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall		 # ecrire char
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f5
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s4
+i_condexp_f5:
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+i_condexp_s4:
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f7
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s6
+i_condexp_f7:
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+i_condexp_s6:
+	lw	$a0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$v0, 1
+	syscall		 # ecriture
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall		 # ecrire char
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f9
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s8
+i_condexp_f9:
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	lw	$t0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	beq	$t0, $zero, i_condexp_f11
+	li	$t0, 0
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+	j	i_condexp_s10
+i_condexp_f11:
+	li	$t0, 1
+	subi	$sp, $sp, 4		 # empile registre
+	sw	$t0, 0($sp)
+i_condexp_s10:
+i_condexp_s8:
+	lw	$a0, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	li	$v0, 1
+	syscall		 # ecriture
+	li	$a0, '\n'
+	li	$v0, 11
+	syscall		 # ecrire char
+	lw	$ra, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	lw	$fp, 0($sp)		 # depile vers registre
+	addi	$sp, $sp, 4
+	jr	$ra
