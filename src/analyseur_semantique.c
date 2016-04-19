@@ -117,6 +117,8 @@ void mips_depile(char *s) {
 }
 
 void analyse_n_prog(n_prog *n) {
+  if (n->fonctions == NULL && n->variables == NULL)
+    erreur("Programme vide !");
   mips_print("\t.data\n");
   analyse_l_dec(n->variables);
   mips_print("\n\t.text\n");
@@ -514,6 +516,8 @@ void analyse_foncDec(n_dec *n) {
 }
 
 void analyse_varDec(n_dec *n) {
+  if (contexte == C_VARIABLE_GLOBALE && rechercheExecutable(n->nom) != -1)
+    erreur("Vaiable déjà déclarée !");
   if (rechercheDeclarative(n->nom) == -1) {
     if (contexte == C_VARIABLE_GLOBALE || contexte == C_VARIABLE_LOCALE) {
       ajouteIdentificateur(n->nom, contexte, T_ENTIER, adresseLocaleCourante, -1);
@@ -557,6 +561,9 @@ void analyse_var_simple(n_var *n, char *s) {
 }
 
 void analyse_var_indicee(n_var *n, char *s) {
+  int pos = rechercheExecutable(n->nom);
+  if (dico.tab[pos].type == T_ENTIER)
+    erreur("La variable n'est pas un tableau !");
   analyse_exp(n->u.indicee_.indice);
   mips_depile("t0");
   mips_print("\tadd\t$t0, $t0, $t0\n");

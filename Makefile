@@ -1,7 +1,7 @@
 CC=gcc
 
 LIBS = -lm
-CCFLAGS= -Wall -I./inc -g3
+CCFLAGS= -Wall -I./inc -g3 -std=gnu99
 LDFLAGS=
 
 SRC=$(wildcard src/*.c)
