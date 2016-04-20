@@ -24,4 +24,4 @@ clean:
 buildAndRun:
 	make clean
 	make
-	cd test && sh -c "./testAll.sh"
+	cd eval-final-projet && sh -c "./testAll.sh"
